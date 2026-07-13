@@ -1,0 +1,15 @@
+# Node / editor
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+
+# Chrome 商店/打包产物
+*.crx
+*.pem
+*.zip
+src/_metadata/
+
+# IDE
+.vscode/
+.idea/

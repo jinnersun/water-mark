@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="title">水印工具 - 设置</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <div class="app">
+      <!-- ============ 顶部 ============ -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <img src="icons/icon48.png" class="logo" alt="logo" />
+          <div class="topbar-titles">
+            <h1 data-i18n="brand">水印配置</h1>
+            <p data-i18n="subtitle">按域名、URL、Cookie、IP 精准区分环境水印</p>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <label class="global-toggle" id="global-toggle-wrap">
+            <input type="checkbox" id="global-toggle" />
+            <span class="global-toggle-slider"></span>
+            <span
+              class="global-toggle-label"
+              id="global-toggle-label"
+              data-i18n="globalOn"
+              >总开关</span
+            >
+          </label>
+          <button
+            id="help-btn"
+            class="btn btn-ghost btn-sm help-trigger"
+            title="帮助"
+            style="padding: 0; width: 32px; margin: 0 4px"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </button>
+          <button
+            id="import-btn"
+            class="btn btn-ghost"
+            data-i18n-title="importBtn"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            <span data-i18n="importBtn">导入</span>
+          </button>
+          <input
+            type="file"
+            id="import-file"
+            accept="application/json"
+            hidden
+          />
+          <button
+            id="export-btn"
+            class="btn btn-ghost"
+            data-i18n-title="exportBtn"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            <span data-i18n="exportBtn">导出</span>
+          </button>
+          <button
+            id="lang-toggle"
+            class="btn btn-ghost lang-toggle"
+            data-target-lang="en"
+          >
+            English
+          </button>
+        </div>
+      </header>
+      <div class="body">
+        <!-- ============ 侧栏 ============ -->
+        <aside class="sidebar">
+          <div class="sidebar-search-row">
+            <div class="search-box">
+              <svg
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                id="config-search"
+                type="text"
+                data-i18n-placeholder="searchPlaceholder"
+                placeholder="搜索配置..."
+              />
+            </div>
+            <button
+              id="add-config-btn"
+              class="icon-btn"
+              data-i18n-title="addConfigTitle"
+              title="添加新配置"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              >
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </button>
+          </div>
+          <ul id="config-list" class="config-list"></ul>
+          <div id="sidebar-empty" class="sidebar-empty" style="display: none">
+            <div class="sidebar-empty-icon">✨</div>
+            <p data-i18n="emptyList">暂无配置</p>
+            <p class="sidebar-empty-hint" data-i18n="emptyListHint">
+              点击右上角 + 号，创建你的第一条配置
+            </p>
+          </div>
+        </aside>
+        <!-- ============ 主区 ============ -->
+        <main class="main">
+          <div id="editor-view">
+            <!-- 编辑区头部 -->
+            <div class="editor-header">
+              <div class="editor-header-left">
+                <input
+                  id="config-name"
+                  class="config-name-input"
+                  type="text"
+                  data-i18n-placeholder="namePlaceholder"
+                  placeholder="例如：生产环境"
+                />
+                <div class="form-group" style="flex: 0 1 180px; margin: 0">
+                  <label
+                    for="short-label"
+                    class="visually-hidden"
+                    data-i18n="shortLabel"
+                    >短标签</label
+                  >
+                  <div class="input-with-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="14"
+                      height="14"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+                      />
+                      <line x1="7" y1="7" x2="7.01" y2="7" />
+                    </svg>
+                    <input
+                      id="short-label"
+                      class="short-label-input"
+                      type="text"
+                      maxlength="4"
+                      data-i18n-placeholder="shortLabelPlaceholder"
+                      placeholder="标签"
+                      title="将在浏览器工具栏图标上显示（最多 4 字符）"
+                    />
+                  </div>
+                </div>
+                <label class="switch inline-switch">
+                  <input type="checkbox" id="enabled" />
+                  <span class="slider"></span>
+                  <span class="switch-label" data-i18n="enabledLabel"
+                    >启用当前配置</span
+                  >
+                </label>
+              </div>
+              <div class="editor-header-right">
+                <button id="copy-config-btn" class="btn btn-outline">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path
+                      d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                    />
+                  </svg>
+                  <span data-i18n="copyConfig">复制</span>
+                </button>
+                <button id="delete-config-btn" class="btn btn-outline-danger">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                    />
+                  </svg>
+                  <span data-i18n="deleteConfig">删除</span>
+                </button>
+                <button id="save-btn" class="btn btn-primary">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"
+                    />
+                    <polyline points="17 21 17 13 7 13 7 21" />
+                    <polyline points="7 3 7 8 15 8" />
+                  </svg>
+                  <span data-i18n="saveBtn">保存</span>
+                </button>
+              </div>
+            </div>
+            <!-- Tab 导航 -->
+            <div class="tabs">
+              <button class="tab active" data-tab="rules" data-i18n="tabRules">
+                匹配规则
+              </button>
+              <button class="tab" data-tab="style" data-i18n="tabStyle">
+                外观
+              </button>
+              <button class="tab" data-tab="alert" data-i18n="tabAlert">
+                提醒 / 交互
+              </button>
+            </div>
+            <!-- Tab: 匹配规则 -->
+            <section class="tab-panel active" data-panel="rules">
+              <div class="card">
+                <div class="card-header">
+                  <h3 data-i18n="rulesTitle">触发条件</h3>
+                  <p class="card-hint" data-i18n="rulesHint">
+                    任一规则命中即生效；多条规则中匹配最精准的一条决定水印样式。
+                  </p>
+                </div>
+                <div id="rules-list" class="rules-list"></div>
+                <button id="add-rule-btn" class="btn btn-outline btn-add-rule">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  >
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                  <span data-i18n="addRuleBtn">添加规则</span>
+                </button>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <h3 data-i18n="testTitle">规则测试</h3>
+                </div>
+                <div class="tester">
+                  <input
+                    id="test-url"
+                    type="text"
+                    data-i18n-placeholder="testUrlPlaceholder"
+                    placeholder="粘贴 URL 试试..."
+                  />
+                  <input
+                    id="test-cookie"
+                    type="text"
+                    data-i18n-placeholder="testCookiePlaceholder"
+                    placeholder="（可选）粘贴 cookie 字符串"
+                  />
+                  <div id="test-result" class="test-result"></div>
+                </div>
+              </div>
+            </section>
+            <!-- Tab: 外观 -->
+            <section class="tab-panel" data-panel="style">
+              <div class="two-col">
+                <div class="card">
+                  <div class="form-group">
+                    <label for="text" data-i18n="watermarkText">水印文字</label>
+                    <textarea
+                      id="text"
+                      rows="2"
+                      data-i18n-placeholder="textPlaceholder"
+                      placeholder="例如：生产环境"
+                    ></textarea>
+                    <p class="input-hint" data-i18n="textHint">
+                      支持换行；未来将支持 {user} / {date} 等变量。
+                    </p>
+                  </div>
+                  <div class="form-grid-2">
+                    <div class="form-group">
+                      <label data-i18n="textColor">文字颜色</label>
+                      <div class="color-input-wrapper">
+                        <input type="color" id="color" />
+                        <code id="color-hex">#FF0000</code>
+                      </div>
+                    </div>
+                    <div class="form-group form-group-switch">
+                      <label class="switch inline-switch">
+                        <input type="checkbox" id="smartColor" />
+                        <span class="slider"></span>
+                        <span class="switch-label" data-i18n="smartColor"
+                          >智能对比色</span
+                        >
+                      </label>
+                      <select id="smartColorTone" class="select-tone">
+                        <option value="light" data-i18n="smartColorToneLight">
+                          浅色（适合深色网页）
+                        </option>
+                        <option value="dark" data-i18n="smartColorToneDark">
+                          深色（适合浅色网页）
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <p
+                    class="input-hint"
+                    data-i18n="smartColorHint"
+                    style="margin-top: -4px"
+                  >
+                    开启后自动根据网页背景反色显示。
+                  </p>
+                  <div class="form-grid-2">
+                    <div class="form-group">
+                      <div class="label-row">
+                        <label data-i18n="fontSize">字体大小</label>
+                        <span class="value-tag"
+                          ><span id="fontsize-val">24</span> px</span
+                        >
+                      </div>
+                      <input
+                        type="range"
+                        id="fontsize"
+                        min="10"
+                        max="80"
+                        step="1"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <div class="label-row">
+                        <label data-i18n="opacity">不透明度</label>
+                        <span class="value-tag" id="opacity-val">0.15</span>
+                      </div>
+                      <input
+                        type="range"
+                        id="opacity"
+                        min="0.03"
+                        max="1"
+                        step="0.01"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <div class="label-row">
+                        <label data-i18n="density">间距密度</label>
+                        <span class="value-tag" id="density-val">300</span>
+                      </div>
+                      <input
+                        type="range"
+                        id="density"
+                        min="120"
+                        max="600"
+                        step="10"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <div class="label-row">
+                        <label data-i18n="rotation">旋转角度</label>
+                        <span class="value-tag"
+                          ><span id="rotation-val">-30</span>°</span
+                        >
+                      </div>
+                      <input
+                        type="range"
+                        id="rotation"
+                        min="-90"
+                        max="90"
+                        step="5"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="card preview-card">
+                  <div class="card-header">
+                    <h3 data-i18n="previewTitle">实时预览</h3>
+                  </div>
+                  <div class="preview-list">
+                    <div class="preview-item preview-light">
+                      <span class="preview-label" data-i18n="previewHintLight"
+                        >浅色背景</span
+                      >
+                      <div id="preview-light" class="preview-canvas"></div>
+                    </div>
+                    <div class="preview-item preview-dark">
+                      <span class="preview-label" data-i18n="previewHintDark"
+                        >深色背景</span
+                      >
+                      <div id="preview-dark" class="preview-canvas"></div>
+                    </div>
+                    <div class="preview-item preview-gradient">
+                      <span
+                        class="preview-label"
+                        data-i18n="previewHintGradient"
+                        >渐变背景</span
+                      >
+                      <div id="preview-gradient" class="preview-canvas"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- Tab: 提醒/交互 -->
+            <section class="tab-panel" data-panel="alert">
+              <div class="card">
+                <div class="card-header">
+                  <h3 data-i18n="borderTitle">沉浸式边框</h3>
+                  <p class="card-hint" data-i18n="borderHint">
+                    在页面四周绘制粗边框，比水印更容易一眼识别。适合生产 /
+                    强提醒场景。
+                  </p>
+                </div>
+                <label class="switch inline-switch big">
+                  <input type="checkbox" id="border-enabled" />
+                  <span class="slider"></span>
+                  <span class="switch-label" data-i18n="borderEnabled"
+                    >启用边框提醒</span
+                  >
+                </label>
+                <div class="form-grid-2 border-controls">
+                  <div class="form-group">
+                    <label data-i18n="borderColor">边框颜色</label>
+                    <div class="color-input-wrapper">
+                      <input type="color" id="border-color" value="#ef4444" />
+                      <code id="border-color-hex">#EF4444</code>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="label-row">
+                      <label data-i18n="borderWidth">边框粗细</label>
+                      <span class="value-tag"
+                        ><span id="border-width-val">4</span> px</span
+                      >
+                    </div>
+                    <input
+                      type="range"
+                      id="border-width"
+                      min="1"
+                      max="12"
+                      step="1"
+                      value="4"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <h3 data-i18n="mouseFadeTitle">鼠标交互时渐隐</h3>
+                  <p class="card-hint" data-i18n="mouseFadeHint">
+                    排查问题时短暂让水印几乎透明，停手后自动恢复。
+                  </p>
+                </div>
+                <label class="switch inline-switch big">
+                  <input type="checkbox" id="mouse-fade-enabled" />
+                  <span class="slider"></span>
+                  <span class="switch-label" data-i18n="mouseFadeEnabled"
+                    >启用鼠标 / 键盘交互时降低透明度</span
+                  >
+                </label>
+                <div class="form-grid-2 fade-controls">
+                  <div class="form-group">
+                    <div class="label-row">
+                      <label data-i18n="mouseFadeOpacity">渐隐后的透明度</label>
+                      <span class="value-tag" id="fade-opacity-val">0.03</span>
+                    </div>
+                    <input
+                      type="range"
+                      id="fade-opacity"
+                      min="0"
+                      max="0.5"
+                      step="0.01"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <div class="label-row">
+                      <label data-i18n="mouseFadeResume">停手后多久恢复</label>
+                      <span class="value-tag"
+                        ><span id="fade-resume-val">2000</span>
+                        <span data-i18n="mouseFadeUnitMs">ms</span></span
+                      >
+                    </div>
+                    <input
+                      type="range"
+                      id="fade-resume"
+                      min="300"
+                      max="8000"
+                      step="100"
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <!-- 空状态 -->
+          <div id="empty-state" class="empty-state" style="display: none">
+            <div class="empty-icon">✨</div>
+            <h3 data-i18n="emptyTitle">暂无配置</h3>
+            <p data-i18n="emptyDesc">
+              点击左上角按钮，创建你的第一个专属水印配置吧
+            </p>
+          </div>
+        </main>
+      </div>
+    </div>
+    <div id="toast" class="toast"></div>
+    <!-- 确认模态框（居中、遮罩） -->
+    <div id="modal-overlay" class="modal-overlay" style="display: none">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="modal-title">确认</h3>
+          <button id="modal-close" class="modal-close">
+            <svg
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
+        <div class="modal-footer">
+          <button id="modal-cancel" class="btn btn-outline btn-sm">取消</button>
+          <button id="modal-confirm" class="btn btn-danger btn-sm">确认</button>
+        </div>
+      </div>
+    </div>
+    <!-- 帮助面板（右侧抽屉） -->
+    <div id="help-panel" class="help-panel-overlay" style="display: none">
+      <div class="help-panel">
+        <div class="help-header">
+          <h3 data-i18n="helpTitle">使用指南</h3>
+          <button id="help-close" class="help-close">
+            <svg
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="help-body">
+          <section class="help-section">
+            <h4 data-i18n="helpQuickStart">快速开始</h4>
+            <ol>
+              <li data-i18n="helpStep1">点击左上角「+」按钮新建一条水印配置</li>
+              <li data-i18n="helpStep2">
+                在「匹配规则」Tab 设置触发条件（域名/URL/IP 等）
+              </li>
+              <li data-i18n="helpStep3">
+                在「外观」Tab 设置水印文字、颜色、字体、透明度等
+              </li>
+            </ol>
+          </section>
+          <hr class="help-divider" />
+          <section class="help-section">
+            <h4 data-i18n="helpRules">匹配规则说明</h4>
+            <ul class="help-rule-list">
+              <li>
+                <strong data-i18n="ruleHostExact">精确域名</strong>：<code
+                  >example.com</code
+                >
+                只匹配完全一致的域名
+              </li>
+              <li>
+                <strong data-i18n="ruleHostSuffix">域名后缀</strong>：<code
+                  >example.com</code
+                >
+                匹配所有子域（a.example.com / b.example.com）
+              </li>
+              <li>
+                <strong data-i18n="ruleUrlRegex">URL 正则</strong
+                >：用正则匹配完整 URL，如 <code>/admin(/.*)?$</code> 匹配所有
+                admin 页
+              </li>
+              <li>
+                <strong data-i18n="ruleIpExact">IP 精确</strong>：当网站通过 IP
+                访问时触发，如 <code>10.20.30.5</code>
+              </li>
+              <li>
+                <strong data-i18n="ruleIpCidr">IP 段 (CIDR)</strong
+                >：匹配整个内网网段，如 <code>10.20.30.0/24</code>
+              </li>
+              <li>
+                <strong data-i18n="ruleCookie">Cookie</strong>：当指定 Cookie
+                存在或匹配时触发，如 <code>env=prod</code> 或
+                <code>env~=test</code>
+              </li>
+            </ul>
+          </section>
+          <hr class="help-divider" />
+          <section class="help-section">
+            <h4 data-i18n="helpTips">小提示</h4>
+            <ul class="help-rule-list">
+              <li data-i18n="helpTip1">
+                每条配置可设置多条规则，任一命中即生效
+              </li>
+              <li data-i18n="helpTip2">
+                多条配置命中时，按"最精确优先"原则选择（精确域名 > IP > 正则 >
+                后缀）
+              </li>
+              <li data-i18n="helpTip3">
+                短标签会显示在浏览器工具栏插件图标的右下角，最多 4 个字符
+              </li>
+              <li data-i18n="helpTip4">
+                智能对比色会自动根据网页背景反色显示，在深浅背景下都清晰
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!-- 规则行模板 -->
+    <template id="rule-row-template">
+      <div class="rule-row">
+        <select class="rule-type">
+          <option value="host-exact" data-i18n="ruleTypeHostExact">
+            精确域名
+          </option>
+          <option value="host-suffix" data-i18n="ruleTypeHostSuffix">
+            域名后缀
+          </option>
+          <option value="url-regex" data-i18n="ruleTypeUrlRegex">
+            URL 正则
+          </option>
+          <option value="ip-exact" data-i18n="ruleTypeIpExact">IP 精确</option>
+          <option value="ip-cidr" data-i18n="ruleTypeIpCidr">
+            IP 段（CIDR）
+          </option>
+          <option value="cookie" data-i18n="ruleTypeCookie">Cookie</option>
+        </select>
+        <input class="rule-value" type="text" />
+        <button
+          class="icon-btn rule-remove"
+          type="button"
+          data-i18n-title="ruleRemove"
+          title="删除"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </template>
+    <script src="features.js"></script>
+    <script src="watermark-core.js"></script>
+    <script src="i18n.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Env Watermark - Distinguish Prod / Test at a glance"
+  },
+  "extDescription": {
+    "message": "Precise watermarks by domain, URL, IP, or Cookie. Prevents mistakes on prod. Includes smart contrast color, immersive border, activity fade."
+  },
+  "extDefaultTitle": {
+    "message": "Click to configure watermark rules"
+  }
+}

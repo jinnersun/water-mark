@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "环境水印 - 精准区分生产 / 测试环境"
+  },
+  "extDescription": {
+    "message": "按域名、URL、IP、Cookie 精准打水印，避免误操作生产环境。支持智能对比色、沉浸式边框、鼠标交互渐隐。"
+  },
+  "extDefaultTitle": {
+    "message": "点击配置水印规则"
+  }
+}
