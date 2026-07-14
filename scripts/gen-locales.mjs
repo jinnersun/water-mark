@@ -77,6 +77,13 @@ const KEY_ORDER = [
   'cpPresets', 'cpRecent', 'cpCustom',
   'presetProd', 'presetPre', 'presetGray', 'presetTest',
   'presetUat', 'presetDev', 'presetSandbox', 'presetOther',
+
+  // Agent prompt + clipboard import + feedback (v2.0)
+  'agentPromptBtn', 'agentPromptHint', 'importClipboardBtn', 'promptViewSource',
+  'toastPromptCopied', 'toastPromptCopyFailed',
+  'toastClipboardEmpty', 'toastClipboardInvalid', 'toastClipboardReadFailed',
+  'helpAiPromptTitle', 'helpAiPromptDesc',
+  'helpFeedbackTitle', 'helpFeedbackDesc', 'helpFeedbackLink',
 ]
 
 const TRANSLATIONS = {
@@ -236,6 +243,22 @@ const TRANSLATIONS = {
     presetDev: 'Development',
     presetSandbox: 'Sandbox',
     presetOther: 'Other',
+
+    // Agent prompt + clipboard import + feedback (v2.0)
+    agentPromptBtn: 'Let AI write rules',
+    agentPromptHint: 'Copies a prompt + current config to clipboard. Paste into ChatGPT / Claude / Codex, describe your setup, get JSON back.',
+    importClipboardBtn: 'Paste from clipboard',
+    promptViewSource: 'View prompt source (GitHub)',
+    toastPromptCopied: 'Prompt copied. Paste it into your AI assistant.',
+    toastPromptCopyFailed: 'Failed to copy prompt. Check clipboard permission.',
+    toastClipboardEmpty: 'Clipboard is empty.',
+    toastClipboardInvalid: 'Clipboard content is not a valid watermark config JSON.',
+    toastClipboardReadFailed: 'Cannot read clipboard. Grant permission and try again.',
+    helpAiPromptTitle: 'AI-generated rules',
+    helpAiPromptDesc: 'Click "Let AI write rules" to copy a prompt to clipboard, paste into ChatGPT / Claude / Codex, describe your scenario, and paste the JSON reply back via "Paste from clipboard".',
+    helpFeedbackTitle: 'Feedback / Bug report',
+    helpFeedbackDesc: 'Found a bug or have suggestions? Open an issue on GitHub.',
+    helpFeedbackLink: 'Open GitHub Issues',
   },
 }
 
@@ -397,6 +420,22 @@ const OVERRIDES = {
     presetDev: '开发',
     presetSandbox: '沙箱',
     presetOther: '其他',
+
+    // Agent prompt + clipboard import + feedback (v2.0)
+    agentPromptBtn: '让 AI 帮我写规则',
+    agentPromptHint: '会将提示词和当前配置复制到剪贴板。粘贴到 ChatGPT / Claude / Codex，描述你的场景，AI 返回可导入的 JSON。',
+    importClipboardBtn: '从剪贴板导入',
+    promptViewSource: '查看提示词源文件 (GitHub)',
+    toastPromptCopied: '提示词已复制。粘贴到 AI 对话即可。',
+    toastPromptCopyFailed: '复制失败，请检查剪贴板权限。',
+    toastClipboardEmpty: '剪贴板为空。',
+    toastClipboardInvalid: '剪贴板内容不是有效的水印配置 JSON。',
+    toastClipboardReadFailed: '无法读取剪贴板，请授权后重试。',
+    helpAiPromptTitle: 'AI 辅助生成规则',
+    helpAiPromptDesc: '点「让 AI 帮我写规则」复制提示词到剪贴板，粘到 ChatGPT / Claude / Codex 描述场景后，用「从剪贴板导入」把 JSON 结果导回。',
+    helpFeedbackTitle: '反馈 / Bug 报告',
+    helpFeedbackDesc: '发现 Bug 或有建议？欢迎到 GitHub 提交 issue。',
+    helpFeedbackLink: '打开 GitHub Issues',
   },
   zh_TW: {
     extName: '環境浮水印 - 精準區分生產 / 測試環境',
@@ -554,6 +593,22 @@ const OVERRIDES = {
     presetDev: '開發',
     presetSandbox: '沙盒',
     presetOther: '其他',
+
+    // Agent prompt + clipboard import + feedback (v2.0)
+    agentPromptBtn: '讓 AI 幫我寫規則',
+    agentPromptHint: '會將提示詞和目前設定複製到剪貼簿。貼上到 ChatGPT / Claude / Codex，描述你的情境，AI 回傳可匯入的 JSON。',
+    importClipboardBtn: '從剪貼簿匯入',
+    promptViewSource: '檢視提示詞原始檔 (GitHub)',
+    toastPromptCopied: '提示詞已複製。貼上至 AI 對話即可。',
+    toastPromptCopyFailed: '複製失敗，請檢查剪貼簿權限。',
+    toastClipboardEmpty: '剪貼簿為空。',
+    toastClipboardInvalid: '剪貼簿內容不是有效的水印設定 JSON。',
+    toastClipboardReadFailed: '無法讀取剪貼簿，請授權後重試。',
+    helpAiPromptTitle: 'AI 輔助產生規則',
+    helpAiPromptDesc: '點「讓 AI 幫我寫規則」複製提示詞到剪貼簿，貼上到 ChatGPT / Claude / Codex 描述情境後，用「從剪貼簿匯入」把 JSON 匯回。',
+    helpFeedbackTitle: '意見回饋 / Bug 回報',
+    helpFeedbackDesc: '發現 Bug 或有建議？歡迎到 GitHub 提交 issue。',
+    helpFeedbackLink: '開啟 GitHub Issues',
   },
   ja: {
     extName: '環境ウォーターマーク - 本番 / テストを一目で区別',
@@ -711,6 +766,22 @@ const OVERRIDES = {
     presetDev: '開発',
     presetSandbox: 'サンドボックス',
     presetOther: 'その他',
+
+    // Agent prompt + clipboard import + feedback (v2.0)
+    agentPromptBtn: 'AI にルール生成を依頼',
+    agentPromptHint: 'プロンプトと現在の設定をクリップボードにコピーします。ChatGPT / Claude / Codex に貼り付けてシナリオを説明すると、AI が JSON を返します。',
+    importClipboardBtn: 'クリップボードから読込',
+    promptViewSource: 'プロンプト元ファイル (GitHub)',
+    toastPromptCopied: 'プロンプトをコピーしました。AI に貼り付けてください。',
+    toastPromptCopyFailed: 'コピーに失敗しました。クリップボードの権限を確認してください。',
+    toastClipboardEmpty: 'クリップボードが空です。',
+    toastClipboardInvalid: 'クリップボードの内容は有効な JSON 設定ではありません。',
+    toastClipboardReadFailed: 'クリップボードを読み取れません。権限を付与してから再試行してください。',
+    helpAiPromptTitle: 'AI ルール生成',
+    helpAiPromptDesc: '「AI にルール生成を依頼」でプロンプトをコピーし、ChatGPT / Claude / Codex に貼り付けてシナリオを説明後、「クリップボードから読込」で JSON を戻します。',
+    helpFeedbackTitle: 'フィードバック / Bug 報告',
+    helpFeedbackDesc: 'Bug や提案があれば、GitHub の issue にご報告ください。',
+    helpFeedbackLink: 'GitHub Issues を開く',
   },
   es: {
     extName: 'Marca de agua de entorno - Distingue producción / pruebas de un vistazo',
@@ -868,6 +939,22 @@ const OVERRIDES = {
     presetDev: 'Desarrollo',
     presetSandbox: 'Sandbox',
     presetOther: 'Otro',
+
+    // Agent prompt + clipboard import + feedback (v2.0)
+    agentPromptBtn: 'Generar reglas con IA',
+    agentPromptHint: 'Copia el prompt y la configuración actual al portapapeles. Pégalo en ChatGPT / Claude / Codex, describe tu escenario, y recibirás JSON.',
+    importClipboardBtn: 'Pegar del portapapeles',
+    promptViewSource: 'Ver fuente del prompt (GitHub)',
+    toastPromptCopied: 'Prompt copiado. Pégalo en tu asistente de IA.',
+    toastPromptCopyFailed: 'Error al copiar. Revisa los permisos del portapapeles.',
+    toastClipboardEmpty: 'El portapapeles está vacío.',
+    toastClipboardInvalid: 'El contenido del portapapeles no es un JSON válido.',
+    toastClipboardReadFailed: 'No se puede leer el portapapeles. Concede permisos y reintenta.',
+    helpAiPromptTitle: 'Generar reglas con IA',
+    helpAiPromptDesc: 'Pulsa "Generar reglas con IA" para copiar el prompt, pégalo en ChatGPT / Claude / Codex, describe tu escenario, y usa "Pegar del portapapeles" para importar el JSON.',
+    helpFeedbackTitle: 'Comentarios / Reportar bug',
+    helpFeedbackDesc: '¿Bug o sugerencia? Abre un issue en GitHub.',
+    helpFeedbackLink: 'Abrir GitHub Issues',
   },
 }
 

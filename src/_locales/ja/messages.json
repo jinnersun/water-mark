@@ -417,5 +417,47 @@
   },
   "presetOther": {
     "message": "その他"
+  },
+  "agentPromptBtn": {
+    "message": "AI にルール生成を依頼"
+  },
+  "agentPromptHint": {
+    "message": "プロンプトと現在の設定をクリップボードにコピーします。ChatGPT / Claude / Codex に貼り付けてシナリオを説明すると、AI が JSON を返します。"
+  },
+  "importClipboardBtn": {
+    "message": "クリップボードから読込"
+  },
+  "promptViewSource": {
+    "message": "プロンプト元ファイル (GitHub)"
+  },
+  "toastPromptCopied": {
+    "message": "プロンプトをコピーしました。AI に貼り付けてください。"
+  },
+  "toastPromptCopyFailed": {
+    "message": "コピーに失敗しました。クリップボードの権限を確認してください。"
+  },
+  "toastClipboardEmpty": {
+    "message": "クリップボードが空です。"
+  },
+  "toastClipboardInvalid": {
+    "message": "クリップボードの内容は有効な JSON 設定ではありません。"
+  },
+  "toastClipboardReadFailed": {
+    "message": "クリップボードを読み取れません。権限を付与してから再試行してください。"
+  },
+  "helpAiPromptTitle": {
+    "message": "AI ルール生成"
+  },
+  "helpAiPromptDesc": {
+    "message": "「AI にルール生成を依頼」でプロンプトをコピーし、ChatGPT / Claude / Codex に貼り付けてシナリオを説明後、「クリップボードから読込」で JSON を戻します。"
+  },
+  "helpFeedbackTitle": {
+    "message": "フィードバック / Bug 報告"
+  },
+  "helpFeedbackDesc": {
+    "message": "Bug や提案があれば、GitHub の issue にご報告ください。"
+  },
+  "helpFeedbackLink": {
+    "message": "GitHub Issues を開く"
   }
 }

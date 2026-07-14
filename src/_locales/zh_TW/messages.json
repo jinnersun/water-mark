@@ -417,5 +417,47 @@
   },
   "presetOther": {
     "message": "其他"
+  },
+  "agentPromptBtn": {
+    "message": "讓 AI 幫我寫規則"
+  },
+  "agentPromptHint": {
+    "message": "會將提示詞和目前設定複製到剪貼簿。貼上到 ChatGPT / Claude / Codex，描述你的情境，AI 回傳可匯入的 JSON。"
+  },
+  "importClipboardBtn": {
+    "message": "從剪貼簿匯入"
+  },
+  "promptViewSource": {
+    "message": "檢視提示詞原始檔 (GitHub)"
+  },
+  "toastPromptCopied": {
+    "message": "提示詞已複製。貼上至 AI 對話即可。"
+  },
+  "toastPromptCopyFailed": {
+    "message": "複製失敗，請檢查剪貼簿權限。"
+  },
+  "toastClipboardEmpty": {
+    "message": "剪貼簿為空。"
+  },
+  "toastClipboardInvalid": {
+    "message": "剪貼簿內容不是有效的水印設定 JSON。"
+  },
+  "toastClipboardReadFailed": {
+    "message": "無法讀取剪貼簿，請授權後重試。"
+  },
+  "helpAiPromptTitle": {
+    "message": "AI 輔助產生規則"
+  },
+  "helpAiPromptDesc": {
+    "message": "點「讓 AI 幫我寫規則」複製提示詞到剪貼簿，貼上到 ChatGPT / Claude / Codex 描述情境後，用「從剪貼簿匯入」把 JSON 匯回。"
+  },
+  "helpFeedbackTitle": {
+    "message": "意見回饋 / Bug 回報"
+  },
+  "helpFeedbackDesc": {
+    "message": "發現 Bug 或有建議？歡迎到 GitHub 提交 issue。"
+  },
+  "helpFeedbackLink": {
+    "message": "開啟 GitHub Issues"
   }
 }

@@ -322,6 +322,36 @@
                   <div id="test-result" class="test-result"></div>
                 </div>
               </div>
+
+              <div class="card ai-prompt-card">
+                <div class="card-header">
+                  <h3 data-i18n="helpAiPromptTitle">AI 辅助生成规则</h3>
+                </div>
+                <div class="ai-prompt-body">
+                  <p class="input-hint" data-i18n="agentPromptHint">
+                    会将提示词和当前配置复制到剪贴板。粘贴到 ChatGPT / Claude / Codex，描述你的场景，AI 返回可导入的 JSON。
+                  </p>
+                  <div class="ai-prompt-actions">
+                    <button id="copy-prompt-btn" class="btn btn-primary" type="button">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                      </svg>
+                      <span data-i18n="agentPromptBtn">让 AI 帮我写规则</span>
+                    </button>
+                    <button id="paste-clipboard-btn" class="btn btn-ghost" type="button">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                      </svg>
+                      <span data-i18n="importClipboardBtn">从剪贴板导入</span>
+                    </button>
+                    <a class="ai-prompt-source" href="https://github.com/jinnersun/web-watermark-prompt/blob/main/PROMPT.md" target="_blank" rel="noopener" data-i18n="promptViewSource">
+                      查看提示词源文件 (GitHub)
+                    </a>
+                  </div>
+                </div>
+              </div>
             </section>
             <!-- Tab: 外观 -->
             <section class="tab-panel" data-panel="style">
@@ -675,6 +705,12 @@
                 智能对比色会自动根据网页背景反色显示，在深浅背景下都清晰
               </li>
             </ul>
+          </section>
+          <hr class="help-divider" />
+          <section class="help-section">
+            <h4 data-i18n="helpFeedbackTitle">反馈 / Bug 报告</h4>
+            <p class="help-feedback-desc" data-i18n="helpFeedbackDesc">发现 Bug 或有建议？欢迎到 GitHub 提交 issue。</p>
+            <a class="help-feedback-link" href="https://github.com/jinnersun/web-watermark-prompt/issues" target="_blank" rel="noopener" data-i18n="helpFeedbackLink">打开 GitHub Issues</a>
           </section>
         </div>
       </div>

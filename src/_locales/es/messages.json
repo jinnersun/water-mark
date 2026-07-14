@@ -417,5 +417,47 @@
   },
   "presetOther": {
     "message": "Otro"
+  },
+  "agentPromptBtn": {
+    "message": "Generar reglas con IA"
+  },
+  "agentPromptHint": {
+    "message": "Copia el prompt y la configuración actual al portapapeles. Pégalo en ChatGPT / Claude / Codex, describe tu escenario, y recibirás JSON."
+  },
+  "importClipboardBtn": {
+    "message": "Pegar del portapapeles"
+  },
+  "promptViewSource": {
+    "message": "Ver fuente del prompt (GitHub)"
+  },
+  "toastPromptCopied": {
+    "message": "Prompt copiado. Pégalo en tu asistente de IA."
+  },
+  "toastPromptCopyFailed": {
+    "message": "Error al copiar. Revisa los permisos del portapapeles."
+  },
+  "toastClipboardEmpty": {
+    "message": "El portapapeles está vacío."
+  },
+  "toastClipboardInvalid": {
+    "message": "El contenido del portapapeles no es un JSON válido."
+  },
+  "toastClipboardReadFailed": {
+    "message": "No se puede leer el portapapeles. Concede permisos y reintenta."
+  },
+  "helpAiPromptTitle": {
+    "message": "Generar reglas con IA"
+  },
+  "helpAiPromptDesc": {
+    "message": "Pulsa \"Generar reglas con IA\" para copiar el prompt, pégalo en ChatGPT / Claude / Codex, describe tu escenario, y usa \"Pegar del portapapeles\" para importar el JSON."
+  },
+  "helpFeedbackTitle": {
+    "message": "Comentarios / Reportar bug"
+  },
+  "helpFeedbackDesc": {
+    "message": "¿Bug o sugerencia? Abre un issue en GitHub."
+  },
+  "helpFeedbackLink": {
+    "message": "Abrir GitHub Issues"
   }
 }

@@ -417,5 +417,47 @@
   },
   "presetOther": {
     "message": "Other"
+  },
+  "agentPromptBtn": {
+    "message": "Let AI write rules"
+  },
+  "agentPromptHint": {
+    "message": "Copies a prompt + current config to clipboard. Paste into ChatGPT / Claude / Codex, describe your setup, get JSON back."
+  },
+  "importClipboardBtn": {
+    "message": "Paste from clipboard"
+  },
+  "promptViewSource": {
+    "message": "View prompt source (GitHub)"
+  },
+  "toastPromptCopied": {
+    "message": "Prompt copied. Paste it into your AI assistant."
+  },
+  "toastPromptCopyFailed": {
+    "message": "Failed to copy prompt. Check clipboard permission."
+  },
+  "toastClipboardEmpty": {
+    "message": "Clipboard is empty."
+  },
+  "toastClipboardInvalid": {
+    "message": "Clipboard content is not a valid watermark config JSON."
+  },
+  "toastClipboardReadFailed": {
+    "message": "Cannot read clipboard. Grant permission and try again."
+  },
+  "helpAiPromptTitle": {
+    "message": "AI-generated rules"
+  },
+  "helpAiPromptDesc": {
+    "message": "Click \"Let AI write rules\" to copy a prompt to clipboard, paste into ChatGPT / Claude / Codex, describe your scenario, and paste the JSON reply back via \"Paste from clipboard\"."
+  },
+  "helpFeedbackTitle": {
+    "message": "Feedback / Bug report"
+  },
+  "helpFeedbackDesc": {
+    "message": "Found a bug or have suggestions? Open an issue on GitHub."
+  },
+  "helpFeedbackLink": {
+    "message": "Open GitHub Issues"
   }
 }
