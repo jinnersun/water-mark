@@ -325,6 +325,15 @@
     "message": "Blocked: regex source exceeds {max} chars",
     "description": "Placeholder {max} is replaced with the regex length limit."
   },
+  "testInvalidRegex": {
+    "message": "Invalid regex syntax"
+  },
+  "toastFeatureLocked": {
+    "message": "This feature is not available in the current version"
+  },
+  "toastModalMissing": {
+    "message": "UI failed to load; please reload the extension"
+  },
   "confirmDelete": {
     "message": "Delete this config?"
   },

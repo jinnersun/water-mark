@@ -325,6 +325,15 @@
     "message": "拒绝执行：正则长度超过上限（{max} 字符）",
     "description": "Placeholder {max} is replaced with the regex length limit."
   },
+  "testInvalidRegex": {
+    "message": "正则语法错误"
+  },
+  "toastFeatureLocked": {
+    "message": "当前版本不可用该功能"
+  },
+  "toastModalMissing": {
+    "message": "UI 加载异常，请重新加载扩展"
+  },
   "confirmDelete": {
     "message": "确定要删除这个配置吗？"
   },

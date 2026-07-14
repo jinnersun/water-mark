@@ -14,7 +14,39 @@ const state = {
 // publishes them on window.WatermarkI18n so the options page can be loaded in
 // isolation for tests, and this indirection keeps the rest of options.js free
 // of the WatermarkI18n prefix.
-const _i18n = window.WatermarkI18n
+// Defensive: if i18n-messages.js / i18n.js failed to load (CSP, syntax err,
+// wrong <script> order), fall back to an identity stub AND surface a visible
+// error banner so the page never silently dies with unresponsive buttons.
+const _i18nStub = {
+  t: (k) => k,
+  tf: (k) => k,
+  applyLang: () => Promise.resolve('en'),
+  switchLang: () => {},
+  getStoredLang: (cb) => cb('en'),
+  getCurrentDisplayLang: () => 'en',
+}
+const _i18nAvailable = !!(window.WatermarkI18n && window.WatermarkI18n.t)
+if (!_i18nAvailable) {
+  console.error('[水印工具] WatermarkI18n not loaded; falling back to stub')
+  const showI18nBanner = () => {
+    if (document.getElementById('__wm_i18n_banner__')) return
+    const bar = document.createElement('div')
+    bar.id = '__wm_i18n_banner__'
+    bar.textContent = 'i18n module failed to load. UI will show raw keys. Please reload the extension.'
+    Object.assign(bar.style, {
+      position: 'fixed', top: '0', left: '0', right: '0',
+      padding: '8px 12px', background: '#ef4444', color: '#fff',
+      font: '13px/1.4 system-ui, sans-serif', textAlign: 'center', zIndex: '2147483647',
+    })
+    document.body && document.body.appendChild(bar)
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', showI18nBanner)
+  } else {
+    showI18nBanner()
+  }
+}
+const _i18n = _i18nAvailable ? window.WatermarkI18n : _i18nStub
 const t = _i18n.t
 const tf = _i18n.tf
 const applyLang = _i18n.applyLang
@@ -189,12 +221,21 @@ function showModal(title, message, onConfirm) {
   const btnConfirm = document.getElementById('modal-confirm')
   const btnCancel = document.getElementById('modal-cancel')
   const btnClose = document.getElementById('modal-close')
-  if (!overlay) {
-    console.error('[水印工具] 找不到模态框 HTML 结构')
+  const titleEl = document.getElementById('modal-title')
+  const bodyEl = document.getElementById('modal-body')
+  // 任一节点缺失时都不要走 cloneNode/replaceChild 流程（会 TypeError 抛出，
+  // 从而中断整个删除/导入调用链）。降级到原生 confirm，保证功能不消失，
+  // 并 toast 提示用户 UI 有问题。
+  if (!overlay || !btnConfirm || !btnCancel || !btnClose || !titleEl || !bodyEl) {
+    console.error('[水印工具] modal DOM incomplete; falling back to window.confirm')
+    showToast(t('toastModalMissing'))
+    if (typeof window.confirm === 'function' && window.confirm(message)) {
+      if (typeof onConfirm === 'function') onConfirm()
+    }
     return
   }
-  document.getElementById('modal-title').textContent = title
-  document.getElementById('modal-body').textContent = message
+  titleEl.textContent = title
+  bodyEl.textContent = message
   // 先移除旧事件，防止重复绑定
   const newBtnConfirm = btnConfirm.cloneNode(true)
   btnConfirm.parentNode.replaceChild(newBtnConfirm, btnConfirm)
@@ -829,6 +870,7 @@ const runTester = () => {
         }),
       )
     }
+    if (r.reason === 'invalid-regex') notes.push(t('testInvalidRegex'))
   })
   if (bestRule) {
     resultEl.className = 'test-result matched'
@@ -973,7 +1015,8 @@ const onDeleteConfig = () => {
     () => {
       state.configs = state.configs.filter((c) => c.id !== state.currentId)
       state.currentId = state.configs.length ? state.configs[0].id : null
-      saveToStorage(() => {
+      saveToStorage((err) => {
+        if (err) return // 已由 saveToStorage 通过 toastStorageError 提示
         renderConfigList()
         if (state.currentId) renderForm()
         else showEmpty()
@@ -990,7 +1033,10 @@ const onSave = () => {
   })
 } // ============ 导入 / 导出 ============
 const onExport = () => {
-  if (!Features.canUse('importExport')) return
+  if (!Features.canUse('importExport')) {
+    showToast(t('toastFeatureLocked'))
+    return
+  }
   const payload = {
     schema: 'watermark-tool@1',
     exportedAt: new Date().toISOString(),
@@ -1033,7 +1079,10 @@ const onImportFile = (e) => {
   const file = e.target.files && e.target.files[0]
   e.target.value = ''
   if (!file) return
-  if (!Features.canUse('importExport')) return
+  if (!Features.canUse('importExport')) {
+    showToast(t('toastFeatureLocked'))
+    return
+  }
   const reader = new FileReader()
   reader.onload = () => {
     let list

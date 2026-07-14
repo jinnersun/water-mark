@@ -1,4 +1,4 @@
-﻿# v2.0 Feature Manifest / v2.0 功能清单
+# v2.0 Feature Manifest / v2.0 功能清单
 
 发布 Chrome Web Store 前的最后一份"已完成 / 待完成"清单。用于对齐上架素材、README、隐私政策的表述。
 
@@ -9,7 +9,7 @@
 ## 核心能力（已完成 ✅）
 
 ### 匹配规则 —— 6 种类型
-- **host-exact** — 精确域名匹配（如 `cust.example.com`）
+- **host-exact** — 精确域名匹配（如 `app.example.com`）
 - **host-suffix** — 域名后缀匹配（含子域，`example.com` 匹配 `a.example.com`）
 - **url-regex** — URL 正则（最长 200 字符，防 ReDoS 嵌套量词校验）
 - **ip-exact** — IPv4 精确匹配

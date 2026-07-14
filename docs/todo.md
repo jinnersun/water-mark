@@ -83,11 +83,11 @@ You are helping the user configure the "Web Watermark Tool" Chrome extension.
 The tool matches pages by rules and injects a customized watermark.
 Rule types (each config has multiple rules, ANY match triggers, most-specific wins):
 
-- host-exact:   Exact hostname, e.g. "cust.example.com"
+- host-exact:   Exact hostname, e.g. "app.example.com"
 - host-suffix:  hostname === value OR hostname endsWith "." + value
 - url-regex:    RegExp against full URL. Max 200 chars. Nested quantifiers like (a+)+ are rejected.
 - ip-exact:     Only matches when browser hostname is an IPv4 literal
-- ip-cidr:      IPv4 CIDR, e.g. "10.20.30.0/24"
+- ip-cidr:      IPv4 CIDR, e.g. "192.0.2.0/24"
 - cookie:       "name" -> exists; "name=value" -> equals; "name~=fragment" -> contains
 
 Watermark config fields (JSON):
@@ -95,7 +95,7 @@ Watermark config fields (JSON):
   "name": "生产环境",
   "shortLabel": "PROD",       // <= 4 chars, shown on toolbar badge
   "enabled": true,
-  "rules": [{ "type": "host-exact", "value": "cust.example.com" }],
+  "rules": [{ "type": "host-exact", "value": "app.example.com" }],
   "text": "生产环境 - 谨慎操作",
   "color": "#ef4444",
   "opacity": 0.15,

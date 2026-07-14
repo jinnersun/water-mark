@@ -325,6 +325,15 @@
     "message": "Bloqueado: la regex supera {max} caracteres",
     "description": "Placeholder {max} is replaced with the regex length limit."
   },
+  "testInvalidRegex": {
+    "message": "Sintaxis de regex inválida"
+  },
+  "toastFeatureLocked": {
+    "message": "Esta función no está disponible en la versión actual"
+  },
+  "toastModalMissing": {
+    "message": "La interfaz falló al cargar; recarga la extensión"
+  },
   "confirmDelete": {
     "message": "¿Eliminar esta configuración?"
   },

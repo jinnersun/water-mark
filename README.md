@@ -10,7 +10,7 @@ Chrome extension (Manifest V3) that stamps precise per-environment watermarks on
   - `Exact host` — `cust.example.com` → this hostname only
   - `Host suffix` — `example.com` → every subdomain
   - `URL regex` — `^https?://.*/admin(/.*)?$` → path/query targeting
-  - `IP exact / CIDR` — `10.20.30.5` / `10.20.30.0/24` → covers VPN‑style access
+  - `IP exact / CIDR` — `192.0.2.5` / `192.0.2.0/24` → covers VPN‑style access
   - `Cookie` — `env=prod` / `env~=stage` / just a name → covers same‑domain gateway routing
 - **Smart contrast color** (`mix-blend-mode: difference`): watermark inverts against light, dark, or gradient backgrounds without disappearing.
 - **Immersive border**: 4px inset shadow, spot the environment at a glance.
@@ -77,8 +77,8 @@ Chrome extension (Manifest V3) that stamps precise per-environment watermarks on
 | `host-exact`  | hostname equals value (recommended for distinguishing same-domain environments) | `cust.example.com`     | **Default**                            |
 | `host-suffix` | hostname equals value or ends with `.<value>` (all subdomains) | `example.com`                           | Compatible with older coarse matching  |
 | `url-regex`   | Full-URL regex                                              | `^https?://.*/admin(/.*)?$`                | For path / query targeting             |
-| `ip-exact`    | When hostname is an IP, exact match                         | `10.20.30.5`                               | Only attempted when hostname is IP-shaped |
-| `ip-cidr`     | When hostname is an IP, CIDR match                          | `10.20.30.0/24`                            | IPv4 CIDR only                         |
+| `ip-exact`    | When hostname is an IP, exact match                         | `192.0.2.5`                               | Only attempted when hostname is IP-shaped |
+| `ip-cidr`     | When hostname is an IP, CIDR match                          | `192.0.2.0/24`                            | IPv4 CIDR only                         |
 | `cookie`      | Key/value match against `document.cookie`                   | `env=prod` / `env~=stage` / just `sid`     | `=` equals, `~=` contains, name-only checks existence |
 
 **Conflict handling**: when multiple rules hit within a config, or multiple configs hit at once, the one with the highest score wins. Approximate priority: `host-exact` > `ip-exact` > `ip-cidr` > `url-regex` > `cookie` > `host-suffix`; ties break on value length.

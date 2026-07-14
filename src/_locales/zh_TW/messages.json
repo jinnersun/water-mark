@@ -325,6 +325,15 @@
     "message": "拒絕執行：正規表示式長度超過上限（{max} 字元）",
     "description": "Placeholder {max} is replaced with the regex length limit."
   },
+  "testInvalidRegex": {
+    "message": "正規表示式語法錯誤"
+  },
+  "toastFeatureLocked": {
+    "message": "目前版本無法使用此功能"
+  },
+  "toastModalMissing": {
+    "message": "UI 載入異常，請重新載入擴充功能"
+  },
   "confirmDelete": {
     "message": "確定要刪除這個設定嗎？"
   },

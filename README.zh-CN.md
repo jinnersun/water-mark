@@ -5,10 +5,10 @@
 ## 核心特性
 
 - **多维匹配规则**（每条配置可组合多条规则，任一命中即生效）
-  - `精确域名`：`cust.example.com` → 只命中生产
+  - `精确域名`：`app.example.com` → 只命中生产
   - `域名后缀`：`example.com` → 命中所有子域
   - `URL 正则`：`^https?://.*/admin(/.*)?$` → 只命中管理后台路径
-  - `IP 精确 / CIDR`：`10.20.30.5` / `10.20.30.0/24` → 覆盖 VPN 里按 IP 访问的内网系统
+  - `IP 精确 / CIDR`：`192.0.2.5` / `192.0.2.0/24` → 覆盖 VPN 里按 IP 访问的内网系统
   - `Cookie`：`env=prod` / `env~=stage` / 仅 `sid` → 覆盖同域名靠网关分流的场景
 - **智能对比色**（`mix-blend-mode: difference`）：无论网页是白底、黑底、渐变，水印自动反色显示，不再"看不见"
 - **沉浸式边框**：4px 血红 `inset box-shadow`，一眼看出当前是生产环境
@@ -62,11 +62,11 @@
 
 | 类型         | 语义                                                        | 例子                                     | 备注                                  |
 | ------------ | ----------------------------------------------------------- | ---------------------------------------- | ------------------------------------- |
-| `host-exact` | hostname 完全相等（推荐用于区分同基域名的多环境）           | `cust.example.com`                        | **默认使用这个**                      |
+| `host-exact` | hostname 完全相等（推荐用于区分同基域名的多环境）           | `app.example.com`                        | **默认使用这个**                      |
 | `host-suffix`| hostname 相等或以 `.<domain>` 结尾（含所有子域）             | `example.com`                             | 兼容旧粗粒度匹配                      |
 | `url-regex`  | 完整 URL 正则匹配                                            | `^https?://.*/admin(/.*)?$`               | 用于按路径 / query 区分               |
-| `ip-exact`   | 当 hostname 是 IP 时精确匹配                                 | `10.20.30.5`                              | 只在 hostname 为 IP 时才尝试匹配      |
-| `ip-cidr`    | 当 hostname 是 IP 时按 CIDR 匹配                             | `10.20.30.0/24`                           | 支持 IPv4 CIDR                        |
+| `ip-exact`   | 当 hostname 是 IP 时精确匹配                                 | `192.0.2.5`                              | 只在 hostname 为 IP 时才尝试匹配      |
+| `ip-cidr`    | 当 hostname 是 IP 时按 CIDR 匹配                             | `192.0.2.0/24`                           | 支持 IPv4 CIDR                        |
 | `cookie`     | `document.cookie` 中的键值匹配                               | `env=prod` / `env~=stage` / `admin_token` | `=` 精确、`~=` 包含、仅键名 → 检查存在 |
 
 **冲突处理**：一条配置内多规则命中时，选 score 最高的一条；多条配置命中时也一样。score 大致规则：`host-exact` > `ip-exact` > `ip-cidr` > `url-regex` > `cookie` > `host-suffix`，同类型按 value 长度。

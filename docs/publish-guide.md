@@ -1,4 +1,4 @@
-﻿# Chrome Web Store 发布指南（v2.0 首次上架）
+# Chrome Web Store 发布指南（v2.0 首次上架）
 
 从"代码开发完"到"用户在商店能搜到并安装"的完整流程。你之前没发过，尽量按顺序走。
 
@@ -95,10 +95,10 @@ Distinguish production/test/dev environments at a glance. Rule-based watermarks 
 Web Watermark Tool（网页水印工具）通过灵活的匹配规则，为不同环境的网页自动叠加醒目水印和边框提醒，防止误操作、防止在生产环境跑测试脚本。
 
 【六种匹配规则，覆盖真实场景】
-• 精确域名 — cust.example.com
+• 精确域名 — app.example.com
 • 域名后缀 — 匹配所有子域 *.example.com
 • URL 正则 — 按路径匹配 /admin
-• IP 精确 — VPN 内网 10.20.30.5
+• IP 精确 — VPN 内网 192.0.2.5
 • IP 段（CIDR）— 整个 10.0.0.0/8 子网
 • Cookie — 按后端灰度分流的 canary/prod cookie
 
@@ -131,10 +131,10 @@ Ever confused test.cust.example.com with cust.example.com? Or accessed the admin
 Web Watermark Tool overlays customized watermarks on web pages that match your rules, preventing catastrophic mis-operations.
 
 【Six rule types】
-• Exact host — cust.example.com
+• Exact host — app.example.com
 • Host suffix — matches all subdomains
 • URL regex — path-based routing like /admin
-• Exact IP — VPN internal 10.20.30.5
+• Exact IP — VPN internal 192.0.2.5
 • IP CIDR — entire subnets like 10.0.0.0/8
 • Cookie — deploy=canary for canary rollouts
 

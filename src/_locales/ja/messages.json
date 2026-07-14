@@ -325,6 +325,15 @@
     "message": "ブロック：正規表現の長さが上限を超えています（{max} 文字）",
     "description": "Placeholder {max} is replaced with the regex length limit."
   },
+  "testInvalidRegex": {
+    "message": "正規表現の構文エラー"
+  },
+  "toastFeatureLocked": {
+    "message": "現バージョンではこの機能は利用できません"
+  },
+  "toastModalMissing": {
+    "message": "UI の読み込みに失敗しました。拡張機能を再読み込みしてください"
+  },
   "confirmDelete": {
     "message": "この設定を削除しますか？"
   },
