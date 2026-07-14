@@ -809,12 +809,6 @@ input[type="color"]::-webkit-color-swatch {
   background-size: cover;
   background-position: center;
 }
-.preview-canvas .preview-tile {
-  position: absolute;
-  inset: -50%; /* 向外扩展50%，确保边缘也能看到水印 */
-  width: 200%;
-  height: 200%;
-}
 .preview-light .preview-canvas {
   background-color: #ffffff;
 }
@@ -829,12 +823,6 @@ input[type="color"]::-webkit-color-swatch {
     #94a3b8 45%,
     #0f172a 100%
   );
-}
-.preview-canvas .preview-tile {
-  position: absolute;
-  inset: 0;
-  background-repeat: repeat;
-  pointer-events: none;
 }
 
 /* ============ 空状态 ============ */
@@ -902,26 +890,6 @@ input[type="color"]::-webkit-color-swatch {
   background: var(--border-hover);
 }
 
-/* 短标签输入（工具栏图标 badge） */
-.short-label-wrap {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border: 1px dashed var(--border-light);
-  border-radius: 999px;
-  background: var(--bg-soft);
-  transition: var(--transition);
-}
-.short-label-wrap:focus-within {
-  border-color: var(--primary);
-  border-style: solid;
-  background: var(--primary-light);
-}
-.short-label-icon {
-  color: var(--text-muted);
-  display: inline-flex;
-}
 .short-label-input {
   border: none !important;
   background: transparent !important;
@@ -955,19 +923,6 @@ input[type="color"]::-webkit-color-swatch {
   height: 32px;
   padding: 0 14px;
   font-size: 13px;
-}
-
-/* 顶部操作分组 */
-.header-actions-group {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.header-divider {
-  width: 1px;
-  height: 24px;
-  background: var(--border-light);
-  margin: 0 8px;
 }
 
 /* 带图标输入框 */
@@ -1007,10 +962,6 @@ input[type="color"]::-webkit-color-swatch {
   box-shadow: none !important;
 }
 
-/* 移除旧的short-label-wrap */
-.short-label-wrap {
-  display: none;
-}
 
 /* ---------- 确认模态框 ---------- */
 .modal-overlay {
@@ -1231,56 +1182,6 @@ input[type="color"]::-webkit-color-swatch {
   justify-content: center;
 }
 
-/* ============ 颜色选择器 ============ */
-.color-picker {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.color-swatch {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
-  flex-shrink: 0;
-}
-.color-swatch:hover {
-  transform: scale(1.12);
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
-}
-.color-swatch.active {
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgb(79 70 229 / 0.15);
-}
-.color-swatch.custom {
-  background: conic-gradient(
-    #ef4444 0deg 45deg,
-    #f59e0b 45deg 90deg,
-    #22c55e 90deg 135deg,
-    #3b82f6 135deg 180deg,
-    #8b5cf6 180deg 225deg,
-    #ec4899 225deg 270deg,
-    #6b7280 270deg 315deg,
-    #000000 315deg 360deg
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-}
-.color-picker input[type="color"] {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
 
 .visually-hidden {
   position: absolute !important;

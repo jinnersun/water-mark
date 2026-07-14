@@ -120,25 +120,8 @@ const extraI18n = {
 Object.keys(extraI18n).forEach(lang => {
   if (!translations[lang]) translations[lang] = {}
   Object.assign(translations[lang], extraI18n[lang])
-}) // ---------- 统一确认模态框（居中） ----------
-let currentConfirmCallback = null
-const showConfirm = (title, message, onConfirm) => {
-  const overlay = $('modal-overlay')
-  $('modal-title').textContent = title
-  $('modal-body').textContent = message
-  overlay.style.display = 'flex'
-  currentConfirmCallback = onConfirm
-}
-const closeModal = () => {
-  $('modal-overlay').style.display = 'none'
-  currentConfirmCallback = null
-} // ---------- 帮助面板 ----------
-const openHelp = () => {
-  $('help-panel').style.display = ''
-}
-const closeHelp = () => {
-  $('help-panel').style.display = 'none'
-} // ============ 工具 ============
+})
+// ============ 工具 ============
 const $ = (id) => document.getElementById(id)
 const showToast = (msg) => {
   const toast = $('toast')
@@ -241,7 +224,6 @@ const bindStaticEvents = () => {
       }
     })
   }
-  // 颜色选择器代码已移除（HTML 中无 .color-swatch，避免运行时空指针）
   // 侧栏
   $('add-config-btn').onclick = onAddConfig
   $('config-search').oninput = (e) => {
@@ -298,7 +280,6 @@ const bindStaticEvents = () => {
     onFormField('text', e.target.value)
     renderPreview()
   }
-  // (removed dead color oninput block)
   bindRange('fontsize', 'fontSize', (v) => parseInt(v, 10))
   bindRange('opacity', 'opacity', (v) => parseFloat(v))
   bindRange('density', 'density', (v) => parseInt(v, 10))
