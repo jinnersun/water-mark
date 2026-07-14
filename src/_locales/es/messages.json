@@ -122,7 +122,7 @@
     "message": "Cookie"
   },
   "rulePlaceholderHostExact": {
-    "message": "p. ej. cust.example.com"
+    "message": "p. ej. app.example.com (solo host, sin https://)"
   },
   "rulePlaceholderHostSuffix": {
     "message": "p. ej. example.com (incluye subdominios)"
@@ -131,10 +131,10 @@
     "message": "p. ej. ^https?://.*/admin(/.*)?$$"
   },
   "rulePlaceholderIpExact": {
-    "message": "p. ej. 10.20.30.5"
+    "message": "p. ej. 192.0.2.5"
   },
   "rulePlaceholderIpCidr": {
-    "message": "p. ej. 10.20.30.0/24"
+    "message": "p. ej. 192.0.2.0/24"
   },
   "rulePlaceholderCookie": {
     "message": "p. ej. env=prod  o  env~=stage  o  solo un nombre"
@@ -312,6 +312,9 @@
     "message": "Fallo al guardar: {msg}",
     "description": "Placeholder {msg} is replaced with the error message from chrome.storage."
   },
+  "toastRuleValueCleaned": {
+    "message": "Se extrajo solo el host"
+  },
   "testUnsafeRegex": {
     "message": "Bloqueado: patrón potencialmente catastrófico, congelaría páginas"
   },
@@ -324,6 +327,12 @@
   },
   "confirmImport": {
     "message": "La importación se añadirá a las configuraciones existentes. ¿Continuar?"
+  },
+  "modalConfirm": {
+    "message": "Confirmar"
+  },
+  "modalCancel": {
+    "message": "Cancelar"
   },
   "confirmDeleteRuleTitle": {
     "message": "Eliminar regla"

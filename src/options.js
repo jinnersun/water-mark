@@ -229,6 +229,21 @@ function closeHelpPanel() {
 }
 // ============ 工具 ============
 const $ = (id) => document.getElementById(id)
+// Null-safe event binder: if the element is missing, log once and move on
+// instead of throwing (which would abort the rest of bindStaticEvents and
+// leave downstream buttons wired to nothing).
+const on = (id, event, handler) => {
+  const el = document.getElementById(id)
+  if (!el) {
+    if (!on._warned) on._warned = new Set()
+    if (!on._warned.has(id)) {
+      on._warned.add(id)
+      console.warn('[水印工具] missing DOM element:', id)
+    }
+    return
+  }
+  el[event] = handler
+}
 const showToast = (msg) => {
   const toast = $('toast')
   toast.textContent = msg
@@ -325,18 +340,18 @@ const bindStaticEvents = () => {
     }
   }
   // 全局开关
-  $('global-toggle').onchange = (e) => {
+  on('global-toggle', 'onchange', (e) => {
     state.globalEnabled = e.target.checked
     saveToStorage((err) => {
       if (err) return // 已由 saveToStorage 提示
       showToast(state.globalEnabled ? t('toastGlobalOn') : t('toastGlobalOff'))
     })
     updateGlobalToggleLabel()
-  }
+  })
   // 顶部导入导出
-  $('export-btn').onclick = onExport
-  $('import-btn').onclick = () => $('import-file').click()
-  $('import-file').onchange = onImportFile
+  on('export-btn', 'onclick', onExport)
+  on('import-btn', 'onclick', () => { const f = document.getElementById('import-file'); if (f) f.click() })
+  on('import-file', 'onchange', onImportFile)
   // v2.0: AI prompt + clipboard import
   const copyPromptBtn = $('copy-prompt-btn')
   if (copyPromptBtn) copyPromptBtn.onclick = onCopyPrompt
@@ -359,13 +374,16 @@ const bindStaticEvents = () => {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closeHelpPanel()
-        document.getElementById('modal-overlay').style.display = 'none'
+        const mo = document.getElementById('modal-overlay')
+        if (mo) mo.style.display = 'none'
+        __confirmCallback = null
       }
     })
   }
   // 侧栏
-  $('add-config-btn').onclick = onAddConfig
-  $('config-search').oninput = (e) => {
+  on('add-config-btn', 'onclick', onAddConfig)
+  const cfgSearch = $('config-search')
+  if (cfgSearch) cfgSearch.oninput = (e) => {
     state.search = e.target.value.trim().toLowerCase()
     renderConfigList()
     // 如果当前选中的配置被过滤掉了，自动切换到过滤后第一条
@@ -379,20 +397,20 @@ const bindStaticEvents = () => {
     }
   }
   // 编辑区顶部
-  $('copy-config-btn').onclick = onCopyConfig
-  $('delete-config-btn').onclick = onDeleteConfig
-  $('save-btn').onclick = onSave
+  on('copy-config-btn', 'onclick', onCopyConfig)
+  on('delete-config-btn', 'onclick', onDeleteConfig)
+  on('save-btn', 'onclick', onSave)
   // Tab 切换
   document.querySelectorAll('.tab').forEach((tab) => {
     tab.onclick = () => switchTab(tab.dataset.tab)
   })
   // 表单绑定：所有 input 变化写入内存中的 config
   const nameInput = $('config-name')
-  nameInput.oninput = () => onFormField('name', nameInput.value)
-  $('short-label').oninput = (e) => onFormField('shortLabel', e.target.value)
-  $('enabled').onchange = (e) => onFormField('enabled', e.target.checked)
+  if (nameInput) nameInput.oninput = () => onFormField('name', nameInput.value)
+  on('short-label', 'oninput', (e) => onFormField('shortLabel', e.target.value))
+  on('enabled', 'onchange', (e) => onFormField('enabled', e.target.checked))
   // 添加规则（当无规则时点击也直接生效）
-  $('add-rule-btn').onclick = () => {
+  on('add-rule-btn', 'onclick', () => {
     const cfg = currentConfig()
     if (!cfg) return
     cfg.rules = cfg.rules || []
@@ -402,82 +420,84 @@ const bindStaticEvents = () => {
     })
     renderRulesList()
     renderConfigList()
-  }
+  })
   // 规则测试
-  $('test-url').oninput = debounce(runTester, 150)
-  $('test-cookie').oninput = debounce(runTester, 150)
+  on('test-url', 'oninput', debounce(runTester, 150))
+  on('test-cookie', 'oninput', debounce(runTester, 150))
   // 外观字段
   const bindRange = (id, key, cast) => {
-    $(id).oninput = (e) => {
+    const el = $(id)
+    if (!el) return
+    el.oninput = (e) => {
       const val = cast ? cast(e.target.value) : e.target.value
       onFormField(key, val)
       updateRangeLabels()
       renderPreview()
     }
   }
-  $('text').oninput = (e) => {
+  on('text', 'oninput', (e) => {
     onFormField('text', e.target.value)
     renderPreview()
-  }
+  })
   bindRange('fontsize', 'fontSize', (v) => parseInt(v, 10))
   bindRange('opacity', 'opacity', (v) => parseFloat(v))
   bindRange('density', 'density', (v) => parseInt(v, 10))
   bindRange('rotation', 'rotation', (v) => parseInt(v, 10))
-  $('smartColor').onchange = (e) => {
+  on('smartColor', 'onchange', (e) => {
     onFormField('smartColor', e.target.checked)
     updateSmartColorUI()
     renderPreview()
-  }
-  $('smartColorTone').onchange = (e) => {
+  })
+  on('smartColorTone', 'onchange', (e) => {
     onFormField('smartColorTone', e.target.value)
     renderPreview()
-  }
-  $('color').oninput = (e) => {
+  })
+  on('color', 'oninput', (e) => {
     onFormField('color', e.target.value)
     renderPreview()
-  }
+  })
   // 提醒/交互
-  $('border-enabled').onchange = (e) => {
+  on('border-enabled', 'onchange', (e) => {
     const cfg = currentConfig()
     if (!cfg) return
     cfg.border = cfg.border || {}
     cfg.border.enabled = e.target.checked
     updateBorderUI()
-  }
-  $('border-color').oninput = (e) => {
+  })
+  on('border-color', 'oninput', (e) => {
     const cfg = currentConfig()
     if (!cfg) return
     cfg.border = cfg.border || {}
     cfg.border.color = e.target.value
-  }
-  $('border-width').oninput = (e) => {
+  })
+  on('border-width', 'oninput', (e) => {
     const cfg = currentConfig()
     if (!cfg) return
     cfg.border = cfg.border || {}
     cfg.border.width = parseInt(e.target.value, 10)
-    $('border-width-val').textContent = e.target.value
-  }
-  $('mouse-fade-enabled').onchange = (e) => {
+    const lbl = document.getElementById('border-width-val'); if (lbl) lbl.textContent = e.target.value
+  })
+  on('mouse-fade-enabled', 'onchange', (e) => {
     const cfg = currentConfig()
     if (!cfg) return
     cfg.mouseFade = cfg.mouseFade || {}
     cfg.mouseFade.enabled = e.target.checked
     updateFadeUI()
-  }
-  $('fade-opacity').oninput = (e) => {
+  })
+  on('fade-opacity', 'oninput', (e) => {
     const cfg = currentConfig()
     if (!cfg) return
     cfg.mouseFade = cfg.mouseFade || {}
     cfg.mouseFade.fadeOpacity = parseFloat(e.target.value)
-    $('fade-opacity-val').textContent = e.target.value
-  }
-  $('fade-resume').oninput = (e) => {
+    const lbl = document.getElementById('fade-opacity-val'); if (lbl) lbl.textContent = e.target.value
+  })
+  on('fade-resume', 'oninput', (e) => {
     const cfg = currentConfig()
     if (!cfg) return
     cfg.mouseFade = cfg.mouseFade || {}
     cfg.mouseFade.resumeDelay = parseInt(e.target.value, 10)
-    $('fade-resume-val').textContent = e.target.value
-  }
+    const lbl = document.getElementById('fade-resume-val'); if (lbl) lbl.textContent = e.target.value
+  })
 }
 const onFormField = (field, value) => {
   const cfg = currentConfig()
@@ -494,7 +514,7 @@ const loadAll = () => {
     (items) => {
       state.configs = items.configs || []
       state.globalEnabled = items.globalEnabled !== false
-      $('global-toggle').checked = state.globalEnabled
+      const gt = $('global-toggle'); if (gt) gt.checked = state.globalEnabled
       updateGlobalToggleLabel()
       if (state.configs.length > 0) {
         state.currentId = state.configs[0].id
@@ -712,6 +732,22 @@ const appendRuleRow = (listEl, rule, idx, cfg, isEphemeral) => {
     materialize()
     renderConfigList()
     runTester()
+  }
+  // 可见清洗：光标离开输入框时，如果规则类型是 host / ip 系列，
+  // 把用户误粘贴的完整 URL / 大小写 / 端口清洗成纯 hostname，
+  // 并回写到输入框和 rule.value，同时 toast 提示。
+  input.onblur = () => {
+    if (!window.WatermarkCore || !window.WatermarkCore.sanitizeHostValue) return
+    const HOST_LIKE_TYPES = new Set(['host-exact', 'host-suffix', 'ip-exact', 'ip-cidr'])
+    if (!HOST_LIKE_TYPES.has(rule.type)) return
+    const cleaned = window.WatermarkCore.sanitizeHostValue(input.value)
+    if (cleaned !== input.value.trim() && cleaned) {
+      input.value = cleaned
+      rule.value = cleaned
+      showToast(t('toastRuleValueCleaned'))
+      renderConfigList()
+      runTester()
+    }
   }
   remove.onclick = () => {
     if (isEphemeral) return // 空临时行没什么可删的，忽略
@@ -960,6 +996,26 @@ const onExport = () => {
   URL.revokeObjectURL(url)
   showToast(t('toastExported'))
 }
+// Shared helper: sanitize + append a list of configs to state, save, refresh UI.
+// Returns the count of accepted configs.
+const appendConfigs = (list) => {
+  const cleaned = list.map((raw) => sanitizeImportedConfig(raw)).filter(Boolean)
+  if (!cleaned.length) return 0
+  cleaned.forEach((c) => {
+    c.id = generateId()
+    state.configs.push(c)
+  })
+  if (!state.currentId) state.currentId = cleaned[0].id
+  saveToStorage((err) => {
+    if (err) return
+    renderConfigList()
+    if (state.currentId) renderForm()
+    else showEmpty()
+    showToast(tf('toastImported', { n: cleaned.length }))
+  })
+  return cleaned.length
+}
+
 const onImportFile = (e) => {
   const file = e.target.files && e.target.files[0]
   e.target.value = ''
@@ -967,50 +1023,29 @@ const onImportFile = (e) => {
   if (!Features.canUse('importExport')) return
   const reader = new FileReader()
   reader.onload = () => {
+    let list
     try {
       const data = JSON.parse(reader.result)
-      const list = Array.isArray(data) ?
-        data :
-        Array.isArray(data.configs) ?
-        data.configs :
-        null
+      list = Array.isArray(data)
+        ? data
+        : Array.isArray(data.configs)
+          ? data.configs
+          : null
       if (!list) throw new Error('bad-format')
-      showModal(
-        t('confirmImport'),
-        t('confirmImport'),
-        () => {
-          const cleaned = list
-            .map((raw) => sanitizeImportedConfig(raw))
-            .filter(Boolean)
-          cleaned.forEach((c) => {
-            c.id = generateId()
-            state.configs.push(c)
-          })
-          saveToStorage(() => {
-            renderConfigList()
-            if (state.currentId) renderForm()
-            showToast(tf('toastImported', {
-              n: cleaned.length
-            }))
-          })
-        }
-      )
-      saveToStorage((err) => {
-        if (err) return
-        if (!state.currentId && state.configs.length) {
-          state.currentId = state.configs[0].id
-        }
-        renderConfigList()
-        if (state.currentId) renderForm()
-        else showEmpty()
-        showToast(tf('toastImported', {
-          n: cleaned.length
-        }))
-      })
     } catch (err) {
       showToast(t('toastImportFailed'))
+      return
     }
+    showModal(
+      t('confirmImport'),
+      t('confirmImport'),
+      () => {
+        const n = appendConfigs(list)
+        if (n === 0) showToast(t('toastImportFailed'))
+      }
+    )
   }
+  reader.onerror = () => showToast(t('toastImportFailed'))
   reader.readAsText(file)
 } // 过滤掉 file 里可能存在的多余字段 + 数值 clamp，防止畸形 JSON 污染 storage
 // ============ v2.0: one-click AI prompt copy + clipboard import ============
@@ -1070,21 +1105,8 @@ const onPasteFromClipboard = async () => {
     showToast(t('toastClipboardInvalid'))
     return
   }
-  const cleaned = list.map(sanitizeImportedConfig).filter(Boolean)
-  if (!cleaned.length) {
-    showToast(t('toastClipboardInvalid'))
-    return
-  }
-  cleaned.forEach((c) => {
-    c.id = generateId()
-    state.configs.push(c)
-  })
-  if (!state.currentId) state.currentId = cleaned[0].id
-  saveToStorage(() => {
-    renderConfigList()
-    renderForm()
-    showToast(tf('toastImported', { n: cleaned.length }))
-  })
+  const n = appendConfigs(list)
+  if (n === 0) showToast(t('toastClipboardInvalid'))
 }
 const sanitizeImportedConfig = (raw) => {
   if (!raw || typeof raw !== 'object') return null

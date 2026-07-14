@@ -122,7 +122,7 @@
     "message": "Cookie"
   },
   "rulePlaceholderHostExact": {
-    "message": "例如：cust.example.com"
+    "message": "例如：app.example.com（只填網域，不含 https://）"
   },
   "rulePlaceholderHostSuffix": {
     "message": "例如：example.com（含所有子網域）"
@@ -131,10 +131,10 @@
     "message": "例如：^https?://.*/admin(/.*)?$$"
   },
   "rulePlaceholderIpExact": {
-    "message": "例如：10.20.30.5"
+    "message": "例如：192.0.2.5"
   },
   "rulePlaceholderIpCidr": {
-    "message": "例如：10.20.30.0/24"
+    "message": "例如：192.0.2.0/24"
   },
   "rulePlaceholderCookie": {
     "message": "例如：env=prod  或  env~=stage  或  僅鍵名"
@@ -312,6 +312,9 @@
     "message": "儲存失敗：{msg}",
     "description": "Placeholder {msg} is replaced with the error message from chrome.storage."
   },
+  "toastRuleValueCleaned": {
+    "message": "已自動擷取為網域"
+  },
   "testUnsafeRegex": {
     "message": "拒絕執行：疑似病態正規表示式，可能導致頁面卡住"
   },
@@ -324,6 +327,12 @@
   },
   "confirmImport": {
     "message": "匯入將追加到現有設定末尾。繼續？"
+  },
+  "modalConfirm": {
+    "message": "確認"
+  },
+  "modalCancel": {
+    "message": "取消"
   },
   "confirmDeleteRuleTitle": {
     "message": "刪除規則"

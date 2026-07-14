@@ -59,6 +59,39 @@
   const isIPv4 = (s) => /^(\d{1,3}\.){3}\d{1,3}$/.test(s)
   const isIP = (s) => isIPv4(s) // IPv6 暂不处理
 
+  // 从任意用户输入（可能是完整 URL / 带端口 / 前后空格 / 大小写混杂）
+  // 提取出干净的 hostname 部分。
+  //  - 传 'https://www.google.com/foo?a=b' → 'www.google.com'
+  //  - 传 'WWW.Google.COM/'                 → 'www.google.com'
+  //  - 传 'www.google.com:8080'             → 'www.google.com'
+  //  - 传 '  test.app.example.com  '        → 'test.app.example.com'
+  //  - 传 '192.168.1.1/24' → 返回原字符串（CIDR 场景由调用方判断）
+  //  - 无法解析时返回 trim() 后的原字符串
+  const sanitizeHostValue = (raw) => {
+    if (raw == null) return ''
+    let v = String(raw).trim()
+    if (!v) return ''
+    // 明显是 CIDR，别用 URL 解析，保留原样
+    if (/^\d{1,3}(\.\d{1,3}){3}\/\d{1,2}$/.test(v)) return v
+    // 显式带 scheme：直接 new URL
+    if (/^[a-z][a-z0-9+.-]*:\/\//i.test(v)) {
+      try {
+        const u = new URL(v)
+        return (u.hostname || '').toLowerCase()
+      } catch (_) { /* fallthrough */ }
+    }
+    // 没 scheme 但形如 host[:port][/path]：套一个 http:// 再解析
+    if (/^[^\s\/]+(:\d+)?(\/|$)/.test(v)) {
+      try {
+        const u = new URL('http://' + v)
+        return (u.hostname || '').toLowerCase()
+      } catch (_) { /* fallthrough */ }
+    }
+    // 去除首尾多余的点 / 斜杠 / 空格
+    return v.replace(/^[\.\/\s]+|[\.\/\s]+$/g, '').toLowerCase()
+  }
+
+
   const ipv4ToInt = (ip) => {
     const parts = ip.split('.').map(Number)
     if (parts.length !== 4 || parts.some((n) => isNaN(n) || n < 0 || n > 255))
@@ -107,13 +140,13 @@
 
     switch (rule.type) {
       case 'host-exact': {
-        const target = value.toLowerCase()
+        const target = sanitizeHostValue(value)
         return ctx.hostname === target
           ? { matched: true, score: 1000 + target.length }
           : { matched: false, score: 0 }
       }
       case 'host-suffix': {
-        const target = value.toLowerCase().replace(/^\./, '')
+        const target = sanitizeHostValue(value).replace(/^\./, '')
         const hit =
           ctx.hostname === target || ctx.hostname.endsWith('.' + target)
         return hit
@@ -122,13 +155,14 @@
       }
       case 'ip-exact': {
         if (!ctx.isIP) return { matched: false, score: 0 }
-        return ctx.hostname === value
+        const target = sanitizeHostValue(value)
+        return ctx.hostname === target
           ? { matched: true, score: 900 }
           : { matched: false, score: 0 }
       }
       case 'ip-cidr': {
         if (!ctx.isIP) return { matched: false, score: 0 }
-        return cidrMatch(ctx.hostname, value)
+        return cidrMatch(ctx.hostname, sanitizeHostValue(value))
           ? { matched: true, score: 800 }
           : { matched: false, score: 0 }
       }
@@ -194,6 +228,7 @@
   }
 
   WatermarkCore.matchRule = matchRule
+  WatermarkCore.sanitizeHostValue = sanitizeHostValue
   WatermarkCore.MAX_REGEX_SOURCE = MAX_REGEX_SOURCE
   WatermarkCore.isDangerousRegex = isDangerousRegex
 

@@ -122,7 +122,7 @@
     "message": "Cookie"
   },
   "rulePlaceholderHostExact": {
-    "message": "例：cust.example.com"
+    "message": "例：app.example.com（ホスト名のみ、https:// 不要）"
   },
   "rulePlaceholderHostSuffix": {
     "message": "例：example.com（サブドメイン含む）"
@@ -131,10 +131,10 @@
     "message": "例：^https?://.*/admin(/.*)?$$"
   },
   "rulePlaceholderIpExact": {
-    "message": "例：10.20.30.5"
+    "message": "例：192.0.2.5"
   },
   "rulePlaceholderIpCidr": {
-    "message": "例：10.20.30.0/24"
+    "message": "例：192.0.2.0/24"
   },
   "rulePlaceholderCookie": {
     "message": "例：env=prod  または  env~=stage  またはキー名のみ"
@@ -312,6 +312,9 @@
     "message": "保存失敗：{msg}",
     "description": "Placeholder {msg} is replaced with the error message from chrome.storage."
   },
+  "toastRuleValueCleaned": {
+    "message": "ホスト名だけに自動整形しました"
+  },
   "testUnsafeRegex": {
     "message": "ブロック：異常な正規表現の可能性、ページが固まる恐れ"
   },
@@ -324,6 +327,12 @@
   },
   "confirmImport": {
     "message": "インポートは既存設定の末尾に追加されます。続行しますか？"
+  },
+  "modalConfirm": {
+    "message": "確認"
+  },
+  "modalCancel": {
+    "message": "キャンセル"
   },
   "confirmDeleteRuleTitle": {
     "message": "ルールを削除"

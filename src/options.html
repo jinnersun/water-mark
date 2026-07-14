@@ -613,8 +613,8 @@
         </div>
         <div class="modal-body" id="modal-body"></div>
         <div class="modal-footer">
-          <button id="modal-cancel" class="btn btn-outline btn-sm">取消</button>
-          <button id="modal-confirm" class="btn btn-danger btn-sm">确认</button>
+          <button id="modal-cancel" class="btn btn-outline btn-sm" data-i18n="modalCancel">取消</button>
+          <button id="modal-confirm" class="btn btn-danger btn-sm" data-i18n="modalConfirm">确认</button>
         </div>
       </div>
     </div>
@@ -674,11 +674,11 @@
               </li>
               <li>
                 <strong data-i18n="ruleIpExact">IP 精确</strong>：当网站通过 IP
-                访问时触发，如 <code>10.20.30.5</code>
+                访问时触发，如 <code>192.0.2.5</code>
               </li>
               <li>
                 <strong data-i18n="ruleIpCidr">IP 段 (CIDR)</strong
-                >：匹配整个内网网段，如 <code>10.20.30.0/24</code>
+                >：匹配整个内网网段，如 <code>192.0.2.0/24</code>
               </li>
               <li>
                 <strong data-i18n="ruleCookie">Cookie</strong>：当指定 Cookie

@@ -29,5 +29,5 @@
     }
   ],
   "options_page": "options.html",
-  "permissions": ["storage", "activeTab"]
+  "permissions": ["storage"]
 }

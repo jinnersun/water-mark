@@ -98,13 +98,12 @@ const buildOverlay = (config) => {
 
   const overlay = document.createElement('div')
   overlay.id = WATERMARK_ID
-  overlay.setAttribute('data-wm', '1')
   Object.assign(overlay.style, {
     position: 'fixed',
     top: '0',
     left: '0',
-    width: '100vw',
-    height: '100vh',
+    right: '0',
+    bottom: '0',
     pointerEvents: 'none',
     // 留 1 个层级给 border（下方 BORDER 用 max）
     zIndex: '2147483646',
@@ -123,7 +122,6 @@ const buildBorder = (border) => {
   const color = border.color || '#ef4444'
   const el = document.createElement('div')
   el.id = BORDER_ID
-  el.setAttribute('data-wm', '1')
   Object.assign(el.style, {
     position: 'fixed',
     top: '0',
@@ -238,8 +236,8 @@ const setupObserver = () => {
             break
           }
         }
-        // 保守起见：其它子树增删也可能引入盖在我们上面的元素，参与检查
-        if (!relevant) relevant = true
+        // 只有我们自己的节点被删掉时才触发重渲；页面其它 DOM 变化不理，
+        // 交给 rAF 合并 + reapply 的兜底路径。
       } else if (rec.type === 'attributes') {
         if (rec.target && rec.target.id && OWN_IDS.has(rec.target.id)) {
           continue // 是自己变化，忽略

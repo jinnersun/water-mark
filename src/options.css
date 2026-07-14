@@ -974,27 +974,28 @@ input[type="range"]::-webkit-slider-thumb:hover {
 /* ============ Toast ============ */
 .toast {
   position: fixed;
-  top: 76px;
-  right: 24px;
+  bottom: 48px;
+  left: 50%;
   background: var(--text-main);
   color: #fff;
   padding: 12px 20px;
   border-radius: 12px;
   font-size: 13px;
-  box-shadow: 0 10px 24px -8px rgb(15 23 42 / 0.25);
+  box-shadow: 0 10px 24px -8px rgb(15 23 42 / 0.35);
   opacity: 0;
-  transform: translateY(-12px) scale(0.98);
+  transform: translate(-50%, 12px) scale(0.98);
   transition:
     opacity 0.25s ease-out,
     transform 0.25s ease-out;
   pointer-events: none;
-  z-index: 1000;
-  max-width: 360px;
+  z-index: 10000;
+  max-width: 420px;
+  text-align: center;
   line-height: 1.5;
 }
 .toast.show {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translate(-50%, 0) scale(1);
 }
 
 /* 杈规/娓愰殣鎺у埗鍗＄墖锛氱鐢ㄧ姸鎬佽瑙夐檷绾?*/

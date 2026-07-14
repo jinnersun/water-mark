@@ -122,7 +122,7 @@
     "message": "Cookie"
   },
   "rulePlaceholderHostExact": {
-    "message": "例如：cust.example.com"
+    "message": "例如：app.example.com（只填域名，不带 https://）"
   },
   "rulePlaceholderHostSuffix": {
     "message": "例如：example.com（含所有子域）"
@@ -131,10 +131,10 @@
     "message": "例如：^https?://.*/admin(/.*)?$$"
   },
   "rulePlaceholderIpExact": {
-    "message": "例如：10.20.30.5"
+    "message": "例如：192.0.2.5"
   },
   "rulePlaceholderIpCidr": {
-    "message": "例如：10.20.30.0/24"
+    "message": "例如：192.0.2.0/24"
   },
   "rulePlaceholderCookie": {
     "message": "例如：env=prod  或  env~=stage  或  仅键名"
@@ -312,6 +312,9 @@
     "message": "保存失败：{msg}",
     "description": "Placeholder {msg} is replaced with the error message from chrome.storage."
   },
+  "toastRuleValueCleaned": {
+    "message": "已自动提取为域名"
+  },
   "testUnsafeRegex": {
     "message": "拒绝执行：疑似病态正则，可能导致页面卡死"
   },
@@ -324,6 +327,12 @@
   },
   "confirmImport": {
     "message": "导入将追加到现有配置末尾。继续？"
+  },
+  "modalConfirm": {
+    "message": "确认"
+  },
+  "modalCancel": {
+    "message": "取消"
   },
   "confirmDeleteRuleTitle": {
     "message": "删除规则"

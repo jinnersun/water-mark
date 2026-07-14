@@ -122,19 +122,19 @@
     "message": "Cookie"
   },
   "rulePlaceholderHostExact": {
-    "message": "e.g. cust.example.com"
+    "message": "e.g. app.example.com (host only, no https://)"
   },
   "rulePlaceholderHostSuffix": {
-    "message": "e.g. example.com (includes subdomains)"
+    "message": "e.g. example.com (matches all subdomains)"
   },
   "rulePlaceholderUrlRegex": {
     "message": "e.g. ^https?://.*/admin(/.*)?$$"
   },
   "rulePlaceholderIpExact": {
-    "message": "e.g. 10.20.30.5"
+    "message": "e.g. 192.0.2.5"
   },
   "rulePlaceholderIpCidr": {
-    "message": "e.g. 10.20.30.0/24"
+    "message": "e.g. 192.0.2.0/24"
   },
   "rulePlaceholderCookie": {
     "message": "e.g. env=prod  or  env~=stage  or  just a name"
@@ -312,6 +312,9 @@
     "message": "Save failed: {msg}",
     "description": "Placeholder {msg} is replaced with the error message from chrome.storage."
   },
+  "toastRuleValueCleaned": {
+    "message": "Auto-cleaned to hostname only"
+  },
   "testUnsafeRegex": {
     "message": "Blocked: pattern likely catastrophic, would freeze pages"
   },
@@ -324,6 +327,12 @@
   },
   "confirmImport": {
     "message": "Import will append to existing configs. Continue?"
+  },
+  "modalConfirm": {
+    "message": "Confirm"
+  },
+  "modalCancel": {
+    "message": "Cancel"
   },
   "confirmDeleteRuleTitle": {
     "message": "Delete rule"
