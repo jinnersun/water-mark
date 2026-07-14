@@ -303,20 +303,9 @@ const debounce = (fn, ms) => {
 }
 const currentConfig = () =>
   state.configs.find((c) => c.id === state.currentId) || null
-// Detect placeholder-style values that were persisted using the localized
-// default names, so we re-render them in the current language instead of
-// showing stale strings. We snapshot the current language's default labels
-// whenever the language changes so users who created a config in one language
-// still see a fresh default label after switching.
-const DEFAULT_NAME_KEYS = ['defaultConfigName', 'unnamed']
-const DEFAULT_TEXT_KEYS = ['defaultConfigText']
-const _seenDefaultLabels = { name: new Set(), text: new Set() }
-const _rememberDefaults = () => {
-  for (const k of DEFAULT_NAME_KEYS) _seenDefaultLabels.name.add(t(k))
-  for (const k of DEFAULT_TEXT_KEYS) _seenDefaultLabels.text.add(t(k))
-}
-const isDefaultName = (name) => _seenDefaultLabels.name.has(name)
-const isDefaultText = (text) => _seenDefaultLabels.text.has(text)
+// NOTE: 水印文本 (cfg.text)、配置名 (cfg.name) 一律按用户输入原样透传，
+// 不做任何跨语言默认值识别或替换。i18n 只影响 UI 静态标签、placeholder、
+// 空态占位，以及首次创建配置时的种子文案。
 const saveToStorage = (cb) =>
   chrome.storage.sync.set({
       configs: state.configs,
@@ -340,14 +329,12 @@ const clamp = (name, v) =>
 document.addEventListener('DOMContentLoaded', () => {
   getStoredLang((lang) => {
     applyLang(lang).then(() => {
-      _rememberDefaults()
       bindStaticEvents()
       loadAll()
     })
   })
 })
 window.onLangChanged = () => {
-  _rememberDefaults()
   renderConfigList()
   if (state.currentId) renderForm()
   updateGlobalToggleLabel()
@@ -609,8 +596,7 @@ const renderConfigList = () => {
     main.className = 'cfg-main'
     const nameEl = document.createElement('div')
     nameEl.className = 'cfg-name'
-    const displayName =
-      isDefaultName(c.name) || !c.name ? t('defaultConfigName') : c.name
+    const displayName = c.name || t('defaultConfigName')
     nameEl.textContent =
       displayName + (c.enabled === false ? ' ' + t('disabled') : '')
     main.appendChild(nameEl)
@@ -653,13 +639,11 @@ const renderForm = () => {
     return
   }
   showEditor()
-  $('config-name').value =
-    isDefaultName(cfg.name) || !cfg.name ? t('defaultConfigName') : cfg.name
+  $('config-name').value = cfg.name || ''
   $('short-label').value = cfg.shortLabel || ''
   $('enabled').checked = cfg.enabled !== false
   // 外观
-  $('text').value =
-    isDefaultText(cfg.text) || !cfg.text ? t('defaultConfigText') : cfg.text
+  $('text').value = cfg.text || ''
   $('color').value = cfg.color || '#ff0000'
   $('fontsize').value = cfg.fontSize ?? 24
   $('opacity').value = cfg.opacity ?? 0.15
@@ -918,8 +902,7 @@ const renderPreview = () => {
     '#1f2937' :
     '#d1d5db' :
     cfg.color
-  const previewText =
-    isDefaultText(cfg.text) || !cfg.text ? t('defaultConfigText') : cfg.text
+  const previewText = cfg.text || t('defaultConfigText')
   const tile = window.WatermarkCore.buildTile({
     text: previewText,
     color: drawColor,
