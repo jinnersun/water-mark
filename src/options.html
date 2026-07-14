@@ -118,19 +118,6 @@
         <aside class="sidebar">
           <div class="sidebar-search-row">
             <div class="search-box">
-              <svg
-                viewBox="0 0 24 24"
-                width="16"
-                height="16"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
               <input
                 id="config-search"
                 type="text"
@@ -355,9 +342,8 @@
                   <div class="form-grid-2">
                     <div class="form-group">
                       <label data-i18n="textColor">文字颜色</label>
-                      <div class="color-input-wrapper">
+                      <div class="color-picker" data-color-picker>
                         <input type="color" id="color" />
-                        <code id="color-hex">#FF0000</code>
                       </div>
                     </div>
                     <div class="form-group form-group-switch">
@@ -493,9 +479,8 @@
                 <div class="form-grid-2 border-controls">
                   <div class="form-group">
                     <label data-i18n="borderColor">边框颜色</label>
-                    <div class="color-input-wrapper">
+                    <div class="color-picker" data-color-picker>
                       <input type="color" id="border-color" value="#ef4444" />
-                      <code id="border-color-hex">#EF4444</code>
                     </div>
                   </div>
                   <div class="form-group">
@@ -738,6 +723,7 @@
     <script src="watermark-core.js"></script>
     <script src="i18n-messages.js"></script>
     <script src="i18n.js"></script>
+    <script src="color-picker.js"></script>
     <script src="options.js"></script>
   </body>
 </html>

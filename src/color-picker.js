@@ -133,7 +133,6 @@
     }
     // Native input becomes the hidden data-source. We keep it in the DOM so
     // options.js can go on reading/writing .value and firing events.
-    nativeInput.hidden = true
     nativeInput.setAttribute('tabindex', '-1')
     nativeInput.setAttribute('aria-hidden', 'true')
 

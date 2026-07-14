@@ -281,6 +281,10 @@ const bindStaticEvents = () => {
     onFormField('smartColorTone', e.target.value)
     renderPreview()
   }
+  $('color').oninput = (e) => {
+    onFormField('color', e.target.value)
+    renderPreview()
+  }
   // 提醒/交互
   $('border-enabled').onchange = (e) => {
     const cfg = currentConfig()
