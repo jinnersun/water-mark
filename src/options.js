@@ -35,39 +35,151 @@ const RULE_PLACEHOLDER_KEY = {
   'ip-exact': 'rulePlaceholderIpExact',
   'ip-cidr': 'rulePlaceholderIpCidr',
   cookie: 'rulePlaceholderCookie',
-} // ========== 弹窗与帮助面板（防御性版本） ==========
-let __confirmCallback = null
+}
 
-function showModal(title, message, onConfirm) {
-  const overlay = document.getElementById('modal-overlay')
-  const btnConfirm = document.getElementById('modal-confirm')
-  const btnCancel = document.getElementById('modal-cancel')
-  const btnClose = document.getElementById('modal-close')
-  if (!overlay) {
-    console.error('[水印工具] 找不到模态框 HTML 结构')
-    return
+// ============ v2.0: Agent prompt (inlined; full version at
+//   https://github.com/jinnersun/web-watermark-prompt/blob/main/PROMPT.md
+// ) ============
+const AGENT_PROMPT_EN = [
+  '# Web Watermark Tool — Config Generator Prompt',
+  '',
+  '> Full reference: https://github.com/jinnersun/web-watermark-prompt',
+  '',
+  '## Role',
+  'You are a configuration generator for the Web Watermark Tool Chrome extension.',
+  'Convert the user\'s natural-language description of their environments into a JSON',
+  'array of watermark configs the extension can import.',
+  '',
+  '## Rule types (each config has multiple rules; ANY match triggers; most-specific wins)',
+  '- host-exact:  Exact hostname, e.g. "app.example.com"',
+  '- host-suffix: hostname === value OR endsWith "." + value',
+  '- url-regex:   RegExp on full URL. Max 200 chars. Nested quantifiers rejected.',
+  '- ip-exact:    Only matches when hostname is an IPv4 literal, e.g. "192.0.2.5"',
+  '- ip-cidr:     IPv4 CIDR, e.g. "192.0.2.0/24"',
+  '- cookie:      "name" (exists) | "name=value" (equals) | "name~=frag" (contains)',
+  '',
+  '## Config fields (JSON, camelCase, no comments)',
+  '{',
+  '  "name": string,                    // shown in sidebar',
+  '  "shortLabel": string(<=4),         // toolbar badge, optional',
+  '  "enabled": true,',
+  '  "rules": [{"type": ..., "value": ...}],',
+  '  "text": string,                    // watermark text; \\n for newline',
+  '  "color": "#rrggbb",                // ignored when smartColor:true',
+  '  "opacity": 0.15,                   // 0.01..1',
+  '  "density": 300,                    // 100..800 (tile spacing px)',
+  '  "fontSize": 24,                    // 10..80',
+  '  "rotation": -30,                   // -90..90',
+  '  "smartColor": false,               // mix-blend-mode auto contrast',
+  '  "smartColorTone": "light"|"dark",',
+  '  "border": {"enabled":true,"color":"#rrggbb","width":1..10},',
+  '  "mouseFade": {"enabled":true,"fadeOpacity":0..1,"resumeDelay":ms}',
+  '}',
+  '',
+  '## Recommended colors',
+  '- prod: #ef4444 red-500 + border ON',
+  '- pre-prod / staging: #f59e0b amber-500',
+  '- test: #10b981 emerald-500',
+  '- dev: #3b82f6 blue-500',
+  '- admin / VPN: #8b5cf6 violet-500',
+  '',
+  '## Output contract',
+  '1. Output ONLY a JSON array wrapped in a ```json fence, no prose before/after.',
+  '2. No JSON comments. Escape backslashes in regex (\\\\. in JSON = \\. in regex).',
+  '3. Strings in the user\'s language.',
+  '4. Omit optional fields with default values.',
+  '5. One config per environment.',
+  '',
+  '## Fallback: when the input is empty or missing info',
+  'When the user input is empty, whitespace only, or only the placeholder text (no hostname / URL / IP / cookie is mentioned), DO NOT output JSON. Reply in the user\'s language (default English; switch to Chinese as soon as any Chinese character appears) with a short bulleted question list asking for: (1) how many environments, (2) the identifier for each (hostname / URL / IP / Cookie), (3) preferred watermark text and color or "use defaults", (4) any special needs (inset border, short badge label). Only after the user replies with concrete info, produce the JSON.',
+  '',
+  '## Task',
+  'The user will describe their environments below. Reply with the JSON array.',
+  '',
+].join('\n')
+
+const AGENT_PROMPT_ZH = [
+  '# 网页水印工具 · 配置生成器提示词',
+  '',
+  '> 完整版本参见: https://github.com/jinnersun/web-watermark-prompt/blob/main/PROMPT.zh_CN.md',
+  '',
+  '## 角色',
+  '你是网页水印工具（Web Watermark Tool）Chrome 扩展的配置生成器。',
+  '把用户对环境的自然语言描述，转换成扩展可导入的 JSON 配置数组。',
+  '',
+  '## 规则类型 (每条配置可有多条规则；任一命中即触发；最精确者胜)',
+  '- host-exact:  精确域名，如 "app.example.com"',
+  '- host-suffix: hostname === value 或以 "." + value 结尾',
+  '- url-regex:   完整 URL 正则。最长 200 字符。嵌套量词会被拒。',
+  '- ip-exact:    hostname 必须是 IPv4 字面量，如 "192.0.2.5"',
+  '- ip-cidr:     IPv4 CIDR，如 "192.0.2.0/24"',
+  '- cookie:      "name"（存在）| "name=value"（等值）| "name~=frag"（包含）',
+  '',
+  '## 配置字段 (JSON, camelCase, 不能有注释)',
+  '{',
+  '  "name": string,                    // 侧栏显示的名称',
+  '  "shortLabel": string(<=4),         // 工具栏 badge，可选',
+  '  "enabled": true,',
+  '  "rules": [{"type": ..., "value": ...}],',
+  '  "text": string,                    // 水印文字；\\n 换行',
+  '  "color": "#rrggbb",                // smartColor:true 时被忽略',
+  '  "opacity": 0.15,                   // 0.01..1',
+  '  "density": 300,                    // 100..800 (tile 间距 px)',
+  '  "fontSize": 24,                    // 10..80',
+  '  "rotation": -30,                   // -90..90',
+  '  "smartColor": false,               // mix-blend-mode 自动对比',
+  '  "smartColorTone": "light"|"dark",',
+  '  "border": {"enabled":true,"color":"#rrggbb","width":1..10},',
+  '  "mouseFade": {"enabled":true,"fadeOpacity":0..1,"resumeDelay":毫秒}',
+  '}',
+  '',
+  '## 推荐颜色',
+  '- 生产: #ef4444 (red-500) + 建议开边框',
+  '- 准生产/staging: #f59e0b (amber-500)',
+  '- 测试: #10b981 (emerald-500)',
+  '- 开发: #3b82f6 (blue-500)',
+  '- 内网/VPN: #8b5cf6 (violet-500)',
+  '',
+  '## 输出契约',
+  '1. 只输出 ```json 代码块包裹的 JSON 数组，前后不加任何说明文字。',
+  '2. JSON 里不能有注释。正则中的反斜杠要转义（JSON 里 \\\\. = 正则里 \\.）。',
+  '3. 字符串使用用户的语言。',
+  '4. 使用默认值的可选字段可省略。',
+  '5. 每个环境一条配置。',
+  '',
+  '## 兜底：输入为空或信息不足时',
+  '当用户输入为空、只有空白字符、只留了占位符原文（没提到任何 hostname / URL / IP / Cookie）时，不要输出 JSON。改为用**用户使用的语言**（默认英文；一旦出现中文字符即切中文）用简短的项目符号反问：(1) 需要区分几个环境；(2) 每个环境的标识（hostname / URL / IP / Cookie）；(3) 偏好的水印文字和颜色，或"用默认"；(4) 有无特殊需求（沉浸式边框、短标签）。等用户补齐具体信息后再输出 JSON。',
+  '',
+  '## 任务',
+  '用户会在下方描述自己的环境。请返回 JSON 数组。',
+  '',
+].join('\n')
+
+// 根据当前 UI 语言选择提示词版本（zh_CN / zh_TW 用中文，其它用英文）
+const pickAgentPrompt = () => {
+  try {
+    const lang = _i18n.getCurrentDisplayLang && _i18n.getCurrentDisplayLang()
+    return (lang === 'zh_CN' || lang === 'zh_TW') ? AGENT_PROMPT_ZH : AGENT_PROMPT_EN
+  } catch (_) {
+    return AGENT_PROMPT_EN
   }
-  document.getElementById('modal-title').textContent = title
-  document.getElementById('modal-body').textContent = message
-  // 先移除旧事件，防止重复绑定
-  const newBtnConfirm = btnConfirm.cloneNode(true)
-  btnConfirm.parentNode.replaceChild(newBtnConfirm, btnConfirm)
-  const newBtnCancel = btnCancel.cloneNode(true)
-  btnCancel.parentNode.replaceChild(newBtnCancel, btnCancel)
-  const newBtnClose = btnClose.cloneNode(true)
-  btnClose.parentNode.replaceChild(newBtnClose, btnClose)
-  const doClose = () => {
-    overlay.style.display = 'none'
-    __confirmCallback = null
-  }
-  __confirmCallback = onConfirm
-  newBtnConfirm.onclick = () => {
-    if (__confirmCallback) __confirmCallback()
-    doClose()
-  }
-  newBtnCancel.onclick = doClose
-  newBtnClose.onclick = doClose
-  overlay.style.display = 'flex'
+}
+
+// Return only a language-appropriate scenario placeholder block to append after
+// the picked AGENT_PROMPT. Intentionally does NOT include any snapshot of the
+// user's existing configs (which would leak real hostnames / IPs to third-party
+// AI tools via clipboard).
+const buildAgentContext = () => {
+  let lang = 'en'
+  try { lang = (_i18n.getCurrentDisplayLang && _i18n.getCurrentDisplayLang()) || 'en' } catch (_) {}
+  const isZh = lang === 'zh_CN' || lang === 'zh_TW'
+
+  const scenarioBlockEn =
+    '\n## Your scenario\n\n<!--\nReplace the block below with your actual environments. For example:\n\n  I have 3 environments sharing the root domain \`app.example.com\`:\n  - \`app.example.com\` is production (red, PROD badge)\n  - \`test.app.example.com\` is test (green)\n  - \`staging.app.example.com\` is pre-production (amber)\n  I also access an admin panel at \`192.0.2.5\` over VPN; use violet with an "Admin" badge.\n-->\n\n(describe your production / test / staging / VPN environments here)\n'
+  const scenarioBlockZh =
+    '\n## 你的场景\n\n<!--\n把下面这段替换成你的实际情况。示例：\n\n  我有 3 个环境共用 \`app.example.com\` 这个根域名：\n  - \`app.example.com\` 是生产（红色，PROD 标签）\n  - \`test.app.example.com\` 是测试（绿色）\n  - \`staging.app.example.com\` 是准生产（橙色）\n  我还通过 VPN 用 \`192.0.2.5\` 访问一个管理后台，希望紫色 + "Admin" 标签。\n-->\n\n(在这里描述你的生产 / 测试 / 准生产 / VPN 环境)\n'
+
+  return isZh ? scenarioBlockZh : scenarioBlockEn
 }
 
 function openHelpPanel() {
@@ -191,6 +303,11 @@ const bindStaticEvents = () => {
   $('export-btn').onclick = onExport
   $('import-btn').onclick = () => $('import-file').click()
   $('import-file').onchange = onImportFile
+  // v2.0: AI prompt + clipboard import
+  const copyPromptBtn = $('copy-prompt-btn')
+  if (copyPromptBtn) copyPromptBtn.onclick = onCopyPrompt
+  const pasteBtn = $('paste-clipboard-btn')
+  if (pasteBtn) pasteBtn.onclick = onPasteFromClipboard
   // ========== 帮助面板事件 ==========
   const helpBtn = $('help-btn')
   if (helpBtn) helpBtn.onclick = openHelpPanel
@@ -862,6 +979,79 @@ const onImportFile = (e) => {
   }
   reader.readAsText(file)
 } // 过滤掉 file 里可能存在的多余字段 + 数值 clamp，防止畸形 JSON 污染 storage
+// ============ v2.0: one-click AI prompt copy + clipboard import ============
+const onCopyPrompt = async () => {
+  const text = pickAgentPrompt() + buildAgentContext()
+  try {
+    await navigator.clipboard.writeText(text)
+    showToast(t('toastPromptCopied'))
+  } catch (err) {
+    // Fallback for contexts where clipboard API is unavailable
+    try {
+      const ta = document.createElement('textarea')
+      ta.value = text
+      ta.style.position = 'fixed'
+      ta.style.left = '-9999px'
+      document.body.appendChild(ta)
+      ta.select()
+      const ok = document.execCommand('copy')
+      document.body.removeChild(ta)
+      if (ok) return showToast(t('toastPromptCopied'))
+      showToast(t('toastPromptCopyFailed'))
+    } catch (_) {
+      showToast(t('toastPromptCopyFailed'))
+    }
+  }
+}
+
+// Read JSON from clipboard, sanitize, and append as new configs. Reuses the
+// same validation path as file-based import.
+const onPasteFromClipboard = async () => {
+  let raw
+  try {
+    raw = await navigator.clipboard.readText()
+  } catch (err) {
+    showToast(t('toastClipboardReadFailed'))
+    return
+  }
+  if (!raw || !raw.trim()) {
+    showToast(t('toastClipboardEmpty'))
+    return
+  }
+  // Strip an optional Markdown code fence (```json ... ```)
+  let jsonText = raw.trim()
+  const fenceMatch = jsonText.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i)
+  if (fenceMatch) jsonText = fenceMatch[1]
+  let data
+  try {
+    data = JSON.parse(jsonText)
+  } catch (err) {
+    showToast(t('toastClipboardInvalid'))
+    return
+  }
+  const list = Array.isArray(data) ? data :
+    Array.isArray(data.configs) ? data.configs :
+    (data && typeof data === 'object' && data.name) ? [data] : null
+  if (!list || !list.length) {
+    showToast(t('toastClipboardInvalid'))
+    return
+  }
+  const cleaned = list.map(sanitizeImportedConfig).filter(Boolean)
+  if (!cleaned.length) {
+    showToast(t('toastClipboardInvalid'))
+    return
+  }
+  cleaned.forEach((c) => {
+    c.id = generateId()
+    state.configs.push(c)
+  })
+  if (!state.currentId) state.currentId = cleaned[0].id
+  saveToStorage(() => {
+    renderConfigList()
+    renderForm()
+    showToast(tf('toastImported', { n: cleaned.length }))
+  })
+}
 const sanitizeImportedConfig = (raw) => {
   if (!raw || typeof raw !== 'object') return null
   const defaults = window.WatermarkCore.makeDefaultConfig('__tmp__')

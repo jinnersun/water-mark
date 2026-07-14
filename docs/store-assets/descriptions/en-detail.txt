@@ -1,0 +1,33 @@
+【Why you need this】
+Ever confused test.app.example.com with app.example.com? Or accessed an admin panel via VPN IP without any visual clue about which environment you're on?
+
+Web Watermark Tool overlays customized watermarks on web pages that match your rules, preventing catastrophic mis-operations on the wrong environment.
+
+【Six rule types — covers real-world scenarios】
+• Exact host — e.g. app.example.com
+• Host suffix — matches all subdomains of example.com
+• URL regex — path-based routing like /admin
+• Exact IP — VPN internal 192.0.2.5
+• IP CIDR — entire subnets like 10.0.0.0/8
+• Cookie — deploy=canary for canary rollouts
+
+【Highlights】
+• Smart contrast color — auto-inverts against page background using CSS mix-blend-mode
+• Immersive border — solid inset frame around the viewport catches your attention peripherally
+• Mouse fade — auto-dims watermark during heavy interaction, restores when idle
+• Toolbar badge — PROD / TEST short label on the icon, know your env without opening the page
+• Cross-iframe matching — each frame evaluates independently by its own URL
+• AI-assisted rule generation — one-click copy a prompt to ChatGPT / Claude and describe your setup in plain language
+
+【Privacy】
+All configurations are stored in your own Chrome account (chrome.storage.sync). No third-party servers. No data collection. No tracking.
+The "Copy AI Prompt" button only copies a built-in template to your clipboard — it does NOT include your rule data.
+
+【For】
+Frontend / full-stack developers, QA engineers, SRE, and anyone juggling multiple similar-looking web environments.
+
+【Getting started】
+Click the ? icon in the top-right for a quick guide. All configs support JSON import / export for team sharing and multi-device migration. Available in Simplified Chinese, Traditional Chinese, English, Japanese, and Spanish.
+
+【Feedback】
+Report bugs or suggest features at: https://github.com/jinnersun/web-watermark-prompt/issues
