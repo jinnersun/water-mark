@@ -315,6 +315,9 @@
   "toastRuleValueCleaned": {
     "message": "Se extrajo solo el host"
   },
+  "toastRuleValueNoMask": {
+    "message": "Este tipo de regla no admite máscara; usa IP CIDR en su lugar"
+  },
   "testUnsafeRegex": {
     "message": "Bloqueado: patrón potencialmente catastrófico, congelaría páginas"
   },

@@ -315,6 +315,9 @@
   "toastRuleValueCleaned": {
     "message": "已自动提取为域名"
   },
+  "toastRuleValueNoMask": {
+    "message": "该规则类型不支持掩码，请改用「IP 段（CIDR）」"
+  },
   "testUnsafeRegex": {
     "message": "拒绝执行：疑似病态正则，可能导致页面卡死"
   },

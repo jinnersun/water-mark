@@ -315,6 +315,9 @@
   "toastRuleValueCleaned": {
     "message": "ホスト名だけに自動整形しました"
   },
+  "toastRuleValueNoMask": {
+    "message": "このルール種別ではマスクを使えません。IP CIDR を使用してください"
+  },
   "testUnsafeRegex": {
     "message": "ブロック：異常な正規表現の可能性、ページが固まる恐れ"
   },

@@ -4,11 +4,17 @@ node_modules/
 Thumbs.db
 *.log
 
-# Chrome 商店/打包产物
+# Chrome build / packaging artifacts
 *.crx
 *.pem
 *.zip
 src/_metadata/
+
+# Local example exports (not code)
+json/
+
+# Scratch dir used by codex for patch scripts
+tmp/
 
 # IDE
 .vscode/

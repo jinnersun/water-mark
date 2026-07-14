@@ -315,6 +315,9 @@
   "toastRuleValueCleaned": {
     "message": "Auto-cleaned to hostname only"
   },
+  "toastRuleValueNoMask": {
+    "message": "This rule type does not accept a mask; use IP CIDR instead"
+  },
   "testUnsafeRegex": {
     "message": "Blocked: pattern likely catastrophic, would freeze pages"
   },

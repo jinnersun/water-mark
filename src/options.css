@@ -49,7 +49,7 @@ body {
   font-size: 14px;
 }
 
-/* ============ 甯冨眬 ============ */
+/* ============ 布局 ============ */
 .app {
   display: flex;
   flex-direction: column;
@@ -62,7 +62,7 @@ body {
   overflow: hidden;
 }
 
-/* ============ 椤堕儴鏉?============ */
+/* ============ 顶部栏 ============ */
 .topbar {
   display: flex;
   align-items: center;
@@ -103,7 +103,7 @@ body {
   gap: 8px;
 }
 
-/* 鍏ㄥ眬寮€鍏?*/
+/* 全局开关 */
 .global-toggle {
   display: inline-flex;
   align-items: center;
@@ -156,7 +156,7 @@ body {
   color: var(--text-secondary);
 }
 
-/* 鎸夐挳 */
+/* 按钮 */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -390,7 +390,7 @@ body {
   color: var(--text-muted);
 }
 
-/* ============ 涓诲尯 ============ */
+/* ============ 主区 ============ */
 .main {
   flex: 1;
   overflow-y: auto;
@@ -476,7 +476,7 @@ body {
   display: flex;
 }
 
-/* 鍗＄墖 */
+/* 卡片 */
 .card {
   background: var(--bg-panel);
   border: 1px solid var(--border-light);
@@ -742,7 +742,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   display: none !important;
 }
 
-/* switch 寮€鍏崇粍浠讹紙涓ユ牸 42脳24 杞ㄩ亾 + 18px 鍦嗙偣锛?*/
+/* switch 开关组件（严格 42×24 轨道 + 18px 圆点） */
 .switch {
   position: relative;
   display: inline-flex;
@@ -799,7 +799,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   flex-shrink: 0;
 }
 .inline-switch .switch-label {
-  margin-left: 52px; /* 寮€鍏冲搴?2 + 10px 瀹夊叏闂磋窛锛岀‘淇濇枃瀛椾笉浼氬拰婊戝潡閲嶅彔 */
+  margin-left: 52px; /* 开关宽度 42 + 10px 安全间距，确保文字不会和滑块重叠 */
   white-space: nowrap;
 }
 .inline-switch.big {
@@ -822,7 +822,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   margin: 0;
 }
 
-/* ============ 瑙勫垯鍒楄〃 ============ */
+/* ============ 规则列表 ============ */
 .rules-list {
   display: flex;
   flex-direction: column;
@@ -911,7 +911,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   color: var(--text-main);
 }
 
-/* ============ 棰勮鍗＄墖 ============ */
+/* ============ 预览卡片 ============ */
 .preview-card {
   padding: 18px;
 }
@@ -955,7 +955,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   );
 }
 
-/* ============ 绌虹姸鎬?============ */
+/* ============ 空状态 ============ */
 .empty-state {
   text-align: center;
   padding: 100px 20px;
@@ -998,14 +998,14 @@ input[type="range"]::-webkit-slider-thumb:hover {
   transform: translate(-50%, 0) scale(1);
 }
 
-/* 杈规/娓愰殣鎺у埗鍗＄墖锛氱鐢ㄧ姸鎬佽瑙夐檷绾?*/
+/* 边框/渐隐控制卡片：禁用状态视觉降级 */
 .border-controls[data-disabled="1"],
 .fade-controls[data-disabled="1"] {
   opacity: 0.45;
   pointer-events: none;
 }
 
-/* 婊氬姩鏉＄編鍖?*/
+/* 滚动条美化 */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -1049,14 +1049,14 @@ input[type="range"]::-webkit-slider-thumb:hover {
   border: 0 !important;
 }
 
-/* 鎸夐挳缁熶竴灏哄锛歜tn-sm = 32px 楂?*/
+/* 按钮统一尺寸：btn-sm = 32px 高 */
 .btn-sm {
   height: 32px;
   padding: 0 14px;
   font-size: 13px;
 }
 
-/* 甯﹀浘鏍囪緭鍏ユ */
+/* 带图标输入框 */
 .input-with-icon {
   display: flex;
   align-items: center;
@@ -1099,7 +1099,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   position: fixed;
   inset: 0;
   background: rgb(15 23 42 / 0.5);
-  display: none; /* 榛樿闅愯棌锛孞S 鏄剧ず鏃舵敼涓?flex */
+  display: none; /* 默认隐藏，JS 显示时改为 flex */
   align-items: center;
   justify-content: center;
   z-index: 9999;
@@ -1176,7 +1176,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   border-color: #dc2626;
 }
 
-/* ---------- 甯姪闈㈡澘锛堝彸渚ф娊灞夛級 ---------- */
+/* ---------- 帮助面板（右侧抽屉） ---------- */
 .help-panel-overlay {
   position: fixed;
   inset: 0;
@@ -1184,7 +1184,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   z-index: 9999;
   backdrop-filter: blur(2px);
   animation: fade-in 0.15s ease-out;
-  display: none; /* 榛樿闅愯棌锛孞S 鎺у埗鏄剧ず */
+  display: none; /* 默认隐藏，JS 控制显示 */
 }
 @keyframes fade-in {
   from {

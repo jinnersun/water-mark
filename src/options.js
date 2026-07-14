@@ -740,8 +740,21 @@ const appendRuleRow = (listEl, rule, idx, cfg, isEphemeral) => {
     if (!window.WatermarkCore || !window.WatermarkCore.sanitizeHostValue) return
     const HOST_LIKE_TYPES = new Set(['host-exact', 'host-suffix', 'ip-exact', 'ip-cidr'])
     if (!HOST_LIKE_TYPES.has(rule.type)) return
+    // 掩码检测：host-exact / host-suffix / ip-exact 都不接受掩码，
+    // 用户如果填成 192.0.2.5/32 会永远静默不命中。给出明确提示。
+    const raw = String(input.value || '').trim()
+    const NO_MASK_TYPES = new Set(['host-exact', 'host-suffix', 'ip-exact'])
+    if (NO_MASK_TYPES.has(rule.type) && /^\d{1,3}(\.\d{1,3}){3}\/\d{1,2}$/.test(raw)) {
+      const stripped = raw.split('/')[0]
+      input.value = stripped
+      rule.value = stripped
+      showToast(t('toastRuleValueNoMask'))
+      renderConfigList()
+      runTester()
+      return
+    }
     const cleaned = window.WatermarkCore.sanitizeHostValue(input.value)
-    if (cleaned !== input.value.trim() && cleaned) {
+    if (cleaned !== raw && cleaned) {
       input.value = cleaned
       rule.value = cleaned
       showToast(t('toastRuleValueCleaned'))

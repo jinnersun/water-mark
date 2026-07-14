@@ -315,6 +315,9 @@
   "toastRuleValueCleaned": {
     "message": "已自動擷取為網域"
   },
+  "toastRuleValueNoMask": {
+    "message": "此規則類型不支援遮罩，請改用「IP 網段（CIDR）」"
+  },
   "testUnsafeRegex": {
     "message": "拒絕執行：疑似病態正規表示式，可能導致頁面卡住"
   },
