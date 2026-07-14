@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "环境水印 - 精准区分生产 / 测试环境",
+    "message": "网页水印工具",
     "description": "Extension name shown in Chrome Web Store and browser toolbar."
   },
   "extDescription": {

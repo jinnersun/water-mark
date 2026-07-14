@@ -2,7 +2,7 @@
 // Run `node scripts/gen-locales.mjs` to regenerate after editing translations.
 self.WatermarkMessages = {
   "en": {
-    "extName": "Env Watermark - Distinguish Prod / Test at a glance",
+    "extName": "Web Watermark Tool",
     "extDescription": "Precise watermarks by domain, URL, IP, or Cookie. Prevents mistakes on prod. Includes smart contrast color, immersive border, activity fade.",
     "extDefaultTitle": "Click to configure watermark rules",
     "title": "Web Watermark - Settings",
@@ -155,7 +155,7 @@ self.WatermarkMessages = {
     "helpFeedbackLink": "Open GitHub Issues"
   },
   "zh_CN": {
-    "extName": "环境水印 - 精准区分生产 / 测试环境",
+    "extName": "网页水印工具",
     "extDescription": "按域名、URL、IP、Cookie 精准打水印，避免误操作生产环境。支持智能对比色、沉浸式边框、鼠标交互渐隐。",
     "extDefaultTitle": "点击配置水印规则",
     "title": "网页水印工具 - 设置",
@@ -308,7 +308,7 @@ self.WatermarkMessages = {
     "helpFeedbackLink": "打开 GitHub Issues"
   },
   "zh_TW": {
-    "extName": "環境浮水印 - 精準區分生產 / 測試環境",
+    "extName": "網頁浮水印工具",
     "extDescription": "依網域、URL、IP、Cookie 精準加浮水印，避免誤操作正式環境。支援智慧對比色、沉浸式邊框、滑鼠互動漸隱。",
     "extDefaultTitle": "點擊設定浮水印規則",
     "title": "網頁浮水印工具 - 設定",
@@ -461,7 +461,7 @@ self.WatermarkMessages = {
     "helpFeedbackLink": "開啟 GitHub Issues"
   },
   "ja": {
-    "extName": "環境ウォーターマーク - 本番 / テストを一目で区別",
+    "extName": "ウェブウォーターマーク ツール",
     "extDescription": "ドメイン・URL・IP・Cookie による正確なウォーターマーク。本番環境での誤操作を防止。スマート対比色、没入型ボーダー、操作時フェード対応。",
     "extDefaultTitle": "クリックしてウォーターマーク設定",
     "title": "Web ウォーターマーク - 設定",
@@ -614,7 +614,7 @@ self.WatermarkMessages = {
     "helpFeedbackLink": "GitHub Issues を開く"
   },
   "es": {
-    "extName": "Marca de agua de entorno - Distingue producción / pruebas de un vistazo",
+    "extName": "Herramienta de marca de agua web",
     "extDescription": "Marcas de agua precisas por dominio, URL, IP o cookie. Evita errores en producción. Incluye color de contraste inteligente, borde inmersivo y atenuación durante la interacción.",
     "extDefaultTitle": "Haz clic para configurar reglas de marca de agua",
     "title": "Marca de agua web - Ajustes",

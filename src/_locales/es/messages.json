@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "Marca de agua de entorno - Distingue producción / pruebas de un vistazo",
+    "message": "Herramienta de marca de agua web",
     "description": "Extension name shown in Chrome Web Store and browser toolbar."
   },
   "extDescription": {

@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "Env Watermark - Distinguish Prod / Test at a glance",
+    "message": "Web Watermark Tool",
     "description": "Extension name shown in Chrome Web Store and browser toolbar."
   },
   "extDescription": {

@@ -182,6 +182,40 @@ const buildAgentContext = () => {
   return isZh ? scenarioBlockZh : scenarioBlockEn
 }
 
+let __confirmCallback = null
+
+function showModal(title, message, onConfirm) {
+  const overlay = document.getElementById('modal-overlay')
+  const btnConfirm = document.getElementById('modal-confirm')
+  const btnCancel = document.getElementById('modal-cancel')
+  const btnClose = document.getElementById('modal-close')
+  if (!overlay) {
+    console.error('[水印工具] 找不到模态框 HTML 结构')
+    return
+  }
+  document.getElementById('modal-title').textContent = title
+  document.getElementById('modal-body').textContent = message
+  // 先移除旧事件，防止重复绑定
+  const newBtnConfirm = btnConfirm.cloneNode(true)
+  btnConfirm.parentNode.replaceChild(newBtnConfirm, btnConfirm)
+  const newBtnCancel = btnCancel.cloneNode(true)
+  btnCancel.parentNode.replaceChild(newBtnCancel, btnCancel)
+  const newBtnClose = btnClose.cloneNode(true)
+  btnClose.parentNode.replaceChild(newBtnClose, btnClose)
+  const doClose = () => {
+    overlay.style.display = 'none'
+    __confirmCallback = null
+  }
+  __confirmCallback = onConfirm
+  newBtnConfirm.onclick = () => {
+    if (__confirmCallback) __confirmCallback()
+    doClose()
+  }
+  newBtnCancel.onclick = doClose
+  newBtnClose.onclick = doClose
+  overlay.style.display = 'flex'
+}
+
 function openHelpPanel() {
   const overlay = document.getElementById('help-panel')
   if (!overlay) return

@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "環境ウォーターマーク - 本番 / テストを一目で区別",
+    "message": "ウェブウォーターマーク ツール",
     "description": "Extension name shown in Chrome Web Store and browser toolbar."
   },
   "extDescription": {

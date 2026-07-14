@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "環境浮水印 - 精準區分生產 / 測試環境",
+    "message": "網頁浮水印工具",
     "description": "Extension name shown in Chrome Web Store and browser toolbar."
   },
   "extDescription": {
