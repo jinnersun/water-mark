@@ -191,4 +191,4 @@ of one or more configs, ready to paste into the extension's Import dialog.
 - 特性门控层 `features.js`（预留付费拆分）
 - iframe 独立匹配（`all_frames: true`）
 - 工具栏图标 badge（shortLabel，短标签）
-- 多语言字典完整保留 + 门控关闭
+- 多语言字典完整（en / zh_CN / zh_TW / ja / es，跟随浏览器 + 手动切换）

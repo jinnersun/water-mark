@@ -1,0 +1,421 @@
+{
+  "extName": {
+    "message": "環境浮水印 - 精準區分生產 / 測試環境",
+    "description": "Extension name shown in Chrome Web Store and browser toolbar."
+  },
+  "extDescription": {
+    "message": "依網域、URL、IP、Cookie 精準加浮水印，避免誤操作正式環境。支援智慧對比色、沉浸式邊框、滑鼠互動漸隱。",
+    "description": "Extension short description in the Chrome Web Store."
+  },
+  "extDefaultTitle": {
+    "message": "點擊設定浮水印規則",
+    "description": "Tooltip when hovering the toolbar icon."
+  },
+  "title": {
+    "message": "網頁浮水印工具 - 設定"
+  },
+  "brand": {
+    "message": "網頁浮水印工具"
+  },
+  "subtitle": {
+    "message": "依網域、URL、Cookie、IP 精準區分環境浮水印"
+  },
+  "langLabel": {
+    "message": "語言",
+    "description": "Label for the language picker in the options page."
+  },
+  "langAuto": {
+    "message": "跟隨瀏覽器",
+    "description": "Language picker option that follows the browser UI language."
+  },
+  "globalOn": {
+    "message": "總開關（已開啟）"
+  },
+  "globalOff": {
+    "message": "總開關（已關閉）"
+  },
+  "importBtn": {
+    "message": "匯入"
+  },
+  "exportBtn": {
+    "message": "匯出"
+  },
+  "helpTitle": {
+    "message": "使用指南"
+  },
+  "searchPlaceholder": {
+    "message": "搜尋設定..."
+  },
+  "addConfigTitle": {
+    "message": "新增設定"
+  },
+  "emptyList": {
+    "message": "尚無設定"
+  },
+  "emptyListHint": {
+    "message": "點擊右上角 + 號，建立你的第一筆設定"
+  },
+  "copyConfig": {
+    "message": "複製"
+  },
+  "deleteConfig": {
+    "message": "刪除"
+  },
+  "saveBtn": {
+    "message": "儲存"
+  },
+  "unsaved": {
+    "message": "有未儲存的變更"
+  },
+  "tabRules": {
+    "message": "比對規則"
+  },
+  "tabStyle": {
+    "message": "外觀"
+  },
+  "tabAlert": {
+    "message": "提醒 / 互動"
+  },
+  "configName": {
+    "message": "設定名稱"
+  },
+  "namePlaceholder": {
+    "message": "例如：生產環境"
+  },
+  "enabledLabel": {
+    "message": "啟用目前設定"
+  },
+  "shortLabel": {
+    "message": "短標籤"
+  },
+  "shortLabelPlaceholder": {
+    "message": "標籤"
+  },
+  "shortLabelHint": {
+    "message": "將顯示在瀏覽器工具列圖示上（最多 4 字元）"
+  },
+  "rulesTitle": {
+    "message": "觸發條件"
+  },
+  "rulesHint": {
+    "message": "任一規則命中即生效；多條規則中比對最精準的一條決定浮水印樣式。"
+  },
+  "addRuleBtn": {
+    "message": "新增規則"
+  },
+  "ruleTypeHostExact": {
+    "message": "精確網域"
+  },
+  "ruleTypeHostSuffix": {
+    "message": "網域尾綴"
+  },
+  "ruleTypeUrlRegex": {
+    "message": "URL 正規表示式"
+  },
+  "ruleTypeIpExact": {
+    "message": "IP 精確"
+  },
+  "ruleTypeIpCidr": {
+    "message": "IP 網段（CIDR）"
+  },
+  "ruleTypeCookie": {
+    "message": "Cookie"
+  },
+  "rulePlaceholderHostExact": {
+    "message": "例如：cust.example.com"
+  },
+  "rulePlaceholderHostSuffix": {
+    "message": "例如：example.com（含所有子網域）"
+  },
+  "rulePlaceholderUrlRegex": {
+    "message": "例如：^https?://.*/admin(/.*)?$$"
+  },
+  "rulePlaceholderIpExact": {
+    "message": "例如：10.20.30.5"
+  },
+  "rulePlaceholderIpCidr": {
+    "message": "例如：10.20.30.0/24"
+  },
+  "rulePlaceholderCookie": {
+    "message": "例如：env=prod  或  env~=stage  或  僅鍵名"
+  },
+  "ruleHintCookie": {
+    "message": "語法：name=value 精確比對；name~=fragment 包含比對；僅填 name 檢查存在。"
+  },
+  "ruleRemove": {
+    "message": "刪除"
+  },
+  "testTitle": {
+    "message": "規則測試"
+  },
+  "testUrlPlaceholder": {
+    "message": "貼上 URL 試試..."
+  },
+  "testCookiePlaceholder": {
+    "message": "（可選）貼上 cookie 字串，例如：sid=abc; env=prod"
+  },
+  "testMatched": {
+    "message": "命中"
+  },
+  "testUnmatched": {
+    "message": "未命中"
+  },
+  "testMatchedBy": {
+    "message": "命中規則："
+  },
+  "watermarkText": {
+    "message": "浮水印文字"
+  },
+  "textPlaceholder": {
+    "message": "例如：生產環境 / 機密資料"
+  },
+  "textHint": {
+    "message": "支援換行；未來將支援 {user} / {date} 等變數。"
+  },
+  "textColor": {
+    "message": "文字顏色"
+  },
+  "fontSize": {
+    "message": "字體大小"
+  },
+  "opacity": {
+    "message": "不透明度"
+  },
+  "density": {
+    "message": "間距密度"
+  },
+  "densityHint": {
+    "message": "數值越大浮水印越稀疏"
+  },
+  "rotation": {
+    "message": "旋轉角度"
+  },
+  "smartColor": {
+    "message": "智慧對比色"
+  },
+  "smartColorHint": {
+    "message": "啟用後依網頁背景自動反色顯示，顏色選擇器由基調決定。"
+  },
+  "smartColorTone": {
+    "message": "基調"
+  },
+  "smartColorToneLight": {
+    "message": "淺色（適合深色網頁）"
+  },
+  "smartColorToneDark": {
+    "message": "深色（適合淺色網頁）"
+  },
+  "borderTitle": {
+    "message": "沉浸式邊框"
+  },
+  "borderEnabled": {
+    "message": "啟用邊框提醒"
+  },
+  "borderHint": {
+    "message": "在頁面四周繪製粗邊框，比浮水印更容易一眼辨識。適合正式環境 / 強提醒場景。"
+  },
+  "borderColor": {
+    "message": "邊框顏色"
+  },
+  "borderWidth": {
+    "message": "邊框粗細"
+  },
+  "mouseFadeTitle": {
+    "message": "滑鼠互動時漸隱"
+  },
+  "mouseFadeEnabled": {
+    "message": "啟用滑鼠 / 鍵盤互動時降低透明度"
+  },
+  "mouseFadeHint": {
+    "message": "排查問題時短暫讓浮水印幾乎透明，停手後自動恢復。"
+  },
+  "mouseFadeOpacity": {
+    "message": "漸隱後的透明度"
+  },
+  "mouseFadeResume": {
+    "message": "停手後多久恢復"
+  },
+  "mouseFadeUnitMs": {
+    "message": "ms"
+  },
+  "previewTitle": {
+    "message": "即時預覽"
+  },
+  "previewHintLight": {
+    "message": "淺色背景"
+  },
+  "previewHintDark": {
+    "message": "深色背景"
+  },
+  "previewHintGradient": {
+    "message": "漸層背景"
+  },
+  "emptyTitle": {
+    "message": "尚無設定"
+  },
+  "emptyDesc": {
+    "message": "點擊左上角按鈕，建立你的第一個專屬浮水印設定吧"
+  },
+  "defaultConfigName": {
+    "message": "新設定"
+  },
+  "defaultConfigText": {
+    "message": "生產環境"
+  },
+  "unnamed": {
+    "message": "未命名"
+  },
+  "disabled": {
+    "message": "（已停用）"
+  },
+  "copySuffix": {
+    "message": " - 副本"
+  },
+  "noRule": {
+    "message": "未設定規則"
+  },
+  "toastAdded": {
+    "message": "已新增設定"
+  },
+  "toastSaved": {
+    "message": "儲存成功"
+  },
+  "toastDeleted": {
+    "message": "設定已刪除"
+  },
+  "toastCopied": {
+    "message": "已複製設定"
+  },
+  "toastCopyFailed": {
+    "message": "複製失敗：未找到目前設定"
+  },
+  "toastExported": {
+    "message": "已匯出"
+  },
+  "toastImported": {
+    "message": "已匯入 {n} 筆設定",
+    "description": "Placeholder {n} is replaced with the number of imported configs."
+  },
+  "toastImportFailed": {
+    "message": "匯入失敗：檔案格式不正確"
+  },
+  "toastGlobalOn": {
+    "message": "已開啟全域浮水印"
+  },
+  "toastGlobalOff": {
+    "message": "已關閉全域浮水印"
+  },
+  "toastInvalidUrl": {
+    "message": "測試失敗：請填寫完整 URL（包含 http:// 或 https://）"
+  },
+  "toastStorageError": {
+    "message": "儲存失敗：{msg}",
+    "description": "Placeholder {msg} is replaced with the error message from chrome.storage."
+  },
+  "testUnsafeRegex": {
+    "message": "拒絕執行：疑似病態正規表示式，可能導致頁面卡住"
+  },
+  "testRegexTooLong": {
+    "message": "拒絕執行：正規表示式長度超過上限（{max} 字元）",
+    "description": "Placeholder {max} is replaced with the regex length limit."
+  },
+  "confirmDelete": {
+    "message": "確定要刪除這個設定嗎？"
+  },
+  "confirmImport": {
+    "message": "匯入將追加到現有設定末尾。繼續？"
+  },
+  "confirmDeleteRuleTitle": {
+    "message": "刪除規則"
+  },
+  "confirmDeleteRule": {
+    "message": "確定要刪除這條規則嗎？"
+  },
+  "confirmDeleteConfigTitle": {
+    "message": "刪除設定"
+  },
+  "confirmDeleteConfig": {
+    "message": "確定要刪除整個設定嗎？此操作無法復原。"
+  },
+  "helpQuickStart": {
+    "message": "快速開始"
+  },
+  "helpStep1": {
+    "message": "點擊左上角「+」按鈕新建一筆浮水印設定"
+  },
+  "helpStep2": {
+    "message": "在「比對規則」分頁設定觸發條件（網域/URL/IP 等）"
+  },
+  "helpStep3": {
+    "message": "在「外觀」分頁設定浮水印文字、顏色、字型、透明度等"
+  },
+  "helpRules": {
+    "message": "比對規則說明"
+  },
+  "ruleHostExact": {
+    "message": "精確網域"
+  },
+  "ruleHostSuffix": {
+    "message": "網域尾綴"
+  },
+  "ruleUrlRegex": {
+    "message": "URL 正規表示式"
+  },
+  "ruleIpExact": {
+    "message": "IP 精確"
+  },
+  "ruleIpCidr": {
+    "message": "IP 網段 (CIDR)"
+  },
+  "ruleCookie": {
+    "message": "Cookie"
+  },
+  "helpTips": {
+    "message": "小提示"
+  },
+  "helpTip1": {
+    "message": "每筆設定可加入多條規則，任一命中即生效"
+  },
+  "helpTip2": {
+    "message": "多筆設定命中時，依「最精確優先」原則選擇"
+  },
+  "helpTip3": {
+    "message": "短標籤顯示在瀏覽器工具列圖示右下角，最多 4 字元"
+  },
+  "helpTip4": {
+    "message": "智慧對比色會依網頁背景自動反色顯示"
+  },
+  "cpPresets": {
+    "message": "預設顏色"
+  },
+  "cpRecent": {
+    "message": "最近使用"
+  },
+  "cpCustom": {
+    "message": "自訂…"
+  },
+  "presetProd": {
+    "message": "正式"
+  },
+  "presetPre": {
+    "message": "預發"
+  },
+  "presetGray": {
+    "message": "灰度"
+  },
+  "presetTest": {
+    "message": "測試"
+  },
+  "presetUat": {
+    "message": "UAT / 整合"
+  },
+  "presetDev": {
+    "message": "開發"
+  },
+  "presetSandbox": {
+    "message": "沙盒"
+  },
+  "presetOther": {
+    "message": "其他"
+  }
+}

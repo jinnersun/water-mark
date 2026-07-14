@@ -1,0 +1,421 @@
+{
+  "extName": {
+    "message": "環境ウォーターマーク - 本番 / テストを一目で区別",
+    "description": "Extension name shown in Chrome Web Store and browser toolbar."
+  },
+  "extDescription": {
+    "message": "ドメイン・URL・IP・Cookie による正確なウォーターマーク。本番環境での誤操作を防止。スマート対比色、没入型ボーダー、操作時フェード対応。",
+    "description": "Extension short description in the Chrome Web Store."
+  },
+  "extDefaultTitle": {
+    "message": "クリックしてウォーターマーク設定",
+    "description": "Tooltip when hovering the toolbar icon."
+  },
+  "title": {
+    "message": "Web ウォーターマーク - 設定"
+  },
+  "brand": {
+    "message": "Web ウォーターマーク"
+  },
+  "subtitle": {
+    "message": "ドメイン、URL、Cookie、IP で環境ごとに正確に区別"
+  },
+  "langLabel": {
+    "message": "言語",
+    "description": "Label for the language picker in the options page."
+  },
+  "langAuto": {
+    "message": "ブラウザに従う",
+    "description": "Language picker option that follows the browser UI language."
+  },
+  "globalOn": {
+    "message": "全体スイッチ（オン）"
+  },
+  "globalOff": {
+    "message": "全体スイッチ（オフ）"
+  },
+  "importBtn": {
+    "message": "インポート"
+  },
+  "exportBtn": {
+    "message": "エクスポート"
+  },
+  "helpTitle": {
+    "message": "ガイド"
+  },
+  "searchPlaceholder": {
+    "message": "設定を検索..."
+  },
+  "addConfigTitle": {
+    "message": "新しい設定を追加"
+  },
+  "emptyList": {
+    "message": "設定がありません"
+  },
+  "emptyListHint": {
+    "message": "右上の + ボタンで最初の設定を作成"
+  },
+  "copyConfig": {
+    "message": "複製"
+  },
+  "deleteConfig": {
+    "message": "削除"
+  },
+  "saveBtn": {
+    "message": "保存"
+  },
+  "unsaved": {
+    "message": "未保存の変更があります"
+  },
+  "tabRules": {
+    "message": "マッチルール"
+  },
+  "tabStyle": {
+    "message": "外観"
+  },
+  "tabAlert": {
+    "message": "通知 / 操作"
+  },
+  "configName": {
+    "message": "設定名"
+  },
+  "namePlaceholder": {
+    "message": "例：本番環境"
+  },
+  "enabledLabel": {
+    "message": "この設定を有効化"
+  },
+  "shortLabel": {
+    "message": "バッジ"
+  },
+  "shortLabelPlaceholder": {
+    "message": "バッジ"
+  },
+  "shortLabelHint": {
+    "message": "ツールバーアイコンに表示（最大 4 文字）"
+  },
+  "rulesTitle": {
+    "message": "トリガー条件"
+  },
+  "rulesHint": {
+    "message": "いずれかのルールにマッチで発火。複数マッチ時は最も具体的なものが優先。"
+  },
+  "addRuleBtn": {
+    "message": "ルールを追加"
+  },
+  "ruleTypeHostExact": {
+    "message": "完全一致ホスト"
+  },
+  "ruleTypeHostSuffix": {
+    "message": "ホスト接尾辞"
+  },
+  "ruleTypeUrlRegex": {
+    "message": "URL 正規表現"
+  },
+  "ruleTypeIpExact": {
+    "message": "IP 完全一致"
+  },
+  "ruleTypeIpCidr": {
+    "message": "IP CIDR"
+  },
+  "ruleTypeCookie": {
+    "message": "Cookie"
+  },
+  "rulePlaceholderHostExact": {
+    "message": "例：cust.example.com"
+  },
+  "rulePlaceholderHostSuffix": {
+    "message": "例：example.com（サブドメイン含む）"
+  },
+  "rulePlaceholderUrlRegex": {
+    "message": "例：^https?://.*/admin(/.*)?$$"
+  },
+  "rulePlaceholderIpExact": {
+    "message": "例：10.20.30.5"
+  },
+  "rulePlaceholderIpCidr": {
+    "message": "例：10.20.30.0/24"
+  },
+  "rulePlaceholderCookie": {
+    "message": "例：env=prod  または  env~=stage  またはキー名のみ"
+  },
+  "ruleHintCookie": {
+    "message": "書式：name=value は完全一致、name~=fragment は部分一致、name のみで存在チェック。"
+  },
+  "ruleRemove": {
+    "message": "削除"
+  },
+  "testTitle": {
+    "message": "ルールテスター"
+  },
+  "testUrlPlaceholder": {
+    "message": "テストする URL を貼り付け..."
+  },
+  "testCookiePlaceholder": {
+    "message": "（任意）Cookie 文字列、例：sid=abc; env=prod"
+  },
+  "testMatched": {
+    "message": "マッチ"
+  },
+  "testUnmatched": {
+    "message": "マッチなし"
+  },
+  "testMatchedBy": {
+    "message": "マッチしたルール："
+  },
+  "watermarkText": {
+    "message": "ウォーターマーク文字"
+  },
+  "textPlaceholder": {
+    "message": "例：本番環境 / 機密資料"
+  },
+  "textHint": {
+    "message": "改行対応。{user}/{date} などの変数は今後対応予定。"
+  },
+  "textColor": {
+    "message": "文字色"
+  },
+  "fontSize": {
+    "message": "フォントサイズ"
+  },
+  "opacity": {
+    "message": "不透明度"
+  },
+  "density": {
+    "message": "タイル間隔"
+  },
+  "densityHint": {
+    "message": "大きいほど疎に"
+  },
+  "rotation": {
+    "message": "回転角度"
+  },
+  "smartColor": {
+    "message": "スマート対比色"
+  },
+  "smartColorHint": {
+    "message": "有効時、ページ背景に応じて自動反転。カラーピッカーはトーンに置き換わります。"
+  },
+  "smartColorTone": {
+    "message": "トーン"
+  },
+  "smartColorToneLight": {
+    "message": "明るめ（暗いページ向け）"
+  },
+  "smartColorToneDark": {
+    "message": "暗め（明るいページ向け）"
+  },
+  "borderTitle": {
+    "message": "没入型ボーダー"
+  },
+  "borderEnabled": {
+    "message": "ボーダー警告を有効化"
+  },
+  "borderHint": {
+    "message": "ビューポート周囲の太いボーダーで、一目で識別可能。本番環境の強い警告に最適。"
+  },
+  "borderColor": {
+    "message": "ボーダー色"
+  },
+  "borderWidth": {
+    "message": "ボーダー幅"
+  },
+  "mouseFadeTitle": {
+    "message": "操作時にフェード"
+  },
+  "mouseFadeEnabled": {
+    "message": "マウス / キーボード操作時に不透明度を下げる"
+  },
+  "mouseFadeHint": {
+    "message": "UI 調査時に一時的にほぼ透明化、操作停止後に自動復帰。"
+  },
+  "mouseFadeOpacity": {
+    "message": "フェード後の不透明度"
+  },
+  "mouseFadeResume": {
+    "message": "停止後の復帰待ち"
+  },
+  "mouseFadeUnitMs": {
+    "message": "ms"
+  },
+  "previewTitle": {
+    "message": "ライブプレビュー"
+  },
+  "previewHintLight": {
+    "message": "明るい背景"
+  },
+  "previewHintDark": {
+    "message": "暗い背景"
+  },
+  "previewHintGradient": {
+    "message": "グラデーション"
+  },
+  "emptyTitle": {
+    "message": "設定がありません"
+  },
+  "emptyDesc": {
+    "message": "左上の + ボタンで最初のウォーターマーク設定を作成しましょう"
+  },
+  "defaultConfigName": {
+    "message": "新しい設定"
+  },
+  "defaultConfigText": {
+    "message": "本番環境"
+  },
+  "unnamed": {
+    "message": "無名"
+  },
+  "disabled": {
+    "message": "（無効）"
+  },
+  "copySuffix": {
+    "message": " - コピー"
+  },
+  "noRule": {
+    "message": "ルールなし"
+  },
+  "toastAdded": {
+    "message": "設定を追加しました"
+  },
+  "toastSaved": {
+    "message": "保存しました"
+  },
+  "toastDeleted": {
+    "message": "設定を削除しました"
+  },
+  "toastCopied": {
+    "message": "設定を複製しました"
+  },
+  "toastCopyFailed": {
+    "message": "複製失敗：現在の設定が見つかりません"
+  },
+  "toastExported": {
+    "message": "エクスポートしました"
+  },
+  "toastImported": {
+    "message": "{n} 件の設定をインポート",
+    "description": "Placeholder {n} is replaced with the number of imported configs."
+  },
+  "toastImportFailed": {
+    "message": "インポート失敗：ファイル形式が不正です"
+  },
+  "toastGlobalOn": {
+    "message": "全体ウォーターマーク ON"
+  },
+  "toastGlobalOff": {
+    "message": "全体ウォーターマーク OFF"
+  },
+  "toastInvalidUrl": {
+    "message": "無効な URL：http:// または https:// を含めてください"
+  },
+  "toastStorageError": {
+    "message": "保存失敗：{msg}",
+    "description": "Placeholder {msg} is replaced with the error message from chrome.storage."
+  },
+  "testUnsafeRegex": {
+    "message": "ブロック：異常な正規表現の可能性、ページが固まる恐れ"
+  },
+  "testRegexTooLong": {
+    "message": "ブロック：正規表現の長さが上限を超えています（{max} 文字）",
+    "description": "Placeholder {max} is replaced with the regex length limit."
+  },
+  "confirmDelete": {
+    "message": "この設定を削除しますか？"
+  },
+  "confirmImport": {
+    "message": "インポートは既存設定の末尾に追加されます。続行しますか？"
+  },
+  "confirmDeleteRuleTitle": {
+    "message": "ルールを削除"
+  },
+  "confirmDeleteRule": {
+    "message": "このルールを削除してもよろしいですか？"
+  },
+  "confirmDeleteConfigTitle": {
+    "message": "設定を削除"
+  },
+  "confirmDeleteConfig": {
+    "message": "この設定を丸ごと削除しますか？この操作は取り消せません。"
+  },
+  "helpQuickStart": {
+    "message": "クイックスタート"
+  },
+  "helpStep1": {
+    "message": "左上の + ボタンで新しいウォーターマーク設定を作成"
+  },
+  "helpStep2": {
+    "message": "「マッチルール」タブでトリガー条件（ドメイン/URL/IP など）を設定"
+  },
+  "helpStep3": {
+    "message": "「外観」タブで文字・色・フォント・透明度などを調整"
+  },
+  "helpRules": {
+    "message": "ルールタイプ"
+  },
+  "ruleHostExact": {
+    "message": "完全一致ホスト"
+  },
+  "ruleHostSuffix": {
+    "message": "ホスト接尾辞"
+  },
+  "ruleUrlRegex": {
+    "message": "URL 正規表現"
+  },
+  "ruleIpExact": {
+    "message": "IP 完全一致"
+  },
+  "ruleIpCidr": {
+    "message": "IP CIDR"
+  },
+  "ruleCookie": {
+    "message": "Cookie"
+  },
+  "helpTips": {
+    "message": "ヒント"
+  },
+  "helpTip1": {
+    "message": "1 つの設定に複数ルール可、いずれか一致で発火"
+  },
+  "helpTip2": {
+    "message": "複数設定がマッチした場合、最も具体的なものが優先"
+  },
+  "helpTip3": {
+    "message": "バッジはツールバーアイコンの右下に表示（最大 4 文字）"
+  },
+  "helpTip4": {
+    "message": "スマート対比色はページ背景に対して自動反転"
+  },
+  "cpPresets": {
+    "message": "プリセット"
+  },
+  "cpRecent": {
+    "message": "最近使用"
+  },
+  "cpCustom": {
+    "message": "カスタム…"
+  },
+  "presetProd": {
+    "message": "本番"
+  },
+  "presetPre": {
+    "message": "プレリリース"
+  },
+  "presetGray": {
+    "message": "カナリア"
+  },
+  "presetTest": {
+    "message": "テスト"
+  },
+  "presetUat": {
+    "message": "UAT / 結合"
+  },
+  "presetDev": {
+    "message": "開発"
+  },
+  "presetSandbox": {
+    "message": "サンドボックス"
+  },
+  "presetOther": {
+    "message": "その他"
+  }
+}

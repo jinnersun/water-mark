@@ -1,11 +1,421 @@
 {
   "extName": {
-    "message": "Env Watermark - Distinguish Prod / Test at a glance"
+    "message": "Env Watermark - Distinguish Prod / Test at a glance",
+    "description": "Extension name shown in Chrome Web Store and browser toolbar."
   },
   "extDescription": {
-    "message": "Precise watermarks by domain, URL, IP, or Cookie. Prevents mistakes on prod. Includes smart contrast color, immersive border, activity fade."
+    "message": "Precise watermarks by domain, URL, IP, or Cookie. Prevents mistakes on prod. Includes smart contrast color, immersive border, activity fade.",
+    "description": "Extension short description in the Chrome Web Store."
   },
   "extDefaultTitle": {
-    "message": "Click to configure watermark rules"
+    "message": "Click to configure watermark rules",
+    "description": "Tooltip when hovering the toolbar icon."
+  },
+  "title": {
+    "message": "Web Watermark - Settings"
+  },
+  "brand": {
+    "message": "Web Watermark"
+  },
+  "subtitle": {
+    "message": "Precise environment badges by domain, URL, Cookie, or IP"
+  },
+  "langLabel": {
+    "message": "Language",
+    "description": "Label for the language picker in the options page."
+  },
+  "langAuto": {
+    "message": "Follow browser",
+    "description": "Language picker option that follows the browser UI language."
+  },
+  "globalOn": {
+    "message": "Global (On)"
+  },
+  "globalOff": {
+    "message": "Global (Off)"
+  },
+  "importBtn": {
+    "message": "Import"
+  },
+  "exportBtn": {
+    "message": "Export"
+  },
+  "helpTitle": {
+    "message": "Guide"
+  },
+  "searchPlaceholder": {
+    "message": "Search configs..."
+  },
+  "addConfigTitle": {
+    "message": "Add new config"
+  },
+  "emptyList": {
+    "message": "No configs"
+  },
+  "emptyListHint": {
+    "message": "Click the + button to create your first config"
+  },
+  "copyConfig": {
+    "message": "Copy"
+  },
+  "deleteConfig": {
+    "message": "Delete"
+  },
+  "saveBtn": {
+    "message": "Save"
+  },
+  "unsaved": {
+    "message": "Unsaved changes"
+  },
+  "tabRules": {
+    "message": "Rules"
+  },
+  "tabStyle": {
+    "message": "Style"
+  },
+  "tabAlert": {
+    "message": "Alerts"
+  },
+  "configName": {
+    "message": "Config name"
+  },
+  "namePlaceholder": {
+    "message": "e.g. Production"
+  },
+  "enabledLabel": {
+    "message": "Enable this config"
+  },
+  "shortLabel": {
+    "message": "Short badge"
+  },
+  "shortLabelPlaceholder": {
+    "message": "Badge"
+  },
+  "shortLabelHint": {
+    "message": "Shows on the toolbar icon (max 4 chars)"
+  },
+  "rulesTitle": {
+    "message": "Match rules"
+  },
+  "rulesHint": {
+    "message": "Any matching rule triggers; the most specific rule wins."
+  },
+  "addRuleBtn": {
+    "message": "Add rule"
+  },
+  "ruleTypeHostExact": {
+    "message": "Exact host"
+  },
+  "ruleTypeHostSuffix": {
+    "message": "Host suffix"
+  },
+  "ruleTypeUrlRegex": {
+    "message": "URL regex"
+  },
+  "ruleTypeIpExact": {
+    "message": "IP exact"
+  },
+  "ruleTypeIpCidr": {
+    "message": "IP CIDR"
+  },
+  "ruleTypeCookie": {
+    "message": "Cookie"
+  },
+  "rulePlaceholderHostExact": {
+    "message": "e.g. cust.example.com"
+  },
+  "rulePlaceholderHostSuffix": {
+    "message": "e.g. example.com (includes subdomains)"
+  },
+  "rulePlaceholderUrlRegex": {
+    "message": "e.g. ^https?://.*/admin(/.*)?$$"
+  },
+  "rulePlaceholderIpExact": {
+    "message": "e.g. 10.20.30.5"
+  },
+  "rulePlaceholderIpCidr": {
+    "message": "e.g. 10.20.30.0/24"
+  },
+  "rulePlaceholderCookie": {
+    "message": "e.g. env=prod  or  env~=stage  or  just a name"
+  },
+  "ruleHintCookie": {
+    "message": "Syntax: name=value equals; name~=fragment contains; just name checks existence."
+  },
+  "ruleRemove": {
+    "message": "Remove"
+  },
+  "testTitle": {
+    "message": "Rule tester"
+  },
+  "testUrlPlaceholder": {
+    "message": "Paste a URL to test..."
+  },
+  "testCookiePlaceholder": {
+    "message": "(optional) cookie string, e.g. sid=abc; env=prod"
+  },
+  "testMatched": {
+    "message": "MATCH"
+  },
+  "testUnmatched": {
+    "message": "no match"
+  },
+  "testMatchedBy": {
+    "message": "Matched by:"
+  },
+  "watermarkText": {
+    "message": "Watermark text"
+  },
+  "textPlaceholder": {
+    "message": "e.g. Production / Confidential"
+  },
+  "textHint": {
+    "message": "Line breaks supported; variables like {user}/{date} coming later."
+  },
+  "textColor": {
+    "message": "Text color"
+  },
+  "fontSize": {
+    "message": "Font size"
+  },
+  "opacity": {
+    "message": "Opacity"
+  },
+  "density": {
+    "message": "Tile spacing"
+  },
+  "densityHint": {
+    "message": "Larger = sparser"
+  },
+  "rotation": {
+    "message": "Rotation"
+  },
+  "smartColor": {
+    "message": "Smart color"
+  },
+  "smartColorHint": {
+    "message": "Auto-invert against page background. Color picker is replaced by tone."
+  },
+  "smartColorTone": {
+    "message": "Tone"
+  },
+  "smartColorToneLight": {
+    "message": "Light (better on dark pages)"
+  },
+  "smartColorToneDark": {
+    "message": "Dark (better on light pages)"
+  },
+  "borderTitle": {
+    "message": "Immersive border"
+  },
+  "borderEnabled": {
+    "message": "Enable border alert"
+  },
+  "borderHint": {
+    "message": "A thick inset border around the viewport, spot at a glance. Great for production."
+  },
+  "borderColor": {
+    "message": "Border color"
+  },
+  "borderWidth": {
+    "message": "Border width"
+  },
+  "mouseFadeTitle": {
+    "message": "Fade on activity"
+  },
+  "mouseFadeEnabled": {
+    "message": "Fade watermark during mouse/keyboard activity"
+  },
+  "mouseFadeHint": {
+    "message": "Temporarily hide the watermark while you inspect UI; restore after idle."
+  },
+  "mouseFadeOpacity": {
+    "message": "Fade opacity"
+  },
+  "mouseFadeResume": {
+    "message": "Restore delay"
+  },
+  "mouseFadeUnitMs": {
+    "message": "ms"
+  },
+  "previewTitle": {
+    "message": "Live preview"
+  },
+  "previewHintLight": {
+    "message": "Light background"
+  },
+  "previewHintDark": {
+    "message": "Dark background"
+  },
+  "previewHintGradient": {
+    "message": "Gradient"
+  },
+  "emptyTitle": {
+    "message": "No configurations"
+  },
+  "emptyDesc": {
+    "message": "Click the + button on the top left to create your first watermark config"
+  },
+  "defaultConfigName": {
+    "message": "New config"
+  },
+  "defaultConfigText": {
+    "message": "Production"
+  },
+  "unnamed": {
+    "message": "Unnamed"
+  },
+  "disabled": {
+    "message": "(disabled)"
+  },
+  "copySuffix": {
+    "message": " - Copy"
+  },
+  "noRule": {
+    "message": "no rule"
+  },
+  "toastAdded": {
+    "message": "Config added"
+  },
+  "toastSaved": {
+    "message": "Saved"
+  },
+  "toastDeleted": {
+    "message": "Config deleted"
+  },
+  "toastCopied": {
+    "message": "Config copied"
+  },
+  "toastCopyFailed": {
+    "message": "Copy failed: config not found"
+  },
+  "toastExported": {
+    "message": "Exported"
+  },
+  "toastImported": {
+    "message": "Imported {n} configs",
+    "description": "Placeholder {n} is replaced with the number of imported configs."
+  },
+  "toastImportFailed": {
+    "message": "Import failed: invalid file"
+  },
+  "toastGlobalOn": {
+    "message": "Global watermark ON"
+  },
+  "toastGlobalOff": {
+    "message": "Global watermark OFF"
+  },
+  "toastInvalidUrl": {
+    "message": "Invalid URL: include http:// or https://"
+  },
+  "toastStorageError": {
+    "message": "Save failed: {msg}",
+    "description": "Placeholder {msg} is replaced with the error message from chrome.storage."
+  },
+  "testUnsafeRegex": {
+    "message": "Blocked: pattern likely catastrophic, would freeze pages"
+  },
+  "testRegexTooLong": {
+    "message": "Blocked: regex source exceeds {max} chars",
+    "description": "Placeholder {max} is replaced with the regex length limit."
+  },
+  "confirmDelete": {
+    "message": "Delete this config?"
+  },
+  "confirmImport": {
+    "message": "Import will append to existing configs. Continue?"
+  },
+  "confirmDeleteRuleTitle": {
+    "message": "Delete rule"
+  },
+  "confirmDeleteRule": {
+    "message": "Are you sure you want to delete this rule?"
+  },
+  "confirmDeleteConfigTitle": {
+    "message": "Delete config"
+  },
+  "confirmDeleteConfig": {
+    "message": "Are you sure you want to delete this config? This cannot be undone."
+  },
+  "helpQuickStart": {
+    "message": "Quick start"
+  },
+  "helpStep1": {
+    "message": "Click the + button in the top-left to create a new config"
+  },
+  "helpStep2": {
+    "message": "Open the Match Rules tab and set trigger conditions"
+  },
+  "helpStep3": {
+    "message": "Open the Style tab to tune watermark text, color, and opacity"
+  },
+  "helpRules": {
+    "message": "Rule types"
+  },
+  "ruleHostExact": {
+    "message": "Exact host"
+  },
+  "ruleHostSuffix": {
+    "message": "Host suffix"
+  },
+  "ruleUrlRegex": {
+    "message": "URL regex"
+  },
+  "ruleIpExact": {
+    "message": "IP exact"
+  },
+  "ruleIpCidr": {
+    "message": "IP CIDR"
+  },
+  "ruleCookie": {
+    "message": "Cookie"
+  },
+  "helpTips": {
+    "message": "Tips"
+  },
+  "helpTip1": {
+    "message": "A config can hold multiple rules; any match triggers it"
+  },
+  "helpTip2": {
+    "message": "When multiple configs match, the most specific one wins"
+  },
+  "helpTip3": {
+    "message": "Short badge shows in the toolbar icon corner (max 4 chars)"
+  },
+  "helpTip4": {
+    "message": "Smart color inverts automatically against page background"
+  },
+  "cpPresets": {
+    "message": "Presets"
+  },
+  "cpRecent": {
+    "message": "Recently used"
+  },
+  "cpCustom": {
+    "message": "Custom…"
+  },
+  "presetProd": {
+    "message": "Production"
+  },
+  "presetPre": {
+    "message": "Pre-release"
+  },
+  "presetGray": {
+    "message": "Gray release"
+  },
+  "presetTest": {
+    "message": "Test"
+  },
+  "presetUat": {
+    "message": "UAT / Staging"
+  },
+  "presetDev": {
+    "message": "Development"
+  },
+  "presetSandbox": {
+    "message": "Sandbox"
+  },
+  "presetOther": {
+    "message": "Other"
   }
 }

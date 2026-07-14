@@ -1,0 +1,421 @@
+{
+  "extName": {
+    "message": "Marca de agua de entorno - Distingue producción / pruebas de un vistazo",
+    "description": "Extension name shown in Chrome Web Store and browser toolbar."
+  },
+  "extDescription": {
+    "message": "Marcas de agua precisas por dominio, URL, IP o cookie. Evita errores en producción. Incluye color de contraste inteligente, borde inmersivo y atenuación durante la interacción.",
+    "description": "Extension short description in the Chrome Web Store."
+  },
+  "extDefaultTitle": {
+    "message": "Haz clic para configurar reglas de marca de agua",
+    "description": "Tooltip when hovering the toolbar icon."
+  },
+  "title": {
+    "message": "Marca de agua web - Ajustes"
+  },
+  "brand": {
+    "message": "Marca de agua web"
+  },
+  "subtitle": {
+    "message": "Distingue entornos con precisión por dominio, URL, cookie o IP"
+  },
+  "langLabel": {
+    "message": "Idioma",
+    "description": "Label for the language picker in the options page."
+  },
+  "langAuto": {
+    "message": "Seguir al navegador",
+    "description": "Language picker option that follows the browser UI language."
+  },
+  "globalOn": {
+    "message": "Interruptor global (activo)"
+  },
+  "globalOff": {
+    "message": "Interruptor global (inactivo)"
+  },
+  "importBtn": {
+    "message": "Importar"
+  },
+  "exportBtn": {
+    "message": "Exportar"
+  },
+  "helpTitle": {
+    "message": "Guía"
+  },
+  "searchPlaceholder": {
+    "message": "Buscar configuraciones..."
+  },
+  "addConfigTitle": {
+    "message": "Añadir nueva configuración"
+  },
+  "emptyList": {
+    "message": "Sin configuraciones"
+  },
+  "emptyListHint": {
+    "message": "Pulsa el botón + para crear tu primera configuración"
+  },
+  "copyConfig": {
+    "message": "Copiar"
+  },
+  "deleteConfig": {
+    "message": "Eliminar"
+  },
+  "saveBtn": {
+    "message": "Guardar"
+  },
+  "unsaved": {
+    "message": "Cambios sin guardar"
+  },
+  "tabRules": {
+    "message": "Reglas"
+  },
+  "tabStyle": {
+    "message": "Estilo"
+  },
+  "tabAlert": {
+    "message": "Alertas"
+  },
+  "configName": {
+    "message": "Nombre de la configuración"
+  },
+  "namePlaceholder": {
+    "message": "p. ej. Producción"
+  },
+  "enabledLabel": {
+    "message": "Activar esta configuración"
+  },
+  "shortLabel": {
+    "message": "Etiqueta corta"
+  },
+  "shortLabelPlaceholder": {
+    "message": "Etiqueta"
+  },
+  "shortLabelHint": {
+    "message": "Se muestra en el icono de la barra (máx 4 caracteres)"
+  },
+  "rulesTitle": {
+    "message": "Reglas de coincidencia"
+  },
+  "rulesHint": {
+    "message": "Se activa con cualquier regla que coincida; gana la más específica."
+  },
+  "addRuleBtn": {
+    "message": "Añadir regla"
+  },
+  "ruleTypeHostExact": {
+    "message": "Host exacto"
+  },
+  "ruleTypeHostSuffix": {
+    "message": "Sufijo de host"
+  },
+  "ruleTypeUrlRegex": {
+    "message": "URL regex"
+  },
+  "ruleTypeIpExact": {
+    "message": "IP exacta"
+  },
+  "ruleTypeIpCidr": {
+    "message": "IP CIDR"
+  },
+  "ruleTypeCookie": {
+    "message": "Cookie"
+  },
+  "rulePlaceholderHostExact": {
+    "message": "p. ej. cust.example.com"
+  },
+  "rulePlaceholderHostSuffix": {
+    "message": "p. ej. example.com (incluye subdominios)"
+  },
+  "rulePlaceholderUrlRegex": {
+    "message": "p. ej. ^https?://.*/admin(/.*)?$$"
+  },
+  "rulePlaceholderIpExact": {
+    "message": "p. ej. 10.20.30.5"
+  },
+  "rulePlaceholderIpCidr": {
+    "message": "p. ej. 10.20.30.0/24"
+  },
+  "rulePlaceholderCookie": {
+    "message": "p. ej. env=prod  o  env~=stage  o  solo un nombre"
+  },
+  "ruleHintCookie": {
+    "message": "Sintaxis: name=value iguala; name~=fragment contiene; solo name comprueba existencia."
+  },
+  "ruleRemove": {
+    "message": "Eliminar"
+  },
+  "testTitle": {
+    "message": "Probador de reglas"
+  },
+  "testUrlPlaceholder": {
+    "message": "Pega una URL para probar..."
+  },
+  "testCookiePlaceholder": {
+    "message": "(opcional) cadena de cookie, p. ej. sid=abc; env=prod"
+  },
+  "testMatched": {
+    "message": "COINCIDE"
+  },
+  "testUnmatched": {
+    "message": "sin coincidencia"
+  },
+  "testMatchedBy": {
+    "message": "Coincide con:"
+  },
+  "watermarkText": {
+    "message": "Texto de la marca de agua"
+  },
+  "textPlaceholder": {
+    "message": "p. ej. Producción / Confidencial"
+  },
+  "textHint": {
+    "message": "Se admiten saltos de línea; variables como {user}/{date} llegarán después."
+  },
+  "textColor": {
+    "message": "Color del texto"
+  },
+  "fontSize": {
+    "message": "Tamaño de fuente"
+  },
+  "opacity": {
+    "message": "Opacidad"
+  },
+  "density": {
+    "message": "Separación"
+  },
+  "densityHint": {
+    "message": "Mayor = más disperso"
+  },
+  "rotation": {
+    "message": "Rotación"
+  },
+  "smartColor": {
+    "message": "Color inteligente"
+  },
+  "smartColorHint": {
+    "message": "Auto-invierte según el fondo. El selector de color se reemplaza por tono."
+  },
+  "smartColorTone": {
+    "message": "Tono"
+  },
+  "smartColorToneLight": {
+    "message": "Claro (mejor en páginas oscuras)"
+  },
+  "smartColorToneDark": {
+    "message": "Oscuro (mejor en páginas claras)"
+  },
+  "borderTitle": {
+    "message": "Borde inmersivo"
+  },
+  "borderEnabled": {
+    "message": "Activar alerta de borde"
+  },
+  "borderHint": {
+    "message": "Un borde interno grueso alrededor de la vista, fácil de detectar. Ideal para producción."
+  },
+  "borderColor": {
+    "message": "Color del borde"
+  },
+  "borderWidth": {
+    "message": "Grosor del borde"
+  },
+  "mouseFadeTitle": {
+    "message": "Atenuar con actividad"
+  },
+  "mouseFadeEnabled": {
+    "message": "Atenuar la marca durante interacción con ratón/teclado"
+  },
+  "mouseFadeHint": {
+    "message": "Oculta temporalmente la marca al inspeccionar; se restaura al parar."
+  },
+  "mouseFadeOpacity": {
+    "message": "Opacidad al atenuar"
+  },
+  "mouseFadeResume": {
+    "message": "Retraso al restaurar"
+  },
+  "mouseFadeUnitMs": {
+    "message": "ms"
+  },
+  "previewTitle": {
+    "message": "Vista previa en vivo"
+  },
+  "previewHintLight": {
+    "message": "Fondo claro"
+  },
+  "previewHintDark": {
+    "message": "Fondo oscuro"
+  },
+  "previewHintGradient": {
+    "message": "Degradado"
+  },
+  "emptyTitle": {
+    "message": "Sin configuraciones"
+  },
+  "emptyDesc": {
+    "message": "Pulsa el botón + arriba a la izquierda para crear tu primera marca de agua"
+  },
+  "defaultConfigName": {
+    "message": "Nueva configuración"
+  },
+  "defaultConfigText": {
+    "message": "Producción"
+  },
+  "unnamed": {
+    "message": "Sin nombre"
+  },
+  "disabled": {
+    "message": "(desactivada)"
+  },
+  "copySuffix": {
+    "message": " - Copia"
+  },
+  "noRule": {
+    "message": "sin regla"
+  },
+  "toastAdded": {
+    "message": "Configuración añadida"
+  },
+  "toastSaved": {
+    "message": "Guardado"
+  },
+  "toastDeleted": {
+    "message": "Configuración eliminada"
+  },
+  "toastCopied": {
+    "message": "Configuración copiada"
+  },
+  "toastCopyFailed": {
+    "message": "Copia fallida: no se encontró la configuración"
+  },
+  "toastExported": {
+    "message": "Exportado"
+  },
+  "toastImported": {
+    "message": "{n} configuraciones importadas",
+    "description": "Placeholder {n} is replaced with the number of imported configs."
+  },
+  "toastImportFailed": {
+    "message": "Importación fallida: archivo inválido"
+  },
+  "toastGlobalOn": {
+    "message": "Marca de agua global ACTIVADA"
+  },
+  "toastGlobalOff": {
+    "message": "Marca de agua global DESACTIVADA"
+  },
+  "toastInvalidUrl": {
+    "message": "URL inválida: incluye http:// o https://"
+  },
+  "toastStorageError": {
+    "message": "Fallo al guardar: {msg}",
+    "description": "Placeholder {msg} is replaced with the error message from chrome.storage."
+  },
+  "testUnsafeRegex": {
+    "message": "Bloqueado: patrón potencialmente catastrófico, congelaría páginas"
+  },
+  "testRegexTooLong": {
+    "message": "Bloqueado: la regex supera {max} caracteres",
+    "description": "Placeholder {max} is replaced with the regex length limit."
+  },
+  "confirmDelete": {
+    "message": "¿Eliminar esta configuración?"
+  },
+  "confirmImport": {
+    "message": "La importación se añadirá a las configuraciones existentes. ¿Continuar?"
+  },
+  "confirmDeleteRuleTitle": {
+    "message": "Eliminar regla"
+  },
+  "confirmDeleteRule": {
+    "message": "¿Seguro que quieres eliminar esta regla?"
+  },
+  "confirmDeleteConfigTitle": {
+    "message": "Eliminar configuración"
+  },
+  "confirmDeleteConfig": {
+    "message": "¿Seguro que quieres eliminar esta configuración? Esta acción no se puede deshacer."
+  },
+  "helpQuickStart": {
+    "message": "Inicio rápido"
+  },
+  "helpStep1": {
+    "message": "Pulsa el botón + arriba a la izquierda para crear una configuración"
+  },
+  "helpStep2": {
+    "message": "Abre la pestaña Reglas y configura las condiciones de disparo"
+  },
+  "helpStep3": {
+    "message": "Abre la pestaña Estilo para ajustar texto, color y opacidad"
+  },
+  "helpRules": {
+    "message": "Tipos de regla"
+  },
+  "ruleHostExact": {
+    "message": "Host exacto"
+  },
+  "ruleHostSuffix": {
+    "message": "Sufijo de host"
+  },
+  "ruleUrlRegex": {
+    "message": "URL regex"
+  },
+  "ruleIpExact": {
+    "message": "IP exacta"
+  },
+  "ruleIpCidr": {
+    "message": "IP CIDR"
+  },
+  "ruleCookie": {
+    "message": "Cookie"
+  },
+  "helpTips": {
+    "message": "Consejos"
+  },
+  "helpTip1": {
+    "message": "Una configuración puede tener varias reglas; cualquier coincidencia la activa"
+  },
+  "helpTip2": {
+    "message": "Si coinciden varias configuraciones, gana la más específica"
+  },
+  "helpTip3": {
+    "message": "La etiqueta corta se muestra en el icono de la barra (máx 4 caracteres)"
+  },
+  "helpTip4": {
+    "message": "El color inteligente se invierte automáticamente según el fondo"
+  },
+  "cpPresets": {
+    "message": "Presets"
+  },
+  "cpRecent": {
+    "message": "Recientes"
+  },
+  "cpCustom": {
+    "message": "Personalizado…"
+  },
+  "presetProd": {
+    "message": "Producción"
+  },
+  "presetPre": {
+    "message": "Pre-lanzamiento"
+  },
+  "presetGray": {
+    "message": "Lanzamiento gradual"
+  },
+  "presetTest": {
+    "message": "Pruebas"
+  },
+  "presetUat": {
+    "message": "UAT / Staging"
+  },
+  "presetDev": {
+    "message": "Desarrollo"
+  },
+  "presetSandbox": {
+    "message": "Sandbox"
+  },
+  "presetOther": {
+    "message": "Otro"
+  }
+}

@@ -1,11 +1,421 @@
 {
   "extName": {
-    "message": "环境水印 - 精准区分生产 / 测试环境"
+    "message": "环境水印 - 精准区分生产 / 测试环境",
+    "description": "Extension name shown in Chrome Web Store and browser toolbar."
   },
   "extDescription": {
-    "message": "按域名、URL、IP、Cookie 精准打水印，避免误操作生产环境。支持智能对比色、沉浸式边框、鼠标交互渐隐。"
+    "message": "按域名、URL、IP、Cookie 精准打水印，避免误操作生产环境。支持智能对比色、沉浸式边框、鼠标交互渐隐。",
+    "description": "Extension short description in the Chrome Web Store."
   },
   "extDefaultTitle": {
-    "message": "点击配置水印规则"
+    "message": "点击配置水印规则",
+    "description": "Tooltip when hovering the toolbar icon."
+  },
+  "title": {
+    "message": "网页水印工具 - 设置"
+  },
+  "brand": {
+    "message": "网页水印工具"
+  },
+  "subtitle": {
+    "message": "按域名、URL、Cookie、IP 精准区分环境水印"
+  },
+  "langLabel": {
+    "message": "语言",
+    "description": "Label for the language picker in the options page."
+  },
+  "langAuto": {
+    "message": "跟随浏览器",
+    "description": "Language picker option that follows the browser UI language."
+  },
+  "globalOn": {
+    "message": "总开关（已开启）"
+  },
+  "globalOff": {
+    "message": "总开关（已关闭）"
+  },
+  "importBtn": {
+    "message": "导入"
+  },
+  "exportBtn": {
+    "message": "导出"
+  },
+  "helpTitle": {
+    "message": "使用指南"
+  },
+  "searchPlaceholder": {
+    "message": "搜索配置..."
+  },
+  "addConfigTitle": {
+    "message": "添加新配置"
+  },
+  "emptyList": {
+    "message": "暂无配置"
+  },
+  "emptyListHint": {
+    "message": "点击右上角 + 号，创建你的第一条配置"
+  },
+  "copyConfig": {
+    "message": "复制"
+  },
+  "deleteConfig": {
+    "message": "删除"
+  },
+  "saveBtn": {
+    "message": "保存"
+  },
+  "unsaved": {
+    "message": "有未保存的修改"
+  },
+  "tabRules": {
+    "message": "匹配规则"
+  },
+  "tabStyle": {
+    "message": "外观"
+  },
+  "tabAlert": {
+    "message": "提醒 / 交互"
+  },
+  "configName": {
+    "message": "配置名称"
+  },
+  "namePlaceholder": {
+    "message": "例如：生产环境"
+  },
+  "enabledLabel": {
+    "message": "启用当前配置"
+  },
+  "shortLabel": {
+    "message": "短标签"
+  },
+  "shortLabelPlaceholder": {
+    "message": "标签"
+  },
+  "shortLabelHint": {
+    "message": "将在浏览器工具栏图标上显示（最多 4 字符）"
+  },
+  "rulesTitle": {
+    "message": "触发条件"
+  },
+  "rulesHint": {
+    "message": "任一规则命中即生效；多条规则中匹配最精准的一条决定水印样式。"
+  },
+  "addRuleBtn": {
+    "message": "添加规则"
+  },
+  "ruleTypeHostExact": {
+    "message": "精确域名"
+  },
+  "ruleTypeHostSuffix": {
+    "message": "域名后缀"
+  },
+  "ruleTypeUrlRegex": {
+    "message": "URL 正则"
+  },
+  "ruleTypeIpExact": {
+    "message": "IP 精确"
+  },
+  "ruleTypeIpCidr": {
+    "message": "IP 段（CIDR）"
+  },
+  "ruleTypeCookie": {
+    "message": "Cookie"
+  },
+  "rulePlaceholderHostExact": {
+    "message": "例如：cust.example.com"
+  },
+  "rulePlaceholderHostSuffix": {
+    "message": "例如：example.com（含所有子域）"
+  },
+  "rulePlaceholderUrlRegex": {
+    "message": "例如：^https?://.*/admin(/.*)?$$"
+  },
+  "rulePlaceholderIpExact": {
+    "message": "例如：10.20.30.5"
+  },
+  "rulePlaceholderIpCidr": {
+    "message": "例如：10.20.30.0/24"
+  },
+  "rulePlaceholderCookie": {
+    "message": "例如：env=prod  或  env~=stage  或  仅键名"
+  },
+  "ruleHintCookie": {
+    "message": "语法：name=value 精确匹配；name~=fragment 包含匹配；只填 name 检查存在。"
+  },
+  "ruleRemove": {
+    "message": "删除"
+  },
+  "testTitle": {
+    "message": "规则测试"
+  },
+  "testUrlPlaceholder": {
+    "message": "粘贴 URL 试试..."
+  },
+  "testCookiePlaceholder": {
+    "message": "（可选）粘贴 cookie 字符串，如：sid=abc; env=prod"
+  },
+  "testMatched": {
+    "message": "命中"
+  },
+  "testUnmatched": {
+    "message": "未命中"
+  },
+  "testMatchedBy": {
+    "message": "命中规则："
+  },
+  "watermarkText": {
+    "message": "水印文字"
+  },
+  "textPlaceholder": {
+    "message": "例如：生产环境 / 机密资料"
+  },
+  "textHint": {
+    "message": "支持换行；未来将支持 {user} / {date} 等变量。"
+  },
+  "textColor": {
+    "message": "文字颜色"
+  },
+  "fontSize": {
+    "message": "字体大小"
+  },
+  "opacity": {
+    "message": "不透明度"
+  },
+  "density": {
+    "message": "间距密度"
+  },
+  "densityHint": {
+    "message": "数值越大水印越稀疏"
+  },
+  "rotation": {
+    "message": "旋转角度"
+  },
+  "smartColor": {
+    "message": "智能对比色"
+  },
+  "smartColorHint": {
+    "message": "开启后自动根据网页背景反色显示，颜色选择器由基调决定。"
+  },
+  "smartColorTone": {
+    "message": "基调"
+  },
+  "smartColorToneLight": {
+    "message": "浅色（适合深色网页）"
+  },
+  "smartColorToneDark": {
+    "message": "深色（适合浅色网页）"
+  },
+  "borderTitle": {
+    "message": "沉浸式边框"
+  },
+  "borderEnabled": {
+    "message": "启用边框提醒"
+  },
+  "borderHint": {
+    "message": "在页面四周绘制粗边框，比水印更容易一眼识别。适合生产 / 强提醒场景。"
+  },
+  "borderColor": {
+    "message": "边框颜色"
+  },
+  "borderWidth": {
+    "message": "边框粗细"
+  },
+  "mouseFadeTitle": {
+    "message": "鼠标交互时渐隐"
+  },
+  "mouseFadeEnabled": {
+    "message": "启用鼠标 / 键盘交互时降低透明度"
+  },
+  "mouseFadeHint": {
+    "message": "排查问题时短暂让水印几乎透明，停手后自动恢复。"
+  },
+  "mouseFadeOpacity": {
+    "message": "渐隐后的透明度"
+  },
+  "mouseFadeResume": {
+    "message": "停手后多久恢复"
+  },
+  "mouseFadeUnitMs": {
+    "message": "ms"
+  },
+  "previewTitle": {
+    "message": "实时预览"
+  },
+  "previewHintLight": {
+    "message": "浅色背景"
+  },
+  "previewHintDark": {
+    "message": "深色背景"
+  },
+  "previewHintGradient": {
+    "message": "渐变背景"
+  },
+  "emptyTitle": {
+    "message": "暂无配置"
+  },
+  "emptyDesc": {
+    "message": "点击左上角按钮，创建你的第一个专属水印配置吧"
+  },
+  "defaultConfigName": {
+    "message": "新配置"
+  },
+  "defaultConfigText": {
+    "message": "生产环境"
+  },
+  "unnamed": {
+    "message": "未命名"
+  },
+  "disabled": {
+    "message": "（已停用）"
+  },
+  "copySuffix": {
+    "message": " - 副本"
+  },
+  "noRule": {
+    "message": "未设置规则"
+  },
+  "toastAdded": {
+    "message": "已添加新配置"
+  },
+  "toastSaved": {
+    "message": "保存成功"
+  },
+  "toastDeleted": {
+    "message": "配置已删除"
+  },
+  "toastCopied": {
+    "message": "已复制配置"
+  },
+  "toastCopyFailed": {
+    "message": "复制失败：未找到当前配置"
+  },
+  "toastExported": {
+    "message": "已导出"
+  },
+  "toastImported": {
+    "message": "已导入 {n} 条配置",
+    "description": "Placeholder {n} is replaced with the number of imported configs."
+  },
+  "toastImportFailed": {
+    "message": "导入失败：文件格式不正确"
+  },
+  "toastGlobalOn": {
+    "message": "已开启全局水印"
+  },
+  "toastGlobalOff": {
+    "message": "已关闭全局水印"
+  },
+  "toastInvalidUrl": {
+    "message": "测试失败：请填写完整 URL（包含 http:// 或 https://）"
+  },
+  "toastStorageError": {
+    "message": "保存失败：{msg}",
+    "description": "Placeholder {msg} is replaced with the error message from chrome.storage."
+  },
+  "testUnsafeRegex": {
+    "message": "拒绝执行：疑似病态正则，可能导致页面卡死"
+  },
+  "testRegexTooLong": {
+    "message": "拒绝执行：正则长度超过上限（{max} 字符）",
+    "description": "Placeholder {max} is replaced with the regex length limit."
+  },
+  "confirmDelete": {
+    "message": "确定要删除这个配置吗？"
+  },
+  "confirmImport": {
+    "message": "导入将追加到现有配置末尾。继续？"
+  },
+  "confirmDeleteRuleTitle": {
+    "message": "删除规则"
+  },
+  "confirmDeleteRule": {
+    "message": "确定要删除这条规则吗？"
+  },
+  "confirmDeleteConfigTitle": {
+    "message": "删除配置"
+  },
+  "confirmDeleteConfig": {
+    "message": "确定要删除整个配置吗？此操作无法撤销。"
+  },
+  "helpQuickStart": {
+    "message": "快速开始"
+  },
+  "helpStep1": {
+    "message": "点击左上角「+」按钮新建一条水印配置"
+  },
+  "helpStep2": {
+    "message": "在「匹配规则」Tab 设置触发条件（域名/URL/IP 等）"
+  },
+  "helpStep3": {
+    "message": "在「外观」Tab 设置水印文字、颜色、字体、透明度等"
+  },
+  "helpRules": {
+    "message": "匹配规则说明"
+  },
+  "ruleHostExact": {
+    "message": "精确域名"
+  },
+  "ruleHostSuffix": {
+    "message": "域名后缀"
+  },
+  "ruleUrlRegex": {
+    "message": "URL 正则"
+  },
+  "ruleIpExact": {
+    "message": "IP 精确"
+  },
+  "ruleIpCidr": {
+    "message": "IP 段 (CIDR)"
+  },
+  "ruleCookie": {
+    "message": "Cookie"
+  },
+  "helpTips": {
+    "message": "小提示"
+  },
+  "helpTip1": {
+    "message": "每条配置可设置多条规则，任一命中即生效"
+  },
+  "helpTip2": {
+    "message": "多条配置命中时，按\"最精确优先\"原则选择"
+  },
+  "helpTip3": {
+    "message": "短标签显示在浏览器工具栏图标右下角，最多 4 字符"
+  },
+  "helpTip4": {
+    "message": "智能对比色自动根据网页背景反色显示"
+  },
+  "cpPresets": {
+    "message": "预设颜色"
+  },
+  "cpRecent": {
+    "message": "最近使用"
+  },
+  "cpCustom": {
+    "message": "自定义…"
+  },
+  "presetProd": {
+    "message": "生产"
+  },
+  "presetPre": {
+    "message": "预发"
+  },
+  "presetGray": {
+    "message": "灰度"
+  },
+  "presetTest": {
+    "message": "测试"
+  },
+  "presetUat": {
+    "message": "UAT / 集成"
+  },
+  "presetDev": {
+    "message": "开发"
+  },
+  "presetSandbox": {
+    "message": "沙箱"
+  },
+  "presetOther": {
+    "message": "其他"
   }
 }

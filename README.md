@@ -1,87 +1,106 @@
-# 网页水印工具（Web Watermark Tool）
+# Env Watermark — Web Watermark Tool
 
-一个 Chrome 扩展（Manifest V3）：按 **域名 / URL 正则 / IP / Cookie** 精准打水印，用于区分生产 / 预发 / 测试等环境，避免"我以为在测试环境结果操作了生产库"这种事故。
+[English](README.md) · [简体中文](README.zh-CN.md)
 
-## 核心特性
+Chrome extension (Manifest V3) that stamps precise per-environment watermarks on any page by **domain / URL regex / IP / cookie**, so you never mistake staging for production again.
 
-- **多维匹配规则**（每条配置可组合多条规则，任一命中即生效）
-  - `精确域名`：`cust.example.com` → 只命中生产
-  - `域名后缀`：`example.com` → 命中所有子域
-  - `URL 正则`：`^https?://.*/admin(/.*)?$` → 只命中管理后台路径
-  - `IP 精确 / CIDR`：`10.20.30.5` / `10.20.30.0/24` → 覆盖 VPN 里按 IP 访问的内网系统
-  - `Cookie`：`env=prod` / `env~=stage` / 仅 `sid` → 覆盖同域名靠网关分流的场景
-- **智能对比色**（`mix-blend-mode: difference`）：无论网页是白底、黑底、渐变，水印自动反色显示，不再"看不见"
-- **沉浸式边框**：4px 血红 `inset box-shadow`，一眼看出当前是生产环境
-- **鼠标交互时渐隐**：鼠标移动 / 键盘输入时水印自动降到几乎透明，停手 2 秒恢复
-- **iframe 独立匹配**（`all_frames: true`）：每个 frame 按自己的 URL / hostname 匹配
-- **实时预览**：编辑区实时显示水印在浅色 / 深色 / 渐变背景下的效果
-- **URL 匹配测试器**：粘贴 URL + Cookie 立刻显示是否命中，命中哪条规则
-- **配置导入 / 导出**：JSON 格式，方便在团队 / 多机之间迁移
-- **全局总开关**：右上角一键停用所有水印
-- **配置搜索**：侧栏搜索框，配置多时秒定位
-- **工具栏图标 badge**：命中的配置在插件图标右下角显示短标签（例 PROD）
-- **多语言支持**：中英字典已完整预留，测试稳定后一键开启（切换 src/features.js 里 multiLang 归属即可）
+## Highlights
 
-## 目录结构
+- **Multi-dimensional match rules** (any hit within a config triggers it):
+  - `Exact host` — `cust.example.com` → this hostname only
+  - `Host suffix` — `example.com` → every subdomain
+  - `URL regex` — `^https?://.*/admin(/.*)?$` → path/query targeting
+  - `IP exact / CIDR` — `10.20.30.5` / `10.20.30.0/24` → covers VPN‑style access
+  - `Cookie` — `env=prod` / `env~=stage` / just a name → covers same‑domain gateway routing
+- **Smart contrast color** (`mix-blend-mode: difference`): watermark inverts against light, dark, or gradient backgrounds without disappearing.
+- **Immersive border**: 4px inset shadow, spot the environment at a glance.
+- **Fade on activity**: watermark eases to near‑transparent while the mouse or keyboard is busy, restores after 2 seconds of idle.
+- **Independent per‑iframe match** (`all_frames: true`): each frame checks its own URL/hostname.
+- **Live preview** across light / dark / gradient backgrounds.
+- **Rule tester**: paste a URL + cookie string to see whether it triggers and which rule wins.
+- **Import / export** JSON — easy to share configs across a team or between machines.
+- **Global kill switch** in the top‑right of the options page.
+- **Config search** in the sidebar.
+- **Toolbar badge** — the matched config's short label appears in the icon corner (e.g. `PROD`).
+- **Multi-language UI** — English, 简体中文, 繁體中文, 日本語, Español, with a "Follow browser" option. Manifest strings served natively via `_locales/*`.
+
+## Directory layout
 
 ```
-├── src/                        # 扩展源码（用于「加载已解压的扩展程序」）
-│   ├── manifest.json           # MV3 清单
-│   ├── background.js           # 后台 service worker
-│   ├── content.js              # 内容脚本：注入水印 + 监听变化
-│   ├── watermark-core.js       # 纯逻辑核心：URL 解析、规则匹配、水印图片生成（options / content 共用）
-│   ├── features.js             # 特性门控层（预留付费拆分）
-│   ├── options.html/.css/.js   # 配置页面
-│   ├── i18n.js                 # 中英双语字典 + 语言切换
-│   ├── _locales/               # manifest 中 __MSG_*__ 用到的多语言资源
-│   └── icons/                  # 16 / 48 / 128 图标
+├── src/                        # Extension source (load unpacked)
+│   ├── manifest.json           # MV3 manifest, default_locale=en
+│   ├── background.js           # Service worker
+│   ├── content.js              # Content script: inject watermark + observe URL changes
+│   ├── watermark-core.js       # Pure logic: URL parsing, rule matching, image generation
+│   ├── features.js             # Feature-flag layer (free vs. reserved paid)
+│   ├── options.html/.css/.js   # Options page
+│   ├── i18n.js                 # Runtime translator with live language switch
+│   ├── i18n-messages.js        # Auto-generated bundle used by i18n.js at runtime
+│   ├── _locales/               # Manifest and runtime i18n resources
+│   │   ├── en/                 # default_locale
+│   │   ├── zh_CN/
+│   │   ├── zh_TW/
+│   │   ├── ja/
+│   │   └── es/
+│   └── icons/                  # 16 / 48 / 128 icons
+├── scripts/
+│   ├── gen-locales.mjs         # Rebuild _locales/**/messages.json + i18n-messages.js
+│   └── check-i18n.mjs          # Lint locale drift, unused/unknown keys
 ├── docs/
-│   ├── paid-version.md         # 付费版方案讨论（后端 / 收款 / license）
-│   └── todo.md                 # 待办 & Roadmap（AI 生成规则 / 反馈入口 / 多语言启用 等）
-├── README.md
+│   ├── paid-version.md         # Notes for the future Pro build
+│   └── todo.md                 # Roadmap
+├── README.md                   # English (this file)
+├── README.zh-CN.md             # Chinese
 └── .gitignore
 ```
 
-## 本地调试
+## Local development
 
-1. `chrome://extensions/`
-2. 打开右上角「开发者模式」
-3. 「加载已解压的扩展程序」→ 选 `src/` 目录
-4. 修改任意 `src/*` 文件后，回扩展页点插件卡片的「刷新」图标即可生效
-5. 点击浏览器工具栏中的插件图标 → 打开配置页
+1. Open `chrome://extensions/`.
+2. Toggle **Developer mode** in the top-right.
+3. **Load unpacked** → pick the `src/` directory.
+4. Edit any file under `src/`, then click the reload icon on the extension card.
+5. Click the toolbar icon to open the options page.
 
-## 数据存储
+## Data storage
 
-- 使用 `chrome.storage.sync`，配置随 Google 账号同步
-- 键：
-  - `configs: Config[]` — 所有水印配置
-  - `globalEnabled: boolean` — 全局总开关
-  - `lang: 'zh-CN' | 'en'` — 语言偏好
+- Uses `chrome.storage.sync`, so configs follow the user's Google account.
+- Keys:
+  - `configs: Config[]` — every watermark config.
+  - `globalEnabled: boolean` — global kill switch.
+  - `lang: '' | 'en' | 'zh_CN' | 'zh_TW' | 'ja' | 'es'` — language override. `''` means "follow browser".
 
-## 匹配规则详解
+## Match rule reference
 
-| 类型         | 语义                                                        | 例子                                     | 备注                                  |
-| ------------ | ----------------------------------------------------------- | ---------------------------------------- | ------------------------------------- |
-| `host-exact` | hostname 完全相等（推荐用于区分同基域名的多环境）           | `cust.example.com`                        | **默认使用这个**                      |
-| `host-suffix`| hostname 相等或以 `.<domain>` 结尾（含所有子域）             | `example.com`                             | 兼容旧粗粒度匹配                      |
-| `url-regex`  | 完整 URL 正则匹配                                            | `^https?://.*/admin(/.*)?$`               | 用于按路径 / query 区分               |
-| `ip-exact`   | 当 hostname 是 IP 时精确匹配                                 | `10.20.30.5`                              | 只在 hostname 为 IP 时才尝试匹配      |
-| `ip-cidr`    | 当 hostname 是 IP 时按 CIDR 匹配                             | `10.20.30.0/24`                           | 支持 IPv4 CIDR                        |
-| `cookie`     | `document.cookie` 中的键值匹配                               | `env=prod` / `env~=stage` / `admin_token` | `=` 精确、`~=` 包含、仅键名 → 检查存在 |
+| Type          | Semantics                                                   | Example                                    | Notes                                  |
+| ------------- | ----------------------------------------------------------- | ------------------------------------------ | -------------------------------------- |
+| `host-exact`  | hostname equals value (recommended for distinguishing same-domain environments) | `cust.example.com`     | **Default**                            |
+| `host-suffix` | hostname equals value or ends with `.<value>` (all subdomains) | `example.com`                           | Compatible with older coarse matching  |
+| `url-regex`   | Full-URL regex                                              | `^https?://.*/admin(/.*)?$`                | For path / query targeting             |
+| `ip-exact`    | When hostname is an IP, exact match                         | `10.20.30.5`                               | Only attempted when hostname is IP-shaped |
+| `ip-cidr`     | When hostname is an IP, CIDR match                          | `10.20.30.0/24`                            | IPv4 CIDR only                         |
+| `cookie`      | Key/value match against `document.cookie`                   | `env=prod` / `env~=stage` / just `sid`     | `=` equals, `~=` contains, name-only checks existence |
 
-**冲突处理**：一条配置内多规则命中时，选 score 最高的一条；多条配置命中时也一样。score 大致规则：`host-exact` > `ip-exact` > `ip-cidr` > `url-regex` > `cookie` > `host-suffix`，同类型按 value 长度。
+**Conflict handling**: when multiple rules hit within a config, or multiple configs hit at once, the one with the highest score wins. Approximate priority: `host-exact` > `ip-exact` > `ip-cidr` > `url-regex` > `cookie` > `host-suffix`; ties break on value length.
 
-## 付费版（Pro）预留
+## Working with translations
 
-参见 `docs/paid-version.md`。当前**所有功能全部免费**开放；架构上已经通过 `src/features.js` 的 `Features.canUse(key)` 打好门控桩位，未来接入 license 校验只需修改这一个文件。
+- Edit `scripts/gen-locales.mjs` — it is the single source of truth for every locale.
+- Run `node scripts/gen-locales.mjs` to regenerate `_locales/*/messages.json` and `src/i18n-messages.js`.
+- Run `node scripts/check-i18n.mjs` to lint for drift between locales and unknown keys referenced from HTML/JS.
+- The runtime picker lives in `src/i18n.js` (`WatermarkI18n.switchLang(lang)`).
 
-## 权限说明
+## Paid ("Pro") plan
 
-- `storage`：使用 `chrome.storage.sync` 保存配置和语言偏好
-- `activeTab`：预留
-- `<all_urls>` content script：全站注入水印判定逻辑，只有命中规则的页面才实际绘制
-- `all_frames: true`：所有 frame（含跨源 iframe）都会独立注入 content script 并按 iframe 自己的 URL / hostname 匹配规则；如果需要在跨源 iframe 里显示"主页面的"水印，浏览器不支持穿透（安全模型层面限制）
+See `docs/paid-version.md`. All features are free today; the `Features.canUse(key)` gate in `src/features.js` is in place for future licence checks, so the business code doesn't need to change.
 
-## 版本
+## Permissions
 
-`2.0.0` — 匹配规则重构 / UI 重做 / 智能变色 / 沉浸式边框 / 导入导出 / 全局开关 等
+- `storage` — persists configs and preferences via `chrome.storage.sync`.
+- `activeTab` — reserved.
+- `<all_urls>` content script — evaluates the match rules on every page, but only actually draws the watermark on matched ones.
+- `all_frames: true` — each (cross-origin) iframe matches its own URL / hostname. Cross-origin iframes cannot see the top page's URL by design.
+
+## Version
+
+`2.0.0` — Rule-based match rewrite, UI overhaul, smart contrast color, immersive border, import/export, global kill switch, full multi-language support.

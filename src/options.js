@@ -8,6 +8,18 @@ const state = {
   search: '',
   activeTab: 'rules',
 }
+
+// Expose the shared i18n helpers under the same names the rest of this file
+// already uses (t, tf, applyLang, switchLang, getStoredLang). The i18n module
+// publishes them on window.WatermarkI18n so the options page can be loaded in
+// isolation for tests, and this indirection keeps the rest of options.js free
+// of the WatermarkI18n prefix.
+const _i18n = window.WatermarkI18n
+const t = _i18n.t
+const tf = _i18n.tf
+const applyLang = _i18n.applyLang
+const switchLang = _i18n.switchLang
+const getStoredLang = _i18n.getStoredLang
 const RULE_TYPES = [
   'host-exact',
   'host-suffix',
@@ -68,59 +80,7 @@ function closeHelpPanel() {
   const overlay = document.getElementById('help-panel')
   if (!overlay) return
   overlay.style.display = 'none'
-} // ---------- 弹窗 & 帮助面板 i18n ----------
-const extraI18n = {
-  'zh-CN': {
-    confirmDeleteRuleTitle: '删除规则',
-    confirmDeleteRule: '确定要删除这条规则吗？',
-    confirmDeleteConfigTitle: '删除配置',
-    confirmDeleteConfig: '确定要删除整个配置吗？此操作无法撤销。',
-    helpTitle: '使用指南',
-    helpQuickStart: '快速开始',
-    helpStep1: '点击左上角「+」按钮新建一条水印配置',
-    helpStep2: '在「匹配规则」Tab 设置触发条件（域名/URL/IP 等）',
-    helpStep3: '在「外观」Tab 设置水印文字、颜色、字体、透明度等',
-    helpRules: '匹配规则说明',
-    ruleHostExact: '精确域名',
-    ruleHostSuffix: '域名后缀',
-    ruleUrlRegex: 'URL 正则',
-    ruleIpExact: 'IP 精确',
-    ruleIpCidr: 'IP 段 (CIDR)',
-    ruleCookie: 'Cookie',
-    helpTips: '小提示',
-    helpTip1: '每条配置可设置多条规则，任一命中即生效',
-    helpTip2: '多条配置命中时，按"最精确优先"原则选择',
-    helpTip3: '短标签显示在浏览器工具栏图标右下角，最多 4 字符',
-    helpTip4: '智能对比色自动根据网页背景反色显示',
-  },
-  en: {
-    confirmDeleteRuleTitle: 'Delete Rule',
-    confirmDeleteRule: 'Are you sure you want to delete this rule?',
-    confirmDeleteConfigTitle: 'Delete Config',
-    confirmDeleteConfig: 'Are you sure you want to delete this config? This cannot be undone.',
-    helpTitle: 'Guide',
-    helpQuickStart: 'Quick Start',
-    helpStep1: 'Click + button in the top-left to create a new config',
-    helpStep2: 'Go to Match Rules tab and set trigger conditions',
-    helpStep3: 'Go to Style tab to customize watermark look',
-    helpRules: 'Rule Types',
-    ruleHostExact: 'Exact Host',
-    ruleHostSuffix: 'Host Suffix',
-    ruleUrlRegex: 'URL Regex',
-    ruleIpExact: 'IP Exact',
-    ruleIpCidr: 'IP CIDR',
-    ruleCookie: 'Cookie',
-    helpTips: 'Tips',
-    helpTip1: 'Multiple rules per config, any match triggers the watermark',
-    helpTip2: 'When multiple configs match, the most specific one wins',
-    helpTip3: 'Short badge shows in the toolbar icon corner (max 4 chars)',
-    helpTip4: 'Smart color inverts automatically against page background',
-  }
-} // 合并到翻译字典
-Object.keys(extraI18n).forEach(lang => {
-  if (!translations[lang]) translations[lang] = {}
-  Object.assign(translations[lang], extraI18n[lang])
-})
+}
 // ============ 工具 ============
 const $ = (id) => document.getElementById(id)
 const showToast = (msg) => {
@@ -141,12 +101,20 @@ const debounce = (fn, ms) => {
 }
 const currentConfig = () =>
   state.configs.find((c) => c.id === state.currentId) || null
-const isDefaultName = (name) =>
-  Object.values(translations).some(
-    (d) => d.defaultConfigName === name || d.unnamed === name,
-  )
-const isDefaultText = (text) =>
-  Object.values(translations).some((d) => d.defaultConfigText === text)
+// Detect placeholder-style values that were persisted using the localized
+// default names, so we re-render them in the current language instead of
+// showing stale strings. We snapshot the current language's default labels
+// whenever the language changes so users who created a config in one language
+// still see a fresh default label after switching.
+const DEFAULT_NAME_KEYS = ['defaultConfigName', 'unnamed']
+const DEFAULT_TEXT_KEYS = ['defaultConfigText']
+const _seenDefaultLabels = { name: new Set(), text: new Set() }
+const _rememberDefaults = () => {
+  for (const k of DEFAULT_NAME_KEYS) _seenDefaultLabels.name.add(t(k))
+  for (const k of DEFAULT_TEXT_KEYS) _seenDefaultLabels.text.add(t(k))
+}
+const isDefaultName = (name) => _seenDefaultLabels.name.has(name)
+const isDefaultText = (text) => _seenDefaultLabels.text.has(text)
 const saveToStorage = (cb) =>
   chrome.storage.sync.set({
       configs: state.configs,
@@ -169,12 +137,15 @@ const clamp = (name, v) =>
   Number(v) // ============ 初始化 ============
 document.addEventListener('DOMContentLoaded', () => {
   getStoredLang((lang) => {
-    applyLang(lang)
-    bindStaticEvents()
-    loadAll()
+    applyLang(lang).then(() => {
+      _rememberDefaults()
+      bindStaticEvents()
+      loadAll()
+    })
   })
 })
 window.onLangChanged = () => {
+  _rememberDefaults()
   renderConfigList()
   if (state.currentId) renderForm()
   updateGlobalToggleLabel()
@@ -182,13 +153,30 @@ window.onLangChanged = () => {
   runTester()
 }
 const bindStaticEvents = () => {
-  // 语言（受 Features.multiLang 门控。字典和结构保留，未启用时隐藏切换按钮）
-  const langBtn = $('lang-toggle')
-  if (Features.canUse('multiLang')) {
-    langBtn.style.display = ''
-    langBtn.onclick = () => switchLang(langBtn.dataset.targetLang || 'en')
-  } else {
-    langBtn.style.display = 'none'
+  // Enhance the two color inputs with our preset+recent picker.
+  // The native <input type="color"> stays in the DOM as the data source,
+  // so existing input/change listeners and `.value`/`.disabled` writes keep working.
+  if (window.ColorPicker) {
+    if ($('color')) window.ColorPicker.attach($('color'))
+    if ($('border-color')) window.ColorPicker.attach($('border-color'))
+  }
+  // Language picker (gated by Features.multiLang so we can dark-launch new
+  // locales without exposing the switch UI).
+  const langSelect = $('lang-select')
+  if (langSelect) {
+    if (Features.canUse('multiLang')) {
+      if (langSelect.parentElement) langSelect.parentElement.style.display = ''
+      chrome.storage.sync.get({ lang: '' }, (items) => {
+        langSelect.value = items && typeof items.lang === 'string' ? items.lang : ''
+      })
+      langSelect.onchange = () => {
+        switchLang(langSelect.value)
+      }
+    } else {
+      // Hide the picker but keep the storage key intact so users who upgrade
+      // to a Pro build later see their previous choice.
+      if (langSelect.parentElement) langSelect.parentElement.style.display = 'none'
+    }
   }
   // 全局开关
   $('global-toggle').onchange = (e) => {
@@ -306,7 +294,6 @@ const bindStaticEvents = () => {
     if (!cfg) return
     cfg.border = cfg.border || {}
     cfg.border.color = e.target.value
-    $('border-color-hex').textContent = e.target.value.toUpperCase()
   }
   $('border-width').oninput = (e) => {
     const cfg = currentConfig()
@@ -458,7 +445,6 @@ const renderForm = () => {
   $('text').value =
     isDefaultText(cfg.text) || !cfg.text ? t('defaultConfigText') : cfg.text
   $('color').value = cfg.color || '#ff0000'
-  $('color-hex').textContent = (cfg.color || '#ff0000').toUpperCase()
   $('fontsize').value = cfg.fontSize ?? 24
   $('opacity').value = cfg.opacity ?? 0.15
   $('density').value = cfg.density ?? 300
@@ -470,7 +456,6 @@ const renderForm = () => {
   const border = cfg.border || {}
   $('border-enabled').checked = !!border.enabled
   $('border-color').value = border.color || '#ef4444'
-  $('border-color-hex').textContent = (border.color || '#ef4444').toUpperCase()
   $('border-width').value = border.width || 4
   $('border-width-val').textContent = String(border.width || 4)
   updateBorderUI()
@@ -482,6 +467,14 @@ const renderForm = () => {
   $('fade-resume-val').textContent = String(fade.resumeDelay ?? 2000)
   updateFadeUI()
   updateRangeLabels()
+  // Programmatic .value writes above don't fire input events; nudge the
+  // color-picker triggers to repaint their swatches.
+  if (window.ColorPicker) {
+    const cp1 = $('color') && $('color').__colorPickerAttached
+    const cp2 = $('border-color') && $('border-color').__colorPickerAttached
+    if (cp1) cp1.refresh()
+    if (cp2) cp2.refresh()
+  }
   renderRulesList()
   renderPreview()
   runTester()
@@ -496,7 +489,6 @@ const updateSmartColorUI = () => {
   const on = $('smartColor').checked
   $('smartColorTone').disabled = !on
   $('color').disabled = on
-  $('color').style.opacity = on ? 0.4 : 1
 }
 const updateBorderUI = () => {
   const on = $('border-enabled').checked
