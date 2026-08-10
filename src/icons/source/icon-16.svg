@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges">
+  <!-- 16px pixel-hinted version: no gradient, no bars, thicker W stroke -->
+  <rect x="1" y="1" width="14" height="14" rx="3" ry="3" fill="#1e40af"/>
+  <path d="M 3.25 4 L 5.75 12 L 8 8 L 10.25 12 L 12.75 4"
+        fill="none" stroke="#ffffff" stroke-width="1.9"
+        stroke-linejoin="round" stroke-linecap="round"
+        shape-rendering="geometricPrecision"/>
+</svg>

@@ -24,23 +24,58 @@ const canUse = (key) =>
 
 // ============ 主流程 ============
 
+// 本页最近一次上报的 badge 状态，供 background 在 top-level 加载完成时
+// ping（wm:request-badge）回来重发，兜住一切"上报后又被清"的时序问题。
+let __wmLastBadge = null // { label, color } | null
+
+const sendBadge = (label, color) => {
+  __wmLastBadge = label ? { label, color } : null
+  try {
+    const ret = chrome.runtime.sendMessage({ type: 'wm:badge', label, color })
+    // MV3 下 sendMessage 返回 Promise；扩展被更新/卸载的瞬间会 reject，吞掉避免噪音
+    if (ret && typeof ret.catch === 'function') ret.catch(() => {})
+  } catch (_) {
+    // 扩展上下文失效，忽略
+  }
+}
+
+// 向 background 上报当前页面的 badge 信息。
+// MV3 下 background 没有 tabs 权限 / host permission 时读不到 tab.url
+// （content_scripts.matches 不授予 host permission），无法自己匹配，
+// 因此由算好结果的 content script 主动上报，零新增权限。
+// 只有顶层 frame 上报：badge 反映主页面，iframe（all_frames: true 也会注入）不覆盖。
+const reportBadge = (config) => {
+  try {
+    if (window.top !== window) return
+  } catch (_) {
+    // 极端沙箱场景下 window.top 不可读，按顶层处理
+  }
+  const label = config ? window.WatermarkCore.shortLabelOf(config) : ''
+  const color = config ? window.WatermarkCore.resolveBadgeColor(config) : ''
+  sendBadge(label, color)
+}
+
 const init = () => {
   chrome.storage.sync.get(
     { configs: [], globalEnabled: true },
     (items) => {
       cleanup()
-      if (items.globalEnabled === false) return
 
-      const ctx = window.WatermarkCore.parseContext(
-        window.location,
-        document.cookie || '',
-      )
-      const matches = window.WatermarkCore.findMatches(items.configs, ctx)
-      if (matches.length === 0) return
+      let matchedConfig = null
+      if (items.globalEnabled !== false) {
+        const ctx = window.WatermarkCore.parseContext(
+          window.location,
+          document.cookie || '',
+        )
+        const matches = window.WatermarkCore.findMatches(items.configs, ctx)
+        if (matches.length > 0) matchedConfig = matches[0].config
+      }
 
-      const config = matches[0].config
-      __wmCurrentConfig = config
-      renderConfig(config)
+      reportBadge(matchedConfig)
+
+      if (!matchedConfig) return
+      __wmCurrentConfig = matchedConfig
+      renderConfig(matchedConfig)
     },
   )
 }
@@ -188,11 +223,17 @@ const installMouseFade = (config, overlay) => {
 
   document.addEventListener('mousemove', onActivity, { passive: true })
   document.addEventListener('keydown', onActivity, { passive: true })
+  // 滚轮滚动也算活跃交互（包括滚到边界滚不动的情况，与用户确认过）
+  document.addEventListener('wheel', onActivity, { passive: true })
+  // 触屏拖动
+  document.addEventListener('touchmove', onActivity, { passive: true })
 
   __wmMouseFadeState = {
     dispose() {
       document.removeEventListener('mousemove', onActivity)
       document.removeEventListener('keydown', onActivity)
+      document.removeEventListener('wheel', onActivity)
+      document.removeEventListener('touchmove', onActivity)
       if (timer) clearTimeout(timer)
     },
   }
@@ -276,6 +317,21 @@ const setupObserver = () => {
 chrome.storage.onChanged.addListener((changes, namespace) => {
   if (namespace !== 'sync') return
   init()
+})
+
+// background 在 top-level 加载完成（onUpdated complete）时 ping 本页重发 badge，
+// 兜住"上报之后又被延迟事件清掉"的一切时序问题。
+chrome.runtime.onMessage.addListener((msg) => {
+  if (!msg || msg.type !== 'wm:request-badge') return
+  try {
+    if (window.top !== window) return
+  } catch (_) {
+    // 同 reportBadge：极端沙箱场景按顶层处理
+  }
+  sendBadge(
+    __wmLastBadge ? __wmLastBadge.label : '',
+    __wmLastBadge ? __wmLastBadge.color : '',
+  )
 })
 
 // 初次运行

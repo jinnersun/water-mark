@@ -2,6 +2,25 @@
 
 按优先级 / 归属方向记录后续要做的功能。已完成的 √ 掉即可。
 
+## 🔴 发布阻塞 BUG（最高优先级）
+
+### ✅ 鼠标渐隐不响应滚轮 —— 已修复（2026-08-10），待浏览器验证
+- 修法：`installMouseFade` 补 `wheel` + `touchmove` 监听（含 dispose 清理），去抖逻辑不动
+- 详见 `docs/v2-implementation-plan.md` 阶段 1-B
+
+### ✅ Badge 无法显示 —— 已修复（2026-08-10 消息传递重构），待浏览器干净加载验证
+- 根因：MV3 下 background 读不到 `tab.url`（无 tabs 权限 / host permission），旧 badge 逻辑全是死代码
+- 修法：content script 算好命中结果后 `runtime.sendMessage` 上报，background 用 `sender.tab.id` 设 badge；零新增权限，顺带修复 cookie 规则 badge 失效
+- 详见 `docs/v2-implementation-plan.md` 阶段 1-A
+
+## 已决策记录
+
+- ✅ **反馈入口**：保持使用 prompt 仓库 GitHub Issues。备选叠加自有 EasyForm（<https://www.easyform.dpdns.org/>）做非 GitHub 用户的反馈通道 —— 需单独做 `feedback.html` 挂 GitHub Pages（扩展内不能直接嵌 script），列为 v2.1 增强
+- ✅ **商店 listing 语言**：不补 zh_TW / ja / es 描述，v2.0 只上中英两套
+- ✅ **付费限制时机**：上线前就加入（无历史用户，可自由划分功能归属）
+- ✅ **`promo-920x680.png`**：Chrome 已废弃该尺寸，不做
+- 🔶 **付费技术栈**：倾向 Supabase（Cloudflare 无对标 Supabase Auth 的消费级认证产品，自建需接邮箱验证/OAuth/邮件服务商）。待确认云同步是否进首发
+
 ## UI 整体优化（按优先级）
 
 ### 高优先级（待修复）
@@ -29,12 +48,8 @@
 - ✅ 导入确认居中模态框
 
 ### UI 优化（进行中）
-- 🎯 **颜色选择器优化**：现有原生 <input type="color"> 体验差，需要视觉升级
-  - 方案对比：
-    - 方案 A：饼图（色轮）点击选色
-    - 方案 B：6×6 正方形色彩矩阵 + 自定义取色器
-    - 方案 C：行内 5-8 个环境预定义色块（红/橙/黄/绿/蓝/紫/灰/黑）+ 自定取色器 ⭐ 推荐
-- 🎯 **规则命中状态高亮**：当前访问页面命中某条规则时，该规则行高亮显示命中标签
+- ✅ **颜色选择器优化**：已落地 `src/color-picker.js`，采用方案 C（8 个环境预设色块 4×2 + 最近使用 6 个 + 自定取色器）
+- 🎯 **规则命中状态高亮**：当前访问页面命中某条规则时，该规则行高亮显示命中标签（**未实现**，代码里搜不到相关逻辑）
 
 ### 匹配逻辑（待单独开窗口讨论）
 - 🔍 **规则去重与冲突检测**
@@ -54,26 +69,22 @@
 
 ## 高优先级（下一版）
 
-### 一键复制规则给 Agent（"让 AI 帮我写规则"）
+> 以下三项（AI prompt、反馈入口、多语言）**已在 v2.0 完成**，保留原始设计记录备查，详见 `docs/v2-manifest.md`。
+
+### ✅ 一键复制规则给 Agent（"让 AI 帮我写规则"）—— 已完成
 **背景**：新用户面对 6 种规则类型 + Cookie 语法 + IP CIDR，可能懒得学；直接把「我们的规则说明」+「我想要的效果」丢给 ChatGPT / Claude / Codex 让 AI 输出一段规则，是最低门槛。
 
-两种可选实现（**都可以做**，不冲突）：
+**最终实现：方案 A + 方案 B 都做了**
 
-**方案 A：扩展内一键复制**
-- 在 options 页某处（比如"规则测试"卡片下方）加一个「让 AI 生成规则」按钮
-- 点击后把下列内容拼装成一段 Markdown 复制到剪贴板：
-  - 扩展的规则语法说明（6 种 type，各自 value 语法）
-  - 当前配置的表单快照（作为 few-shot 示例）
-  - 一个占位符提示："请在这里描述你的场景"
-- 用户粘到任意 AI 对话里，AI 会输出 JSON 片段，用户再回到扩展"从剪贴板导入"即可
-- 需要新增一个"从剪贴板导入"按钮，配合已有的 sanitizeImportedConfig
+**方案 A：扩展内一键复制** ✅
+- `options.html:335` `#copy-prompt-btn` → `options.js` `onCopyPrompt`
+- 拼装内联 PROMPT（`options.js:72` 起）+ 当前配置快照 → 剪贴板 → toast
+- `options.html:342` `#paste-clipboard-btn` → `onPasteFromClipboard`，复用 `sanitizeImportedConfig`
+- `options.html:349` 「查看提示词源文件」链接
 
-**方案 B：独立 Skill / Prompt（放 GitHub）**
-- 在 <https://github.com/...> 开个仓库存 `SKILL.md` 或 `PROMPT.md`
-- 内容：规则语法说明 + 示例输入输出 + 直接可粘贴的 system prompt
-- 用户在 Claude / Codex / Cursor 里 import 这个 skill / 复制 prompt，之后随时问"帮我给 XX 网站生成水印配置"
-
-**建议先做 B**（GitHub prompt 文件），零代码改动、门槛最低、可迭代；A 是等 prompt 沉淀后再做的糖衣。
+**方案 B：独立 Prompt 仓库** ✅
+- <https://github.com/jinnersun/web-watermark-prompt>
+- 已有 `PROMPT.md` / `PROMPT.zh_CN.md` / `EXAMPLES.md` / `EXAMPLES.zh_CN.md`
 
 **Prompt 骨架草案**（先记这里，后期再抽取）：
 
@@ -112,40 +123,44 @@ Task: The user will describe their scenario. Reply with a JSON array
 of one or more configs, ready to paste into the extension's Import dialog.
 ```
 
-### 反馈入口
-- options 页顶部或侧边加一个"反馈 / 建议"入口
-- 可选实现方案：
-  1. mailto 链接（最简单，`?subject=[Web Watermark Feedback] ...`）
-  2. GitHub Issues 链接（跳到仓库 issue 页）
-  3. 自建表单（Cloudflare Workers + D1，未来跟 license 同一套后端）
-- **建议先做 GitHub Issues 链接**，等仓库开好之后加一行就行
+### ✅ 反馈入口 —— 已完成
+- 实现位置：帮助面板底部「反馈 / Bug 报告」卡片（`options.html:711-713`）
+- 指向 <https://github.com/jinnersun/web-watermark-prompt/issues>
+- i18n key `helpFeedbackTitle / helpFeedbackDesc / helpFeedbackLink`，5 语言齐全
+- ✅ **已决策**：保持使用 prompt 仓库，不为扩展单开仓库
+- 🔶 **v2.1 增强候选**：接入自有 EasyForm（<https://www.easyform.dpdns.org/>）作为非 GitHub 用户的反馈通道
+  - 免费额度 100 次/月，含 AI 反垃圾 + AI 摘要，Resend 送信
+  - 实现路径：GitHub Pages 上挂 `feedback.html` 内嵌 EasyForm script，扩展里链过去（扩展内不能直接嵌外部 script，CSP 限制）
 
 ## 中优先级
 
-### 多语言支持正式启用
-- 现有代码已经全部走 i18n，字典完整
-- 启用步骤：`src/features.js` 里把 `multiLang` 从 `DISABLED_FEATURES` 挪到 `FREE_FEATURES` 即可
-- 启用后：语言切换按钮自动显示、`switchLang` 正常工作、`getStoredLang` 恢复自动检测
-- 启用前 QA：确认所有 UI 都通过 `data-i18n / data-i18n-placeholder / data-i18n-title` 打了标签，动态渲染部分用 `t()` / `tf()`
+### ✅ 多语言支持正式启用 —— 已完成
+- `src/features.js:18` `multiLang` 已在 `FREE_FEATURES`，`DISABLED_FEATURES` 为空
+- 五语齐全：en / zh_CN / zh_TW / ja / es（`src/i18n-messages.js` + `src/_locales/`）
+- ⏳ **遗留 QA**：五语的实际 UI 走查（尤其 ja / es 的长文案是否溢出布局）尚未做
+
+### ✅ 从剪贴板导入 —— 已完成
+- `options.html:342` `#paste-clipboard-btn` → `onPasteFromClipboard`，复用 `sanitizeImportedConfig`
 
 ### 配置拖拽排序
 - 侧栏配置列表支持拖拽调整顺序（决定同分匹配时的优先级，也让用户能自主排列）
 - 用 HTML5 draggable + 保存到 storage
+- 状态：**未实现**（代码里无 `draggable`）
 
 ### 动态变量支持
 - 水印文本支持占位符：`{user}` / `{date}` / `{time}` / `{host}` / `{path}`
 - 需要在 options 里加"用户显示名"字段（存 storage.sync.userDisplay），因为浏览器拿不到系统账号
 - 已在 `features.js` 标记为 `dynamicVars` PAID 候选
-
-### 从剪贴板导入
-- 配合"一键复制规则给 Agent"使用；用户从 AI 复制 JSON → 一键导入
-- 复用 sanitizeImportedConfig，UI 上加一个「粘贴 JSON 导入」按钮
+- 状态：**未实现**，但 5 语言的 `textHint` 已埋「未来将支持 {user} / {date} 等变量」文案 —— 这是对用户的隐性承诺，需要兑现或改文案
 
 ## 低优先级 / 长期
 
 ### 付费版落地
 - 见 `docs/paid-version.md`
-- 涉及：Cloudflare Workers + D1 后端、Paddle/Gumroad 收款、license 校验、扩展内激活 UI
+- ✅ **已决策**：上线前就加入付费限制（无历史用户）
+- 🔶 技术栈倾向 Supabase（认证开箱即用）
+- ⚠️ **重要发现**：`features.js` 里 `cookieMatch` / `unlimitedConfigs` / `dynamicVars` 等键的 `canUse()` **实际调用点为 0**，是空壳声明。挪 key 不产生任何效果，需真正写门控逻辑（`cookieMatch` 3 处、`unlimitedConfigs` 2 处）
+- ⚠️ **强制约束**：任何转 Pro 的功能，必须同步删改 `docs/store-assets/descriptions/` 下 4 份商店文案里的对应卖点，否则构成虚假宣传（拒审理由）
 
 ### 字体家族可选
 - 微软雅黑在 Mac / Linux 上没有会回退
@@ -155,6 +170,7 @@ of one or more configs, ready to paste into the extension's Import dialog.
 - 目前 badge 文本只支持 4 字符纯文本
 - 未来可以做自定义 canvas 图标（`chrome.action.setIcon` 传 ImageData），支持任意样式
 - 或多个 tab 分别不同颜色
+- 图标源已是 SVG（`src/icons/source/icon.svg`），未来可以用 `OffscreenCanvas` + drawImage 组合出"当前环境色调 + 白 W"的动态图标，直接通过 `chrome.action.setIcon({ tabId, imageData })` 应用
 
 ### 可访问性
 - 键盘导航（Tab / Enter / Esc）
@@ -191,4 +207,10 @@ of one or more configs, ready to paste into the extension's Import dialog.
 - 特性门控层 `features.js`（预留付费拆分）
 - iframe 独立匹配（`all_frames: true`）
 - 工具栏图标 badge（shortLabel，短标签）
-- 多语言字典完整（en / zh_CN / zh_TW / ja / es，跟随浏览器 + 手动切换）
+- 多语言字典完整（en / zh_CN / zh_TW / ja / es，跟随浏览器 + 手动切换）并正式启用
+- 图标矢量化重制：SVG 单一源 (`src/icons/source/`) + `scripts/gen-icons.mjs` 一键导出 16/48/128（`npm run gen-icons`）；options logo 引用打包产物 `icons/icon48.png`（`source/` 仅为构建输入，不进 zip）
+- 颜色选择器（`src/color-picker.js`）：8 环境预设色 + 最近使用 + 自定取色器
+- 一键复制 AI 提示词 + 从剪贴板导入
+- 反馈入口（帮助面板 → GitHub Issues）
+- 上架素材：5 张 1280×800 截图、2 张 promo tile（440×280 / 1400×560）、中英文短/详描述、隐私政策挂 GitHub Pages
+- 独立 prompt 仓库 <https://github.com/jinnersun/web-watermark-prompt>（PROMPT / EXAMPLES 中英双语）

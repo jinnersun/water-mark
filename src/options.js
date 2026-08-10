@@ -93,7 +93,7 @@ const AGENT_PROMPT_EN = [
   '## Config fields (JSON, camelCase, no comments)',
   '{',
   '  "name": string,                    // shown in sidebar',
-  '  "shortLabel": string(<=4),         // toolbar badge, optional',
+  '  "shortLabel": string(<=4 half-width chars; CJK counts as 2), // toolbar badge, prefer ASCII like PROD/TEST/PRE',
   '  "enabled": true,',
   '  "rules": [{"type": ..., "value": ...}],',
   '  "text": string,                    // watermark text; \\n for newline',
@@ -150,7 +150,7 @@ const AGENT_PROMPT_ZH = [
   '## 配置字段 (JSON, camelCase, 不能有注释)',
   '{',
   '  "name": string,                    // 侧栏显示的名称',
-  '  "shortLabel": string(<=4),         // 工具栏 badge，可选',
+  '  "shortLabel": string(<=4 个半角字符；中日韩全角字符按 2 计), // 工具栏 badge，建议用 PROD/TEST/PRE 等英文简写',
   '  "enabled": true,',
   '  "rules": [{"type": ..., "value": ...}],',
   '  "text": string,                    // 水印文字；\\n 换行',
@@ -267,6 +267,46 @@ function closeHelpPanel() {
   const overlay = document.getElementById('help-panel')
   if (!overlay) return
   overlay.style.display = 'none'
+}
+
+// Click-triggered field help popover. Uses click (not hover) so the hint is
+// reachable by keyboard and touch; the input keeps its title attribute as a
+// zero-cost hover fallback. Dismissal semantics mirror color-picker.js:
+// capture-phase outside mousedown + Escape.
+const bindFieldHint = (btnId, popId) => {
+  const btn = $(btnId)
+  const pop = $(popId)
+  if (!btn || !pop) return
+  const isOpen = () => pop.style.display !== 'none'
+  const setOpen = (open) => {
+    pop.style.display = open ? 'block' : 'none'
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false')
+  }
+  setOpen(false)
+  btn.onclick = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setOpen(!isOpen())
+  }
+  // Document-level listeners are global, so guard against double-binding the
+  // same popover (mirrors the __helpEscBound pattern above).
+  if (btn.__fieldHintBound) return
+  btn.__fieldHintBound = true
+  document.addEventListener(
+    'mousedown',
+    (e) => {
+      if (!isOpen()) return
+      if (btn.contains(e.target) || pop.contains(e.target)) return
+      setOpen(false)
+    },
+    true,
+  )
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) {
+      setOpen(false)
+      btn.focus()
+    }
+  })
 }
 // ============ 工具 ============
 const $ = (id) => document.getElementById(id)
@@ -436,6 +476,7 @@ const bindStaticEvents = () => {
   const nameInput = $('config-name')
   if (nameInput) nameInput.oninput = () => onFormField('name', nameInput.value)
   on('short-label', 'oninput', (e) => onFormField('shortLabel', e.target.value))
+  bindFieldHint('short-label-hint-btn', 'short-label-hint-pop')
   on('enabled', 'onchange', (e) => onFormField('enabled', e.target.checked))
   // 添加规则（当无规则时点击也直接生效）
   on('add-rule-btn', 'onclick', () => {
@@ -546,11 +587,14 @@ const loadAll = () => {
       updateGlobalToggleLabel()
       if (state.configs.length > 0) {
         state.currentId = state.configs[0].id
-        showEditor()
       } else {
         showEmpty()
       }
       renderConfigList()
+      // renderConfigList() first so the sidebar .active highlight matches the
+      // form. renderForm() calls showEditor() itself and falls back to
+      // showEmpty() when no config resolves.
+      if (state.currentId) renderForm()
     },
   )
 }
@@ -1047,7 +1091,9 @@ const appendConfigs = (list) => {
     c.id = generateId()
     state.configs.push(c)
   })
-  if (!state.currentId) state.currentId = cleaned[0].id
+  // Always select the first imported config so the editor shows what just
+  // arrived instead of staying on the previously selected one.
+  state.currentId = cleaned[0].id
   saveToStorage((err) => {
     if (err) return
     renderConfigList()
@@ -1121,6 +1167,10 @@ const onCopyPrompt = async () => {
 // Read JSON from clipboard, sanitize, and append as new configs. Reuses the
 // same validation path as file-based import.
 const onPasteFromClipboard = async () => {
+  if (!Features.canUse('importExport')) {
+    showToast(t('toastFeatureLocked'))
+    return
+  }
   let raw
   try {
     raw = await navigator.clipboard.readText()

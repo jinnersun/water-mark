@@ -846,11 +846,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
   transition: var(--transition);
 }
 .rule-row .rule-remove:hover {
-  color: #ef4444;
-  border-color: #fecaca;
-  background: #fef2f2;
-}
-.rule-row .rule-remove:hover {
   color: var(--danger);
   border-color: #fca5a5;
   background: var(--danger-bg);
@@ -1021,22 +1016,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   background: var(--border-hover);
 }
 
-.short-label-input {
-  border: none !important;
-  background: transparent !important;
-  padding: 0 !important;
-  width: 60px;
-  font-size: 12.5px !important;
-  font-weight: 600;
-  color: var(--text-main) !important;
-  text-align: center;
-  letter-spacing: 0.5px;
-}
-.short-label-input:focus {
-  box-shadow: none !important;
-}
-
-/* 浠呰灞忓櫒鍙 */
+/* 仅读屏器可见：视觉上隐藏，但保留在无障碍树中（勿用 display:none） */
 .visually-hidden {
   position: absolute !important;
   width: 1px !important;
@@ -1056,25 +1036,33 @@ input[type="range"]::-webkit-slider-thumb:hover {
   font-size: 13px;
 }
 
-/* 带图标输入框 */
+/* 带图标输入框：真边框画在外壳上，内部 input 去掉自身边框/背景，
+   使图标 + 输入框 + i 按钮看起来像同一个控件。
+   position:relative 使其成为 .hint-pop 的定位锚点。 */
 .input-with-icon {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 0 12px;
+  height: 36px;
+  padding: 0 10px;
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
   background: var(--bg-panel);
   transition: var(--transition);
-  height: 36px;
+  position: relative;
 }
 .input-with-icon:focus-within {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-light);
 }
 .input-with-icon svg {
-  color: var(--text-muted);
+  color: #6b7280;
   flex-shrink: 0;
+}
+.input-with-icon input {
+  border: none !important;
+  padding: 8px 0 !important;
+  background: transparent !important;
 }
 .short-label-input {
   border: none !important;
@@ -1313,35 +1301,55 @@ input[type="range"]::-webkit-slider-thumb:hover {
   justify-content: center;
 }
 
-
-.visually-hidden {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-}
-.input-with-icon {
-  display: flex;
+/* ============ Inline field help: "i" trigger + click popover ============ */
+/* Positioning mirrors .cp-pop: the shared .main ancestor scrolls and clips on
+   both axes, so the popover opens downward into the content area. */
+.hint-btn {
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 0 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background: #fff;
-}
-.input-with-icon svg {
-  color: #6b7280;
+  justify-content: center;
   flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
 }
-.input-with-icon input {
-  border: none !important;
-  padding: 8px 0 !important;
-  background: transparent !important;
+.hint-btn:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+/* `.input-with-icon svg` matches the icon directly, which beats inheritance
+   from .hint-btn:hover — so the stroke must be targeted explicitly here. */
+.hint-btn:hover svg {
+  color: var(--primary);
+}
+.hint-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+.hint-pop {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 60;
+  width: 260px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md, 10px);
+  background: var(--bg-panel);
+  box-shadow: 0 10px 30px -10px rgb(15 23 42 / 0.25);
+  font-size: 11.5px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--text-secondary);
+  white-space: normal;
 }
 
 /* ============ AI prompt card + feedback link (v2.0) ============ */

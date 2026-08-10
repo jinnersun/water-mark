@@ -92,7 +92,10 @@
     "message": "標籤"
   },
   "shortLabelHint": {
-    "message": "將顯示在瀏覽器工具列圖示上（最多 4 字元）"
+    "message": "顯示在工具列角標；建議英文簡寫如 PROD / TEST / PRE（最多 4 個半形或 2 個全形字元）"
+  },
+  "viewHelp": {
+    "message": "查看欄位說明"
   },
   "rulesTitle": {
     "message": "觸發條件"

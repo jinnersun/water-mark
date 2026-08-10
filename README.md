@@ -36,19 +36,28 @@ Chrome extension (Manifest V3) that stamps precise per-environment watermarks on
 │   ├── options.html/.css/.js   # Options page
 │   ├── i18n.js                 # Runtime translator with live language switch
 │   ├── i18n-messages.js        # Auto-generated bundle used by i18n.js at runtime
+│   ├── color-picker.js         # Preset + recent-colors picker over <input type="color">
 │   ├── _locales/               # Manifest and runtime i18n resources
 │   │   ├── en/                 # default_locale
 │   │   ├── zh_CN/
 │   │   ├── zh_TW/
 │   │   ├── ja/
 │   │   └── es/
-│   └── icons/                  # 16 / 48 / 128 icons
+│   └── icons/                  # 16 / 48 / 128 PNGs (packaged) + source/*.svg (build input)
 ├── scripts/
 │   ├── gen-locales.mjs         # Rebuild _locales/**/messages.json + i18n-messages.js
-│   └── check-i18n.mjs          # Lint locale drift, unused/unknown keys
+│   ├── check-i18n.mjs          # Lint locale drift, unused/unknown keys
+│   ├── gen-icons.mjs           # Rasterize src/icons/source/*.svg to PNG
+│   ├── gen-promo.mjs           # Build Chrome Web Store promo tiles
+│   ├── check-screenshots.mjs   # Validate store screenshot dimensions
+│   └── fix-screenshots.mjs     # Crop/pad screenshots to exact 1280x800
 ├── docs/
 │   ├── paid-version.md         # Notes for the future Pro build
-│   └── todo.md                 # Roadmap
+│   ├── publish-guide.md        # Chrome Web Store submission guide
+│   ├── v2-manifest.md          # v2.0 feature manifest
+│   ├── v2-implementation-plan.md  # Phased implementation plan
+│   ├── todo.md                 # Roadmap
+│   └── store-assets/           # Icons, screenshots, promo tiles, store descriptions
 ├── README.md                   # English (this file)
 ├── README.zh-CN.md             # Chinese
 └── .gitignore
@@ -97,9 +106,10 @@ See `docs/paid-version.md`. All features are free today; the `Features.canUse(ke
 ## Permissions
 
 - `storage` — persists configs and preferences via `chrome.storage.sync`.
-- `activeTab` — reserved.
 - `<all_urls>` content script — evaluates the match rules on every page, but only actually draws the watermark on matched ones.
 - `all_frames: true` — each (cross-origin) iframe matches its own URL / hostname. Cross-origin iframes cannot see the top page's URL by design.
+
+This is the complete permission list (`manifest.json` declares `"permissions": ["storage"]` only). The extension has no `activeTab`, no host permissions beyond the content script match pattern, and makes no network requests.
 
 ## Version
 

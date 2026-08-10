@@ -166,7 +166,7 @@
                   data-i18n-placeholder="namePlaceholder"
                   placeholder="例如：生产环境"
                 />
-                <div class="form-group" style="flex: 0 1 180px; margin: 0">
+                <div class="form-group" style="flex: 0 1 200px; margin: 0">
                   <label
                     for="short-label"
                     class="visually-hidden"
@@ -196,8 +196,43 @@
                       maxlength="4"
                       data-i18n-placeholder="shortLabelPlaceholder"
                       placeholder="标签"
-                      title="将在浏览器工具栏图标上显示（最多 4 字符）"
+                      data-i18n-title="shortLabelHint"
                     />
+                    <button
+                      id="short-label-hint-btn"
+                      class="hint-btn"
+                      type="button"
+                      aria-expanded="false"
+                      aria-controls="short-label-hint-pop"
+                      data-i18n-title="viewHelp"
+                      title="查看字段说明"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="14"
+                        height="14"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="16" x2="12" y2="12" />
+                        <line x1="12" y1="8" x2="12.01" y2="8" />
+                      </svg>
+                    </button>
+                    <div
+                      id="short-label-hint-pop"
+                      class="hint-pop"
+                      role="tooltip"
+                      style="display: none"
+                      data-i18n="shortLabelHint"
+                    >
+                      显示在工具栏角标；建议英文简写如 PROD / TEST /
+                      PRE（最多 4 个半角或 2 个全角字符）
+                    </div>
                   </div>
                 </div>
                 <label class="switch inline-switch">

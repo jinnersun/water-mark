@@ -1,0 +1,42 @@
+﻿<!doctype html><meta charset="utf-8">
+<style>
+  body{margin:0;padding:24px;background:#f1f5f9;font-family:system-ui;color:#0f172a}
+  .row{display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap;margin-bottom:24px}
+  .cell{background:#fff;padding:16px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);text-align:center}
+  .cell small{display:block;color:#64748b;font-size:11px;margin-top:8px}
+  .toolbar{background:#e2e8f0;padding:8px 12px;border-radius:6px;display:inline-flex;align-items:center;gap:8px}
+  .toolbar.dark{background:#0f172a;color:#fff}
+  img{display:block;image-rendering:auto}
+</style>
+<h2>Env Watermark icon preview</h2>
+
+<div class="row">
+  <div class="cell"><img src="icon16.png" width="16" height="16"><small>16 @1x</small></div>
+  <div class="cell"><img src="icon16.png" width="32" height="32"><small>16 @2x</small></div>
+  <div class="cell"><img src="icon48.png" width="48" height="48"><small>48 @1x</small></div>
+  <div class="cell"><img src="icon128.png" width="128" height="128"><small>128 @1x</small></div>
+</div>
+
+<h3>Simulated Chrome toolbar</h3>
+<div class="row">
+  <div class="toolbar"><img src="icon16.png" width="16" height="16"><span>light toolbar</span></div>
+  <div class="toolbar dark"><img src="icon16.png" width="16" height="16"><span>dark toolbar</span></div>
+</div>
+
+<h3>Badge overlap check</h3>
+<div class="row">
+  <div class="cell" style="position:relative;padding:8px">
+    <div style="position:relative;width:48px;height:48px">
+      <img src="icon48.png" width="48" height="48">
+      <span style="position:absolute;right:-2px;bottom:-2px;background:#ef4444;color:#fff;font:600 10px system-ui;padding:1px 4px;border-radius:3px">PROD</span>
+    </div>
+    <small>with PROD badge</small>
+  </div>
+  <div class="cell" style="position:relative;padding:8px">
+    <div style="position:relative;width:48px;height:48px">
+      <img src="icon48.png" width="48" height="48">
+      <span style="position:absolute;right:-2px;bottom:-2px;background:#10b981;color:#fff;font:600 10px system-ui;padding:1px 4px;border-radius:3px">DEV</span>
+    </div>
+    <small>with DEV badge</small>
+  </div>
+</div>

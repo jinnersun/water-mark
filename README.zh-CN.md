@@ -32,13 +32,27 @@
 │   ├── watermark-core.js       # 纯逻辑核心：URL 解析、规则匹配、水印图片生成（options / content 共用）
 │   ├── features.js             # 特性门控层（预留付费拆分）
 │   ├── options.html/.css/.js   # 配置页面
-│   ├── i18n.js                 # 中英双语字典 + 语言切换
-│   ├── _locales/               # manifest 中 __MSG_*__ 用到的多语言资源
-│   └── icons/                  # 16 / 48 / 128 图标
+│   ├── i18n.js                 # 运行时字典 + 语言即时切换
+│   ├── i18n-messages.js        # 自动生成的字典包（供 i18n.js 运行时使用）
+│   ├── color-picker.js         # 预设色 + 最近使用色选择器
+│   ├── _locales/               # manifest 中 __MSG_*__ 用到的多语言资源（en / zh_CN / zh_TW / ja / es）
+│   └── icons/                  # 16 / 48 / 128 PNG（打包用）+ source/*.svg（构建输入，不打包）
+├── scripts/
+│   ├── gen-locales.mjs         # 重新生成 _locales/**/messages.json + i18n-messages.js
+│   ├── check-i18n.mjs          # 校验各语言漂移、未使用/未知 key
+│   ├── gen-icons.mjs           # 由 src/icons/source/*.svg 光栅化出 PNG
+│   ├── gen-promo.mjs           # 生成 Chrome 商店宣传图
+│   ├── check-screenshots.mjs   # 校验商店截图尺寸
+│   └── fix-screenshots.mjs     # 裁切/补白到精确 1280x800
 ├── docs/
 │   ├── paid-version.md         # 付费版方案讨论（后端 / 收款 / license）
-│   └── todo.md                 # 待办 & Roadmap（AI 生成规则 / 反馈入口 / 多语言启用 等）
+│   ├── publish-guide.md        # Chrome 商店上架指南
+│   ├── v2-manifest.md          # v2.0 功能清单
+│   ├── v2-implementation-plan.md  # 分阶段实施计划
+│   ├── todo.md                 # 待办 & Roadmap
+│   └── store-assets/           # 图标、截图、宣传图、商店描述
 ├── README.md
+├── README.zh-CN.md
 └── .gitignore
 ```
 
@@ -78,9 +92,10 @@
 ## 权限说明
 
 - `storage`：使用 `chrome.storage.sync` 保存配置和语言偏好
-- `activeTab`：预留
 - `<all_urls>` content script：全站注入水印判定逻辑，只有命中规则的页面才实际绘制
 - `all_frames: true`：所有 frame（含跨源 iframe）都会独立注入 content script 并按 iframe 自己的 URL / hostname 匹配规则；如果需要在跨源 iframe 里显示"主页面的"水印，浏览器不支持穿透（安全模型层面限制）
+
+以上即完整权限清单（`manifest.json` 中仅声明 `"permissions": ["storage"]`）。扩展没有 `activeTab`，除 content script 匹配范围外没有任何主机权限，也不发起任何网络请求。
 
 ## 版本
 

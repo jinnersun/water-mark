@@ -1,0 +1,20 @@
+{
+  "name": "env-watermark",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "description": "Env Watermark — Chrome extension. Build scripts and tooling only; the extension itself has no runtime deps.",
+  "scripts": {
+    "gen-icons": "node scripts/gen-icons.mjs",
+    "gen-icons:all": "node scripts/gen-icons.mjs --with-store",
+    "gen-promo": "node scripts/gen-promo.mjs",
+    "gen-locales": "node scripts/gen-locales.mjs",
+    "check-i18n": "node scripts/check-i18n.mjs",
+    "check-screenshots": "node scripts/check-screenshots.mjs",
+    "fix-screenshots": "node scripts/fix-screenshots.mjs"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "pngjs": "^7.0.0"
+  }
+}

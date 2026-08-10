@@ -92,7 +92,10 @@
     "message": "Etiqueta"
   },
   "shortLabelHint": {
-    "message": "Se muestra en el icono de la barra (máx 4 caracteres)"
+    "message": "Se muestra como insignia en la barra; prefiere abreviaturas como PROD / TEST / PRE (máx. 4 semiangulares o 2 de ancho doble)"
+  },
+  "viewHelp": {
+    "message": "Ver ayuda del campo"
   },
   "rulesTitle": {
     "message": "Reglas de coincidencia"

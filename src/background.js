@@ -1,12 +1,18 @@
 // background.js
 // 1) 点击工具栏图标 → 打开配置页
-// 2) 工具栏图标 badge：当前 tab 命中哪条配置，在图标右下角显示短标签
+// 2) 工具栏图标 badge：content script 命中配置后通过 runtime.sendMessage
+//    把短标签上报上来，background 只负责绘制到对应 tab 的图标上。
 //
-// 注意：background 是 MV3 service worker，无 DOM。所有匹配逻辑都在 watermark-core.js 里。
-// service worker 会被 Chrome 定期休眠，用 importScripts 加载依赖，代码本身要保持无状态。
+// 为什么不用 chrome.tabs.onUpdated 读 tab.url 自己匹配（旧实现，已实测不工作）：
+// MV3 下没有 "tabs" 权限或匹配该 URL 的 host permission 时，tab.url 会被
+// 剥离为 undefined——而 content_scripts.matches 并不授予 host permission。
+// 消息传递方案零新增权限，且 content 侧有真实 document.cookie，
+// 顺带修复了 cookie 规则 badge 永远失效的问题。
+//
+// 注意：background 是 MV3 service worker，无 DOM。代码保持无状态。
 
 try {
-  importScripts('features.js', 'watermark-core.js')
+  importScripts('features.js')
 } catch (e) {
   console.error('[watermark] failed to import scripts', e)
 }
@@ -18,87 +24,61 @@ chrome.action.onClicked.addListener(() => {
 
 // ============ Badge ============
 
-const BADGE_MAX_CHARS = 4 // Chrome 只显示前 4 个字符
-
-// 取一个"短标签"：优先使用 config.shortLabel，否则回退到 config.name 前 N 字
-const shortLabelOf = (config) => {
-  const raw = (config.shortLabel || config.name || '').trim()
-  if (!raw) return ''
-  return raw.slice(0, BADGE_MAX_CHARS)
-}
-
-// 命中最精准的一条配置
-const matchForUrl = (url, configs) => {
-  const ctx = self.WatermarkCore.parseContext(url, '')
-  if (!ctx) return null
-  const matches = self.WatermarkCore.findMatches(configs, ctx)
-  return matches[0] || null
-}
-
-const updateBadge = (tabId, url) => {
-  if (!url || !url.startsWith('http')) {
-    clearBadge(tabId)
-    return
-  }
-  if (!self.Features || !self.Features.canUse('badge')) {
-    clearBadge(tabId)
-    return
-  }
-  chrome.storage.sync.get(
-    { configs: [], globalEnabled: true },
-    (items) => {
-      if (items.globalEnabled === false) {
-        clearBadge(tabId)
-        return
-      }
-      const hit = matchForUrl(url, items.configs)
-      if (!hit) {
-        clearBadge(tabId)
-        return
-      }
-      const label = shortLabelOf(hit.config)
-      const color = hit.config.border && hit.config.border.color
-        ? hit.config.border.color
-        : (hit.config.color || '#ef4444')
-      try {
-        chrome.action.setBadgeText({ tabId, text: label })
-        chrome.action.setBadgeBackgroundColor({ tabId, color })
-        // Chrome 100+ 才支持 setBadgeTextColor，包一层 try 避免旧版 crash
-        if (chrome.action.setBadgeTextColor) {
-          chrome.action.setBadgeTextColor({ tabId, color: '#ffffff' })
-        }
-      } catch (e) {
-        // 忽略 tab 已关闭等错误
-      }
-    },
-  )
-}
-
-const clearBadge = (tabId) => {
+const setBadge = (tabId, label, color) => {
   try {
-    chrome.action.setBadgeText({ tabId, text: '' })
-  } catch (e) {}
+    chrome.action.setBadgeText({ tabId, text: label || '' })
+    if (label) {
+      chrome.action.setBadgeBackgroundColor({ tabId, color: color || '#ef4444' })
+      // Chrome 100+ 才支持 setBadgeTextColor，包一层 try 避免旧版 crash
+      if (chrome.action.setBadgeTextColor) {
+        chrome.action.setBadgeTextColor({ tabId, color: '#ffffff' })
+      }
+    }
+  } catch (e) {
+    // 忽略 tab 已关闭等错误
+  }
 }
 
-// tab URL / 加载状态变化时刷新 badge
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (changeInfo.status === 'complete' || changeInfo.url) {
-    updateBadge(tabId, tab.url || changeInfo.url)
+// content script 上报命中结果：{ type: 'wm:badge', label, color }
+// label 为空串表示清除（未命中 / 全局开关关闭）。
+// iframe 已由 content 侧过滤（仅顶层上报），这里再用 sender.frameId 兜底。
+chrome.runtime.onMessage.addListener((msg, sender) => {
+  if (!msg || msg.type !== 'wm:badge') return
+  if (!sender || !sender.tab || sender.frameId) return
+  if (!self.Features || !self.Features.canUse('badge')) {
+    setBadge(sender.tab.id, '', '')
+    return
   }
+  setBadge(sender.tab.id, msg.label, msg.color)
 })
 
-// 切换 tab 时确保 badge 是最新的
-chrome.tabs.onActivated.addListener(({ tabId }) => {
-  chrome.tabs.get(tabId, (tab) => {
-    if (chrome.runtime.lastError || !tab) return
-    updateBadge(tabId, tab.url)
-  })
-})
-
-// 存储变化时（用户改了配置）刷新所有 tab 的 badge
-chrome.storage.onChanged.addListener((changes, namespace) => {
-  if (namespace !== 'sync') return
-  chrome.tabs.query({}, (tabs) => {
-    tabs.forEach((tab) => updateBadge(tab.id, tab.url))
-  })
+// 导航生命周期处理。badge 的最终事实源是 content script，这里只做三件事：
+//
+// 1. status === 'loading'：新文档开始，先清旧 badge 防跨页残留。
+//    （即使该事件被子框架等延迟触发误清，下面的 complete ping 也会修好）
+// 2. changeInfo.url 且 scheme 非 http(s)：chrome:// / about: / 扩展页等
+//    content script 不会运行的地方，必须主动清。只看 scheme 是安全的：
+//    SPA 的同文档导航（pushState / replaceState）永远不改 scheme，
+//    不会再误清——这正是上一版「PRE 页 badge 显示后消失」的根因之一。
+// 3. status === 'complete'：ping content 重报一遍，兜住所有事件时序。
+//
+// http(s) 的 url 变化（含 replaceState）一律忽略，不做任何清除。
+chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  if (changeInfo.status === 'loading') {
+    setBadge(tabId, '', '')
+    return
+  }
+  if (typeof changeInfo.url === 'string' && !/^https?:/i.test(changeInfo.url)) {
+    setBadge(tabId, '', '')
+    return
+  }
+  if (changeInfo.status === 'complete') {
+    try {
+      const ret = chrome.tabs.sendMessage(tabId, { type: 'wm:request-badge' })
+      // 该 tab 没有 content script（chrome:// 等）时 sendMessage 会 reject，吞掉
+      if (ret && typeof ret.catch === 'function') ret.catch(() => {})
+    } catch (_) {
+      // 同上，忽略
+    }
+  }
 })

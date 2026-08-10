@@ -301,6 +301,39 @@
     return { dataURL: canvas.toDataURL('image/png'), size: gap }
   }
 
+  // ============ Badge 工具 ============
+
+  // badge 画布约 16×11px，装得下约 4 个半角 ASCII（如 PROD）。
+  // 全角字符（CJK 等）在同字号下宽度约为半角 2 倍，按 2 个单位计。
+  // 按"宽度单位"截断而不是按字符数，避免 Chrome 按像素硬裁出半个字。
+  const BADGE_MAX_UNITS = 4
+  const charUnits = (ch) => (ch.codePointAt(0) > 0x7f ? 2 : 1)
+
+  // 取一个"短标签"：优先使用 config.shortLabel，否则回退到 config.name，按宽度单位截断。
+  // 供 content script 计算后上报给 background（MV3 下 background 无权限读 tab.url，
+  // 不能再自己匹配，见 background.js 头部注释）。
+  WatermarkCore.shortLabelOf = (config) => {
+    const raw = ((config && (config.shortLabel || config.name)) || '').trim()
+    let units = 0
+    let out = ''
+    for (const ch of raw) {
+      const w = charUnits(ch)
+      if (units + w > BADGE_MAX_UNITS) break
+      out += ch
+      units += w
+    }
+    return out
+  }
+
+  // badge 背景色：border 色优先，否则水印色，兜底 #ef4444。
+  // 取值顺序沿用旧 background.js（border.color 存在即用），保证行为可对照。
+  WatermarkCore.resolveBadgeColor = (config) => {
+    if (config && config.border && config.border.color) {
+      return config.border.color
+    }
+    return (config && config.color) || '#ef4444'
+  }
+
   // ============ 默认配置 ============
 
   WatermarkCore.makeDefaultConfig = (id) => ({

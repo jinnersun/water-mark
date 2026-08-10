@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Badge showcase</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 1280px;
+      height: 800px;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+      overflow: hidden;
+    }
+    .stage {
+      width: 1280px;
+      height: 800px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      position: relative;
+    }
+    .headline {
+      font-size: 32px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .subheadline {
+      font-size: 16px;
+      color: #64748b;
+      margin-bottom: 56px;
+    }
+
+    /* Simulated Chrome toolbar */
+    .toolbar {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px 20px;
+      box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+    .traffic {
+      display: flex;
+      gap: 6px;
+      margin-right: 4px;
+    }
+    .traffic i {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: block;
+    }
+    .traffic i:nth-child(1) { background: #ef4444; }
+    .traffic i:nth-child(2) { background: #f59e0b; }
+    .traffic i:nth-child(3) { background: #10b981; }
+    .addr {
+      flex: 1;
+      background: #f1f5f9;
+      border-radius: 999px;
+      padding: 8px 16px;
+      color: #475569;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 13px;
+      min-width: 480px;
+    }
+    .ext-tray {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      padding-left: 10px;
+      border-left: 1px solid #e2e8f0;
+    }
+    .ext-icon {
+      position: relative;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      transition: transform .2s;
+    }
+    .ext-icon img { width: 100%; height: 100%; display: block; }
+    .ext-icon .badge {
+      position: absolute;
+      right: -4px;
+      bottom: -4px;
+      background: #ef4444;
+      color: #fff;
+      font: 700 8px/1 system-ui;
+      padding: 2px 3px;
+      border-radius: 3px;
+      letter-spacing: 0.5px;
+    }
+    /* Placeholder for other ext icons */
+    .ext-icon.puzzle {
+      background: #f1f5f9;
+      display: flex; align-items: center; justify-content: center;
+      color: #94a3b8; font-size: 16px;
+    }
+    .ext-icon.our {
+      transform: scale(1.02);
+    }
+
+    /* Zoomed showcase row */
+    .row {
+      display: flex;
+      gap: 40px;
+      align-items: flex-end;
+    }
+    .zoom-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 28px 36px 24px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      min-width: 180px;
+    }
+    .zoom-card .big {
+      position: relative;
+      width: 96px;
+      height: 96px;
+    }
+    .zoom-card .big img {
+      width: 96px; height: 96px; display: block;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.25);
+    }
+    .zoom-card .big .badge {
+      position: absolute;
+      right: -6px;
+      bottom: -6px;
+      color: #fff;
+      font: 800 15px/1 system-ui;
+      padding: 5px 9px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .badge.prod  { background: #ef4444; }
+    .badge.test  { background: #10b981; }
+    .badge.pre   { background: #f59e0b; }
+    .badge.admin { background: #8b5cf6; }
+    .zoom-card .label {
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 500;
+    }
+    .arrow {
+      position: absolute;
+      top: 235px;
+      right: 130px;
+      color: #ef4444;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="headline">Environment at a glance</div>
+    <div class="subheadline">A short label appears on the toolbar icon &mdash; you always know which environment you are on</div>
+
+    <div class="toolbar">
+      <div class="traffic"><i></i><i></i><i></i></div>
+      <div class="addr">https://app.example.com/admin/operations</div>
+      <div class="ext-tray">
+        <div class="ext-icon puzzle">&#x1F9E9;</div>
+        <div class="ext-icon our">
+          <img src="../../src/icons/icon48.png" alt="">
+          <div class="badge">PROD</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="zoom-card">
+        <div class="big"><img src="../../src/icons/icon128.png" alt=""><div class="badge prod">PROD</div></div>
+        <div class="label">Production</div>
+      </div>
+      <div class="zoom-card">
+        <div class="big"><img src="../../src/icons/icon128.png" alt=""><div class="badge pre">PRE</div></div>
+        <div class="label">Pre-production</div>
+      </div>
+      <div class="zoom-card">
+        <div class="big"><img src="../../src/icons/icon128.png" alt=""><div class="badge test">TEST</div></div>
+        <div class="label">Testing</div>
+      </div>
+      <div class="zoom-card">
+        <div class="big"><img src="../../src/icons/icon128.png" alt=""><div class="badge admin">ADMIN</div></div>
+        <div class="label">Admin Panel</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

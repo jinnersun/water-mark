@@ -10,11 +10,17 @@ Thumbs.db
 *.zip
 src/_metadata/
 
-# Local example exports (not code)
+# Local example exports (not code) — may contain real internal hostnames
 json/
+watermark-configs-*.json
 
-# Scratch dir used by codex for patch scripts
+# Scratch dir used for verification/patch scripts
 tmp/
+
+# Secrets (none today; guard for the phase-4 Supabase work)
+.env
+.env.*
+!.env.example
 
 # IDE
 .vscode/

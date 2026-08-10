@@ -23,16 +23,24 @@ if (Features.canUse('smartColor')) { ... }
 | `hostRule`               | 精确 / 后缀域名匹配                     | Free    |
 | `urlRegex`               | URL 正则匹配                            | Free    |
 | `ipMatch`                | IP / CIDR 匹配（前端 hostname 为 IP）    | Free    |
-| `cookieMatch`            | Cookie 键值匹配                         | Pro（候选）|
-| `smartColor`             | mix-blend-mode 智能对比色               | Pro（候选）|
+| `cookieMatch`            | Cookie 键值匹配                         | ⚠️ 见下 |
+| `smartColor`             | mix-blend-mode 智能对比色               | ⚠️ 见下 |
 | `immersiveBorder`        | 沉浸式边框提醒                          | Free    |
 | `mouseFade`              | 鼠标操作时透明度渐隐                    | Free    |
 | `iframeInject`           | 同源 iframe 打水印                      | Free    |
-| `importExport`           | 配置一键导入/导出                       | Pro（候选）|
+| `importExport`           | 配置一键导入/导出                       | ⚠️ 见下 |
 | `unlimitedConfigs`       | 无限配置数（Free 版可能限 5 条）        | Pro（候选）|
 | `dynamicVars`            | 水印文本变量：{user}/{date}/{host} 等   | Pro（候选）|
+| `multiLang`              | 多语言切换                              | Free（v2.0 已启用）|
+| `globalToggle`           | 全局总开关                              | Free    |
+| `badge`                  | 工具栏短标签                            | Free    |
 
 > 现阶段全部返回 `true`，只是打个"未来可以拆"的桩位。
+
+> ⚠️ **归属冲突（需决策）**：`features.js` 目前把 `cookieMatch` / `smartColor` / `importExport` 放在 `PAID_FEATURES`，且这三项在 v2.0 已作为核心卖点写进 Chrome 商店描述草稿。
+>
+> **已决策**：上线前就加入付费限制（无历史用户，无差评风险）。**但商店描述文案必须同步修改** —— 详见下方「免费功能转收费：改动量评估」。
+
 
 ## 后端方向讨论
 
@@ -91,10 +99,78 @@ Cloudflare Worker
 
 ## 待办 / 下一步
 
-- [ ] 决定：**买断 vs 订阅 vs 并存**
-- [ ] 决定：**Free 版限制什么**（配置数？功能开关？）
-- [ ] 决定：**Pro 定价**（推荐 $9–15 一次买断 / 或 ¥68–98）
-- [ ] 起草：**服务条款 & 隐私政策**（Chrome 商店必需）
-- [ ] Cloudflare Worker 骨架 + D1 schema 设计
+### 技术栈：Supabase vs Cloudflare（认证能力调研结论）
+
+你的关注点是「登录认证简单」。调研结果：
+
+**Cloudflare 没有对标 Supabase Auth 的第一方消费级认证产品。**
+
+| 选项 | 定位 | 是否适用 |
+| --- | --- | --- |
+| Cloudflare Access / Zero Trust | 企业内网 SSO，保护自己的应用入口 | ❌ 不是给终端用户注册登录用的 |
+| D1 + better-auth / Lucia（第三方库） | 自建认证 | ⚠️ 可行，但邮箱验证、magic link、密码重置、OAuth 全要自己接，还得自己配邮件服务商（Resend 等） |
+| Supabase Auth | 托管认证服务 | ✅ 上述全部开箱即用 |
+
+**结论**：若看重认证省事，**Supabase 明显更优**。Cloudflare 的优势在边缘延迟与成本，但 license 校验是低频场景，两者都够用。
+
+**建议**：
+- v3.0 **要做云同步** → Supabase 一体化（认证 + 数据库 + 同步一套搞定）
+- v3.0 **只做 license 校验**（云同步后推）→ 理论上可 Supabase 管认证 + Workers 做校验缓存，但为少一个供应商，直接 Supabase 全包更省心
+
+> 你已有 Cloudflare 实践经验（EasyForm 用 Workers AI + Resend），若倾向复用现有栈，可考虑 D1 + better-auth；但要接受认证部分多写不少代码。
+
+### 免费功能转收费：改动量评估
+
+你提出「上线前就加入付费限制」。**这个判断是对的** —— 无历史用户，零差评风险。
+
+但实测统计 `canUse()` 的**实际调用点**后发现一个重要事实：
+
+| 特性键 | 实际调用点数 | 现状 |
+| --- | --- | --- |
+| `smartColor` | 2（`content.js:78`、`options.js:899`） | ✅ 已真实门控 |
+| `importExport` | 2（`options.js:1019 / 1065`） | ✅ 已真实门控 |
+| `multiLang` | 4 | ✅ 已真实门控 |
+| `immersiveBorder` | 1 | ✅ 已真实门控 |
+| `mouseFade` | 1 | ✅ 已真实门控 |
+| `badge` | 1 | ✅ 已真实门控 |
+| **`cookieMatch`** | **0** | ❌ 门控是**空壳**，规则照常生效 |
+| **`unlimitedConfigs`** | **0** | ❌ 空壳 |
+| `hostRule` / `urlRegex` / `ipMatch` / `iframeInject` / `globalToggle` / `dynamicVars` | **0** | ❌ 空壳 |
+
+**关键结论**：把 key 从 `FREE_FEATURES` 挪到 `PAID_FEATURES` 对**半数特性是无效操作** —— `features.js` 只是声明，没有执行点。
+
+具体改动量：
+
+| 目标 | 改动 | 规模 |
+| --- | --- | --- |
+| `smartColor` 转 Pro | 逻辑层已拦住，只需补 UI（锁图标 + 点击提示升级） | **小** |
+| `importExport` 转 Pro | 同上 | **小** |
+| `cookieMatch` 转 Pro | 需新增 3 处：① `options.js` 规则类型下拉禁用 cookie 选项 ② `watermark-core.js` `matchRule` 里拦截 ③ 导入时降级已有 cookie 规则 | **中** |
+| `unlimitedConfigs` 限 N 条 | 需新增 2 处：① 新建配置时计数校验 ② 导入时截断 + 超限提示 | **中** |
+
+**真正的工作量在 license 基建**，不在门控本身：激活 UI、后端校验接口、本地缓存、离线宽限期、错误码提示。
+
+> ⚠️ **强制约束**：`docs/store-assets/descriptions/` 下 4 份商店描述目前把「六种匹配规则」「智能对比色」「支持 JSON 导入导出」写成了核心卖点。**任何转为 Pro 的功能都必须同步从文案中删除或标注**，否则构成虚假宣传 —— 这是 Chrome 明确列出的拒审理由。
+
+### 决策清单
+
+**已明确倾向**
+- [x] 技术栈倾向 **Supabase**（认证开箱即用；待确认云同步是否进首发）
+- [x] 上线前就加入付费限制（无历史用户，可自由划分）
+
+**待拍板**
+- [ ] 云同步是否进 v3.0 首发（决定 Supabase 全包 vs 混搭）
+- [ ] **收费范围**：`cookieMatch` / `smartColor` / `importExport` 具体收哪几个？
+- [ ] **`unlimitedConfigs` 限制值**：Free 版限几条？（原草案 5 条）
+- [ ] **付费门控进 v2.0 还是 v3.0**：进 v2.0 = 首发即有 Pro 入口，但需先做完 license 基建，会推迟上架；进 v3.0 = 先免费上架积累用户，但那时收回功能有差评风险
+- [ ] **统一收款通道**：Paddle vs Lemon Squeezy vs 爱发电（国内）
+- [ ] **统一定价**：$9.9 还是 $9–15 区间？人民币定价？
+- [ ] **是否做 7 天试用**
+- [ ] **买断 vs 订阅 vs 并存**
+- [ ] 起草：**服务条款**（隐私政策已完成并挂 GitHub Pages）
+- [ ] 后端骨架 + schema 设计
 - [ ] 结账页原型（域名、UI、结账通道）
 - [ ] 扩展端 license UI（激活输入框、状态显示、错误码提示）
+- [ ] 设备数限制与离线宽限期的具体数值
+- [ ] ⚠️ 同步修改 4 份商店描述文案（若收回已宣传的功能）
+

@@ -92,7 +92,10 @@
     "message": "Badge"
   },
   "shortLabelHint": {
-    "message": "Shows on the toolbar icon (max 4 chars)"
+    "message": "Shown as the toolbar badge; prefer English shortcuts like PROD / TEST / PRE (max 4 half-width or 2 full-width chars)"
+  },
+  "viewHelp": {
+    "message": "View field help"
   },
   "rulesTitle": {
     "message": "Match rules"

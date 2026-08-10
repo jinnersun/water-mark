@@ -92,7 +92,10 @@
     "message": "バッジ"
   },
   "shortLabelHint": {
-    "message": "ツールバーアイコンに表示（最大 4 文字）"
+    "message": "ツールバーのバッジに表示。PROD / TEST / PRE など英字略称を推奨（半角4 / 全角2文字まで）"
+  },
+  "viewHelp": {
+    "message": "項目の説明を表示"
   },
   "rulesTitle": {
     "message": "トリガー条件"

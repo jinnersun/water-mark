@@ -43,6 +43,7 @@ const KEY_ORDER = [
   'tabRules', 'tabStyle', 'tabAlert',
   'configName', 'namePlaceholder', 'enabledLabel',
   'shortLabel', 'shortLabelPlaceholder', 'shortLabelHint',
+  'viewHelp',
   'rulesTitle', 'rulesHint', 'addRuleBtn',
   'ruleTypeHostExact', 'ruleTypeHostSuffix', 'ruleTypeUrlRegex',
   'ruleTypeIpExact', 'ruleTypeIpCidr', 'ruleTypeCookie',
@@ -127,7 +128,8 @@ const TRANSLATIONS = {
     enabledLabel: 'Enable this config',
     shortLabel: 'Short badge',
     shortLabelPlaceholder: 'Badge',
-    shortLabelHint: 'Shows on the toolbar icon (max 4 chars)',
+    shortLabelHint: 'Shown as the toolbar badge; prefer English shortcuts like PROD / TEST / PRE (max 4 half-width or 2 full-width chars)',
+    viewHelp: 'View field help',
 
     rulesTitle: 'Match rules',
     rulesHint: 'Any matching rule triggers; the most specific rule wins.',
@@ -311,7 +313,8 @@ const OVERRIDES = {
     enabledLabel: '启用当前配置',
     shortLabel: '短标签',
     shortLabelPlaceholder: '标签',
-    shortLabelHint: '将在浏览器工具栏图标上显示（最多 4 字符）',
+    shortLabelHint: '显示在工具栏角标；建议英文简写如 PROD / TEST / PRE（最多 4 个半角或 2 个全角字符）',
+    viewHelp: '查看字段说明',
 
     rulesTitle: '触发条件',
     rulesHint: '任一规则命中即生效；多条规则中匹配最精准的一条决定水印样式。',
@@ -491,7 +494,8 @@ const OVERRIDES = {
     enabledLabel: '啟用目前設定',
     shortLabel: '短標籤',
     shortLabelPlaceholder: '標籤',
-    shortLabelHint: '將顯示在瀏覽器工具列圖示上（最多 4 字元）',
+    shortLabelHint: '顯示在工具列角標；建議英文簡寫如 PROD / TEST / PRE（最多 4 個半形或 2 個全形字元）',
+    viewHelp: '查看欄位說明',
 
     rulesTitle: '觸發條件',
     rulesHint: '任一規則命中即生效；多條規則中比對最精準的一條決定浮水印樣式。',
@@ -671,7 +675,8 @@ const OVERRIDES = {
     enabledLabel: 'この設定を有効化',
     shortLabel: 'バッジ',
     shortLabelPlaceholder: 'バッジ',
-    shortLabelHint: 'ツールバーアイコンに表示（最大 4 文字）',
+    shortLabelHint: 'ツールバーのバッジに表示。PROD / TEST / PRE など英字略称を推奨（半角4 / 全角2文字まで）',
+    viewHelp: '項目の説明を表示',
 
     rulesTitle: 'トリガー条件',
     rulesHint: 'いずれかのルールにマッチで発火。複数マッチ時は最も具体的なものが優先。',
@@ -851,7 +856,8 @@ const OVERRIDES = {
     enabledLabel: 'Activar esta configuración',
     shortLabel: 'Etiqueta corta',
     shortLabelPlaceholder: 'Etiqueta',
-    shortLabelHint: 'Se muestra en el icono de la barra (máx 4 caracteres)',
+    shortLabelHint: 'Se muestra como insignia en la barra; prefiere abreviaturas como PROD / TEST / PRE (máx. 4 semiangulares o 2 de ancho doble)',
+    viewHelp: 'Ver ayuda del campo',
 
     rulesTitle: 'Reglas de coincidencia',
     rulesHint: 'Se activa con cualquier regla que coincida; gana la más específica.',

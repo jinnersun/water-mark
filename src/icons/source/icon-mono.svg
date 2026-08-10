@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Monochrome variant for pinned/dark backgrounds; fill via currentColor -->
+  <rect x="8" y="8" width="112" height="112" rx="24" ry="24"
+        fill="none" stroke="currentColor" stroke-width="8"/>
+  <path d="M 26 30 L 46 92 L 64 58 L 82 92 L 102 30"
+        fill="none" stroke="currentColor" stroke-width="12"
+        stroke-linejoin="round" stroke-linecap="round"/>
+</svg>

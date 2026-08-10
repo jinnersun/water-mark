@@ -92,7 +92,10 @@
     "message": "标签"
   },
   "shortLabelHint": {
-    "message": "将在浏览器工具栏图标上显示（最多 4 字符）"
+    "message": "显示在工具栏角标；建议英文简写如 PROD / TEST / PRE（最多 4 个半角或 2 个全角字符）"
+  },
+  "viewHelp": {
+    "message": "查看字段说明"
   },
   "rulesTitle": {
     "message": "触发条件"

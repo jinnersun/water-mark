@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Env Watermark icon: stamp W + three-env bar -->
+  <defs>
+    <linearGradient id="stamp" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18"/>
+      <stop offset="55%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- stamp body -->
+  <rect x="8" y="8" width="112" height="112" rx="24" ry="24" fill="url(#stamp)"/>
+  <!-- top sheen -->
+  <rect x="8" y="8" width="112" height="112" rx="24" ry="24" fill="url(#sheen)"/>
+  <!-- inner hairline border for definition -->
+  <rect x="9" y="9" width="110" height="110" rx="23" ry="23" fill="none" stroke="#0b1e57" stroke-opacity="0.35" stroke-width="1"/>
+
+  <!-- letter W: single polyline stroke for consistent rendering -->
+  <path d="M 26 30 L 46 92 L 64 58 L 82 92 L 102 30"
+        fill="none" stroke="#ffffff" stroke-width="12"
+        stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- three environment bars: prod / test / dev -->
+  <rect x="26" y="102" width="22" height="8" rx="4" fill="#ef4444"/>
+  <rect x="53" y="102" width="22" height="8" rx="4" fill="#f59e0b"/>
+  <rect x="80" y="102" width="22" height="8" rx="4" fill="#10b981"/>
+</svg>

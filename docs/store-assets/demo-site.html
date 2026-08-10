@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Acme Admin Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      padding: 32px;
+      min-height: 100vh;
+    }
+    nav {
+      background: #0f172a;
+      color: #fff;
+      padding: 14px 24px;
+      border-radius: 8px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    nav h2 { font-size: 16px; font-weight: 600; }
+    nav .breadcrumb {
+      color: #94a3b8;
+      font-size: 13px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    nav .user {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+    nav .user::before {
+      content: "";
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display: block;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e2e8f0;
+    }
+    .card h3 {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .card .value { font-size: 26px; font-weight: 700; line-height: 1.2; }
+    .card .delta { font-size: 12px; margin-top: 6px; }
+    .green { color: #10b981; }
+    .blue { color: #3b82f6; }
+    .orange { color: #f59e0b; }
+    .red { color: #ef4444; }
+    table {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e2e8f0;
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+    }
+    thead tr { background: #f8fafc; }
+    th, td {
+      padding: 12px 20px;
+      text-align: left;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+    }
+    th { color: #64748b; font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    tbody tr:last-child td { border-bottom: none; }
+    .pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .pill.success { background: #dcfce7; color: #166534; }
+    .pill.pending { background: #fef3c7; color: #92400e; }
+    .pill.failed { background: #fee2e2; color: #991b1b; }
+    .pill.info { background: #dbeafe; color: #1e40af; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: #475569; }
+  </style>
+</head>
+<body>
+  <nav>
+    <h2>Acme Console</h2>
+    <span class="breadcrumb">app.example.com / admin / operations</span>
+    <div class="user">alice@acme.com</div>
+  </nav>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Active Users</h3>
+      <div class="value green">12,847</div>
+      <div class="delta green">+3.2% vs last week</div>
+    </div>
+    <div class="card">
+      <h3>API Requests</h3>
+      <div class="value blue">2.84M</div>
+      <div class="delta blue">+18% vs last week</div>
+    </div>
+    <div class="card">
+      <h3>Error Rate</h3>
+      <div class="value orange">0.03%</div>
+      <div class="delta">SLO: &lt; 0.1%</div>
+    </div>
+    <div class="card">
+      <h3>P95 Latency</h3>
+      <div class="value">142ms</div>
+      <div class="delta green">-8ms vs yesterday</div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Operator</th>
+        <th>Action</th>
+        <th>Target</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mono">2026-07-27 10:23:14</td>
+        <td>admin@acme.com</td>
+        <td>Deploy config</td>
+        <td class="mono">pricing-v2.3.1</td>
+        <td><span class="pill success">Success</span></td>
+      </tr>
+      <tr>
+        <td class="mono">2026-07-27 10:15:02</td>
+        <td>ops@acme.com</td>
+        <td>Restart service</td>
+        <td class="mono">payment-gateway</td>
+        <td><span class="pill success">Success</span></td>
+      </tr>
+      <tr>
+        <td class="mono">2026-07-27 09:58:47</td>
+        <td>dev@acme.com</td>
+        <td>DB migration</td>
+        <td class="mono">users_2026_q3</td>
+        <td><span class="pill pending">Running</span></td>
+      </tr>
+      <tr>
+        <td class="mono">2026-07-27 09:41:22</td>
+        <td>alice@acme.com</td>
+        <td>Rotate secret</td>
+        <td class="mono">stripe-webhook-sig</td>
+        <td><span class="pill success">Success</span></td>
+      </tr>
+      <tr>
+        <td class="mono">2026-07-27 09:12:05</td>
+        <td>bob@acme.com</td>
+        <td>Grant access</td>
+        <td class="mono">carol@acme.com</td>
+        <td><span class="pill info">Approved</span></td>
+      </tr>
+      <tr>
+        <td class="mono">2026-07-27 08:56:38</td>
+        <td>system</td>
+        <td>Backup snapshot</td>
+        <td class="mono">db-primary</td>
+        <td><span class="pill success">Success</span></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
