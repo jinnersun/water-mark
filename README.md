@@ -32,7 +32,7 @@ Chrome extension (Manifest V3) that stamps precise per-environment watermarks on
 │   ├── background.js           # Service worker
 │   ├── content.js              # Content script: inject watermark + observe URL changes
 │   ├── watermark-core.js       # Pure logic: URL parsing, rule matching, image generation
-│   ├── features.js             # Feature-flag layer (free vs. reserved paid)
+│   ├── features.js             # Feature-flag layer (all free today; paid stubs only)
 │   ├── options.html/.css/.js   # Options page
 │   ├── i18n.js                 # Runtime translator with live language switch
 │   ├── i18n-messages.js        # Auto-generated bundle used by i18n.js at runtime
@@ -52,7 +52,7 @@ Chrome extension (Manifest V3) that stamps precise per-environment watermarks on
 │   ├── check-screenshots.mjs   # Validate store screenshot dimensions
 │   └── fix-screenshots.mjs     # Crop/pad screenshots to exact 1280x800
 ├── docs/
-│   ├── paid-version.md         # Notes for the future Pro build
+│   ├── paid-version.md         # Decision record: paid features rejected, all free
 │   ├── publish-guide.md        # Chrome Web Store submission guide
 │   ├── v2-manifest.md          # v2.0 feature manifest
 │   ├── v2-implementation-plan.md  # Phased implementation plan
@@ -99,9 +99,9 @@ Chrome extension (Manifest V3) that stamps precise per-environment watermarks on
 - Run `node scripts/check-i18n.mjs` to lint for drift between locales and unknown keys referenced from HTML/JS.
 - The runtime picker lives in `src/i18n.js` (`WatermarkI18n.switchLang(lang)`).
 
-## Paid ("Pro") plan
+## Pricing
 
-See `docs/paid-version.md`. All features are free today; the `Features.canUse(key)` gate in `src/features.js` is in place for future licence checks, so the business code doesn't need to change.
+**All features are free.** There is no paid tier, trial, or feature limit. `src/features.js` keeps a gate layer (`Features.canUse`) purely as a stub for a possible future feature split — it never restricts anything today. See `docs/paid-version.md` for the decision record.
 
 ## Permissions
 

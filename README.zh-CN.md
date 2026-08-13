@@ -30,7 +30,7 @@
 │   ├── background.js           # 后台 service worker
 │   ├── content.js              # 内容脚本：注入水印 + 监听变化
 │   ├── watermark-core.js       # 纯逻辑核心：URL 解析、规则匹配、水印图片生成（options / content 共用）
-│   ├── features.js             # 特性门控层（预留付费拆分）
+│   ├── features.js             # 特性门控层（当前全部免费，仅预留付费桩位）
 │   ├── options.html/.css/.js   # 配置页面
 │   ├── i18n.js                 # 运行时字典 + 语言即时切换
 │   ├── i18n-messages.js        # 自动生成的字典包（供 i18n.js 运行时使用）
@@ -45,7 +45,7 @@
 │   ├── check-screenshots.mjs   # 校验商店截图尺寸
 │   └── fix-screenshots.mjs     # 裁切/补白到精确 1280x800
 ├── docs/
-│   ├── paid-version.md         # 付费版方案讨论（后端 / 收款 / license）
+│   ├── paid-version.md         # 决策记录：付费已否决，全部免费
 │   ├── publish-guide.md        # Chrome 商店上架指南
 │   ├── v2-manifest.md          # v2.0 功能清单
 │   ├── v2-implementation-plan.md  # 分阶段实施计划
@@ -85,9 +85,9 @@
 
 **冲突处理**：一条配置内多规则命中时，选 score 最高的一条；多条配置命中时也一样。score 大致规则：`host-exact` > `ip-exact` > `ip-cidr` > `url-regex` > `cookie` > `host-suffix`，同类型按 value 长度。
 
-## 付费版（Pro）预留
+## 定价
 
-参见 `docs/paid-version.md`。当前**所有功能全部免费**开放；架构上已经通过 `src/features.js` 的 `Features.canUse(key)` 打好门控桩位，未来接入 license 校验只需修改这一个文件。
+**所有功能全部免费**，无付费档位、无试用、无功能限制。`src/features.js` 的 `Features.canUse(key)` 门控层仅作为未来可能的拆分桩位保留，当前不限制任何功能。决策记录见 `docs/paid-version.md`。
 
 ## 权限说明
 

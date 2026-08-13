@@ -1,6 +1,6 @@
 // options.js
 // 负责：配置 CRUD、Tab 切换、规则编辑、URL 测试、实时预览、全局开关、导入导出。
-// 所有可能付费的功能都走 Features.canUse 决定是否可用。
+// 所有功能都通过 Features.canUse 决定是否可用（当前全部免费，门控为未来预留桩位）。
 const state = {
   configs: [],
   currentId: null,
@@ -402,8 +402,8 @@ const bindStaticEvents = () => {
         switchLang(langSelect.value)
       }
     } else {
-      // Hide the picker but keep the storage key intact so users who upgrade
-      // to a Pro build later see their previous choice.
+      // Hide the picker but keep the storage key intact so the user's
+      // language choice survives a future change in feature policy.
       if (langSelect.parentElement) langSelect.parentElement.style.display = 'none'
     }
   }

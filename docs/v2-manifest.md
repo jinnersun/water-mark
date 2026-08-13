@@ -4,7 +4,7 @@
 
 ## 版本定位
 
-**Web Watermark Tool v2.0** — 免费全功能版。所有付费想法（v3.0 讨论中）在本版本**不启用**，付费门控仅在代码层预留（`src/features.js` 里的 `PAID_FEATURES` 与 `DISABLED_FEATURES`），UI 无任何"升级到 Pro"入口。
+**Web Watermark Tool v2.0** — 免费全功能版。**已决策（2026-08-13）：不做付费功能**，所有功能全部免费。`src/features.js` 里的 `PAID_FEATURES` 仅为未来可能的拆分预留桩位，当前不产生任何限制，UI 无任何"升级到 Pro"入口。
 
 ## 核心能力（已完成 ✅）
 
@@ -30,7 +30,7 @@
 
 ### 全局与工具栏
 - 全局总开关（Storage sync 持久化）
-- 工具栏 badge 短标签（`shortLabel`，最多 4 字符，如 `PROD` / `TEST`）—— 🔴 **当前有 BUG 无法显示，见下方权限章节**
+- 工具栏 badge 短标签（`shortLabel`，最多 4 字符，如 `PROD` / `TEST`）—— ✅ 已修复（2026-08-10，消息传递方案，见下方权限章节）
 - 跨 iframe 独立匹配（`content_scripts.all_frames: true`）
 
 
@@ -78,13 +78,11 @@ v2.0 实际只申请 **一个** 权限：
 
 `content_scripts.matches: ["<all_urls>"]` 用于按用户自定义规则在任意页面叠加水印，不读取、不上传页面内容。
 
-> 🔴 **Badge BUG（已实测确认，发布阻塞）**：`background.js:38` 依赖 `tab.url`，但 MV3 下读该字段需 `tabs` 权限**或**匹配的 host permission，而 `content_scripts.matches` **不授予** host permission。当前二者皆无 → `tab.url` 为 `undefined` → 第 39 行判断成立 → badge 永不显示。
+> ✅ **Badge BUG（已修复，2026-08-10）**：原 `background.js` 依赖 `tab.url`，但 MV3 下读该字段需 `tabs` 权限**或**匹配的 host permission，而 `content_scripts.matches` **不授予** host permission。当前二者皆无 → `tab.url` 为 `undefined` → badge 永不显示。
 >
-> `activeTab` **不是解**：它只在用户点击图标后对当前页临时授权，而 badge 需在每次导航时无手势自动更新。
+> 已按方案 A（消息传递）修复：content script 计算命中结果后上报，background 用 `sender.tab.id` 设 badge，**零新增权限**。附带修复了 cookie 规则 badge 永久失效的问题（旧实现传空 cookie 串）。
 >
-> 附带第二个 BUG：`background.js:32` 传空 cookie 串，导致 **cookie 类型规则的 badge 永久失效**，即使权限修好也一样。
->
-> 修复方案对比与选型见 `docs/publish-guide.md` 第七节 #1。权限方案确定后需同步隐私政策（已上线版本声明了 `activeTab`，与 manifest 不一致）。
+> 修复记录与二轮修正（SPA replaceState 误清 / CJK 裁字）见 `docs/v2-implementation-plan.md` 阶段 1。
 
 
 ## v2.0 发布阻塞项 —— 已全部完成 ✅
@@ -109,12 +107,11 @@ v2.0 实际只申请 **一个** 权限：
 - 图标矢量化重制：SVG 单一源 + `scripts/gen-icons.mjs`
 - 上架素材：5 张 1280×800 截图、2 张 promo tile（440×280 / 1400×560）、中英文短/详描述
 
-## v2.0 发布阻塞项（新）
+## v2.0 发布阻塞项（新）—— ✅ 已全部完成
 
-### 🔴 Badge 无法显示 —— 实测确认的 BUG
-- 根因与修复方案见上方「权限清单」注释 + `docs/publish-guide.md` 第七节 #1
-- 附带：cookie 规则的 badge 永久失效（`background.js:32` 空 cookie 串）
-- **必须修完才能上架**（badge 是商店截图 05 的卖点，也写进了描述文案）
+### ✅ Badge 无法显示
+- 已按方案 A（消息传递）修复，零新增权限；连带修复 cookie 规则 badge 失效
+- 详见 `docs/v2-implementation-plan.md` 阶段 1 + `docs/publish-guide.md` 第七节 #1
 
 ## v2.0 待验证（非代码，发版前）
 
@@ -124,23 +121,11 @@ v2.0 实际只申请 **一个** 权限：
 - [ ] `git tag v2.0.0`
 - [ ] Chrome Web Store 开发者账号 $5
 
-## v3.0（付费版，本次不做）
+## v3.0（原付费版方案）—— ✅ 已否决（2026-08-13）
 
-> ⚠️ **范围可能变化**：你已提出「上线前就加入付费限制」，若采纳，下列部分功能会提前到 v2.0。改动量评估见 `docs/paid-version.md`。
+> **决策**：不做付费功能，所有功能全部免费。见 `docs/paid-version.md`。
 
-以下功能**代码框架保留**（`features.js` 已声明为 `PAID_FEATURES`），**UI 不出现**：
-
-- 云同步（跨设备存储用户配置）
-- 团队共享配置
-- IP 匹配（真实服务器 IP，走 `chrome.webRequest.onCompleted`，需 `webRequest` 权限；v2.0 用的是 hostname IPv4 字面量匹配，不需要该权限）
-- 动态变量 `{user}/{date}/{host}/{path}/{time}`
-- 配置存储配额预警条
-- 设置面板 + 暗色主题
-- 无限配置数量（v2.0 不设上限）
-
-> **认证 / 收款 / 定价 / Free 版限制均未定案**。本文档早期草稿（Supabase + Lemon Squeezy + $9.9 买断）与 `docs/paid-version.md`（Cloudflare Workers + D1 + Paddle/爱发电，$9–15）曾互相冲突；**倾向已明确为 Supabase**（认证开箱即用），详见 `docs/paid-version.md`。
-
-> ⚠️ **归属决策变更**：原建议「已免费功能永久免费」。你已提出**上线前收回**（无历史用户，零差评风险）。若采纳，**必须同步修改 `docs/store-assets/descriptions/` 下 4 份文案**，删除转为 Pro 的功能卖点，否则构成虚假宣传（明确拒审理由）。改动量评估见 `docs/paid-version.md`。
+原「付费版」规划（云同步、teamShare、动态变量、设置面板、暗色主题、无限配置等付费拆分）**全部搁置**。其中**动态变量 `{user}/{date}/{host}/{path}/{time}`** 保留为潜在免费功能候选（尚未实现），其余依赖登录 / 后端的想法不在本版本范围。
 
 ## 版本号约定
 

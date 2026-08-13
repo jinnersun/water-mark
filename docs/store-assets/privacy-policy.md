@@ -4,10 +4,8 @@
 > `web-watermark-prompt/privacy-policy.html`，线上地址：
 > <https://jinnersun.github.io/web-watermark-prompt/privacy-policy.html>
 >
-> ⚠️ **待决策**：下方 `activeTab` 权限说明与 `src/manifest.json` 实际申请的权限
-> （目前只有 `storage`）不一致。需先按 `docs/publish-guide.md` 3.3 节实测
-> badge 是否依赖该权限，再决定「删掉此段」或「manifest 补权限」。
-> 两处必须保持一致，否则有拒审风险。
+> 已与 `src/manifest.json` 核对一致：仅申请 `storage` 权限，无 `activeTab`。
+> 工具栏 badge 由 content script 上报命中结果实现，不需要额外权限。
 
 Last updated: 2026-07-14
 
@@ -31,8 +29,11 @@ and never leave your device. This data is:
 ## 3. Permissions Rationale
 
 - `storage`: to persist your watermark configurations and preferences
-- `activeTab`: to read the active tab's URL for updating the toolbar badge with
-  the environment short label (e.g., `PROD`, `TEST`)
+
+This is the **only** permission the extension requests. The environment short
+label on the toolbar icon (e.g., `PROD`, `TEST`) is driven by the in-page
+content script reporting its own match result, so no `activeTab` or additional
+host permission is needed.
 
 The content script's `<all_urls>` match pattern is used solely to inject the
 watermark visual layer on any URL you choose to watermark via your own rules.
@@ -48,11 +49,17 @@ remote script loading, no analytics (Google Analytics, Sentry, etc.), no ad SDK.
 This extension is designed for developers and operations engineers. It does not
 knowingly collect any information from anyone, including children under 13.
 
-## 6. Changes
+## 6. Website Feedback Form
+
+The "Report a problem" form on this site sends your submission to EasyForm
+(dpdns.org) so it can be forwarded to the author's inbox. Submissions are used
+only to receive and act on feedback. You can also report via GitHub Issues.
+
+## 7. Changes
 
 This policy may be updated. Check the published page for the latest version.
 
-## 7. Contact
+## 8. Contact
 
 Report bugs or ask privacy-related questions via GitHub Issues:
 <https://github.com/jinnersun/web-watermark-prompt/issues>

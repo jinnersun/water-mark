@@ -337,8 +337,8 @@ Chrome 现在对隐私要求非常严，这一栏答错就上不了：
   "This extension helps users visually distinguish different web environments (production, test, staging, VPN internal) that share similar URLs by overlaying customizable watermarks and border indicators."
 - **Permission justification**（每一项都要写）：
   - `storage`: "To persist user-configured watermark rules and preferences across sessions."
-  - `activeTab`: **仅在 3.3 实测确认必须补此权限时才填** — "To read the active tab's URL for real-time badge updates on the toolbar icon."
   - `<all_urls>` (host permission via content script): "The extension must be able to inject the watermark overlay on any URL the user configures a rule for. Page content is never read or transmitted."
+  - 注意：**不申请 `activeTab` / `tabs`**（badge 由 content script 消息上报实现，见第七节 #1 方案 A）
 - **Are you handling user data**: **No**（因为你确实不收集）
 - **Data collection disclosure**: 全选 "not being collected"
 - **Privacy policy URL**: `https://jinnersun.github.io/web-watermark-prompt/privacy-policy.html`
@@ -359,7 +359,7 @@ Chrome 现在对隐私要求非常严，这一栏答错就上不了：
 ### 4.6 常见拒审原因
 
 - ❌ 隐私政策 URL 打不开或返回 404
-- ❌ 权限过多（我们只用 `storage` + `activeTab`，没问题）
+- ❌ 权限过多（我们只用 `storage`，没问题）
 - ❌ 图标模糊或不是 PNG
 - ❌ 截图分辨率不对
 - ❌ Description 里含虚假承诺、比较其他扩展、含 "best" / "#1" 之类关键词
@@ -412,23 +412,15 @@ Chrome 现在对隐私要求非常严，这一栏答错就上不了：
 
 **待办 ⏳**
 
-- [ ] 🔴 **修复 badge 无法显示**（发布阻塞 BUG，见第七节 #1）
-- [ ] 🔴 顺带修复 badge 对 cookie 规则失效（`background.js:32` 传空 cookie 串）
-- [ ] 权限方案确定后，同步隐私政策 + 商店问卷（第七节 #2）
+- [x] ✅ **修复 badge 无法显示**（2026-08-10 方案 A 消息传递，见第七节 #1）
+- [x] ✅ 顺带修复 badge 对 cookie 规则失效（旧逻辑传空 cookie 串）
+- [x] ✅ 权限方案确定后，同步隐私政策 + 商店问卷（第七节 #2，已按方案 A 同步）
 - [ ] 五语 UI 走查（ja / es 长文案是否溢出布局）
 - [ ] 本地干净加载测试通过（第三章 3.3）
 - [ ] `chrome.storage.sync` 存储在多个 Chrome profile 间同步验证通过
 - [ ] `git tag v2.0.0` 已打
 - [ ] Chrome Web Store 开发者账号 $5 已付 + 2FA 已开
 - [ ] 打包 zip 并确认解压后直接见 `manifest.json`、体积 < 500 KB
-
-**若决定 v2.0 就带付费门控（见 `docs/paid-version.md`）**
-
-- [ ] 实现 `unlimitedConfigs` 计数限制
-- [ ] 实现 `cookieMatch` 门控（3 处）
-- [ ] `smartColor` / `importExport` 补 UI 锁态
-- [ ] license 激活 UI + 后端
-- [ ] ⚠️ 同步修改 4 份商店描述文案，删除转为 Pro 的功能卖点
 
 ---
 
@@ -460,15 +452,14 @@ Chrome 现在对隐私要求非常严，这一栏答错就上不了：
 
 **副作用（方案 A）**：content script 无法运行的页面（`chrome://`、Chrome 应用商店、PDF 查看器）不会有 badge —— 但这些页面本来也不会有水印，行为一致。
 
-**待你选择方案后实施。** 隐私政策与商店问卷的权限段落需在方案确定后同步（见 #2）。
+隐私政策与商店问卷已按方案 A 同步（见 #2）。
 
-### 2. 隐私政策的 `activeTab` 段落（依赖 #1 的结论）
+### 2. 隐私政策的 `activeTab` 段落 —— ✅ 已解决
 
-- 已上线的隐私政策声明了 `activeTab`，manifest 实际未申请
-- **若选方案 A** → 删掉政策里的 `activeTab` 段落，问卷只报 `storage`
-- **若选方案 B** → 政策改为说明 host permission（`<all_urls>`）用于注入水印图层
-- **若选方案 C** → 政策改为说明 `tabs`，并强调只读 URL、不记录历史
-- 需同步三处：`web-watermark-prompt/privacy-policy.html`、`docs/store-assets/privacy-policy.md`、商店隐私问卷
+- **已按方案 A 处理（2026-08-10）**：manifest 只申请 `storage`，badge 由 content script 上报实现，不需要 `activeTab`
+- `web-watermark-prompt/privacy-policy.html`：已上线版本**不含 activeTab 段落**，权限说明仅列 `storage`
+- `docs/store-assets/privacy-policy.md`：已同步（无 activeTab、无待决策警告、补反馈表单段）
+- 商店隐私问卷：权限 justification 只写 `storage` + `<all_urls>`，不填 activeTab
 
 ### 3. 反馈入口 —— ✅ 已决策
 
@@ -487,8 +478,8 @@ Chrome 现在对隐私要求非常严，这一栏答错就上不了：
 
 - Chrome Web Store 已废弃该尺寸，**不做**
 
-### 6. 付费版相关决策 —— 见 `docs/paid-version.md`
+### 6. 定价 —— ✅ 已决策：全部免费
 
-- 技术栈（Supabase vs Cloudflare）、免费功能收回范围、`unlimitedConfigs` 限制值
-- ⚠️ **若决定把 `cookieMatch` / `smartColor` / `importExport` 转为 Pro，`docs/store-assets/descriptions/` 下 4 份文案必须同步删改相关卖点**，否则构成虚假宣传（明确的拒审理由）
+- **所有功能免费**，无付费档位、无试用、无功能限制（2026-08-13 决策，见 `docs/paid-version.md`）
+- 商店问卷 Pricing = Free；商店描述 4 份无任何付费表述，无需改动
 

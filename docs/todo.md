@@ -17,9 +17,8 @@
 
 - ✅ **反馈入口**：保持使用 prompt 仓库 GitHub Issues。备选叠加自有 EasyForm（<https://www.easyform.dpdns.org/>）做非 GitHub 用户的反馈通道 —— 需单独做 `feedback.html` 挂 GitHub Pages（扩展内不能直接嵌 script），列为 v2.1 增强
 - ✅ **商店 listing 语言**：不补 zh_TW / ja / es 描述，v2.0 只上中英两套
-- ✅ **付费限制时机**：上线前就加入（无历史用户，可自由划分功能归属）
+- ✅ **付费功能**：**已否决（2026-08-13）**——不做付费，所有功能全部免费
 - ✅ **`promo-920x680.png`**：Chrome 已废弃该尺寸，不做
-- 🔶 **付费技术栈**：倾向 Supabase（Cloudflare 无对标 Supabase Auth 的消费级认证产品，自建需接邮箱验证/OAuth/邮件服务商）。待确认云同步是否进首发
 
 ## UI 整体优化（按优先级）
 
@@ -150,17 +149,14 @@ of one or more configs, ready to paste into the extension's Import dialog.
 ### 动态变量支持
 - 水印文本支持占位符：`{user}` / `{date}` / `{time}` / `{host}` / `{path}`
 - 需要在 options 里加"用户显示名"字段（存 storage.sync.userDisplay），因为浏览器拿不到系统账号
-- 已在 `features.js` 标记为 `dynamicVars` PAID 候选
+- 已在 `features.js` 标记为 `dynamicVars` PAID 桩位（当前全免费，不限制）
 - 状态：**未实现**，但 5 语言的 `textHint` 已埋「未来将支持 {user} / {date} 等变量」文案 —— 这是对用户的隐性承诺，需要兑现或改文案
 
 ## 低优先级 / 长期
 
 ### 付费版落地
-- 见 `docs/paid-version.md`
-- ✅ **已决策**：上线前就加入付费限制（无历史用户）
-- 🔶 技术栈倾向 Supabase（认证开箱即用）
-- ⚠️ **重要发现**：`features.js` 里 `cookieMatch` / `unlimitedConfigs` / `dynamicVars` 等键的 `canUse()` **实际调用点为 0**，是空壳声明。挪 key 不产生任何效果，需真正写门控逻辑（`cookieMatch` 3 处、`unlimitedConfigs` 2 处）
-- ⚠️ **强制约束**：任何转 Pro 的功能，必须同步删改 `docs/store-assets/descriptions/` 下 4 份商店文案里的对应卖点，否则构成虚假宣传（拒审理由）
+- ✅ **已否决（2026-08-13）**：不做付费功能，所有功能全部免费（见 `docs/paid-version.md` 决策记录）
+- `features.js` 的 `PAID_FEATURES` / `tierOf` / `currentPlan` 保留为桩位，当前全返回 `true`，不产生任何限制
 
 ### 字体家族可选
 - 微软雅黑在 Mac / Linux 上没有会回退

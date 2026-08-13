@@ -1,9 +1,11 @@
 // features.js
-// 特性门控层：所有可能拆分为付费/未启用的功能都通过 Features.canUse(key) 查询是否可用。
+// 特性门控层：所有功能都通过 Features.canUse(key) 查询是否可用。
 //
-// 现阶段（免费版）所有功能特性均返回 true。
+// 【当前状态】所有功能全部免费开放，canUse(*) 一律返回 true。
+// PAID_FEATURES / tierOf / currentPlan 仅为未来可能的付费拆分或灰度保留的
+// 桩位，当前不产生任何限制。已决策（2026-08-13）：v2.0 不设付费功能。
 //
-// 未来接入付费 / 灰度：修改这一个文件即可，业务代码不动。
+// 未来若要做付费 / 灰度：修改这一个文件即可，业务代码不动。
 
 // 默认可用（免费版全部开放）
 const FREE_FEATURES = new Set([
@@ -18,7 +20,7 @@ const FREE_FEATURES = new Set([
   'multiLang',
 ])
 
-// 未来可能移到付费；目前也返回 true
+// 付费桩位（保留为未来可能拆分，当前全部免费，canUse 对它们也返回 true）
 const PAID_FEATURES = new Set([
   'cookieMatch',
   'smartColor',
