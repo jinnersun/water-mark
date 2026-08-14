@@ -66,7 +66,7 @@
 ### 上架材料相关
 - 图标：SVG 单一源（`src/icons/source/`）+ `npm run gen-icons` 导出 16 / 48 / 128
 - 隐私政策：**不收集任何用户数据**（所有配置存 `chrome.storage.sync`，仅同步到用户自己的 Chrome 账号，不经过任何第三方服务器）
-- 已挂载：<https://jinnersun.github.io/web-watermark-prompt/privacy-policy.html>（中英双语）
+- 已挂载：<https://www.webwatermark.dpdns.org/privacy-policy>（中英双语）
 
 ## 权限清单（`src/manifest.json`）
 
@@ -96,7 +96,7 @@ v2.0 实际只申请 **一个** 权限：
 ### 2. 一键复制 prompt + 从剪贴板导入 ✅
 - `options.html:335` `#copy-prompt-btn` → `options.js` `onCopyPrompt`（内联 PROMPT 见 `options.js:72` 起）
 - `options.html:342` `#paste-clipboard-btn` → `options.js` `onPasteFromClipboard`
-- `options.html:349` 提示词源文件链接 → `web-watermark-prompt/blob/main/PROMPT.md`
+- `options.html:380` 提示词源文件链接 → `web-watermark-prompt/blob/main/PROMPT.md`
 - 空输入保护：prompt 内置指令要求 AI 先反问场景细节，不直接吐 JSON
 
 ### 3. 反馈入口 ✅

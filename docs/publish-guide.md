@@ -37,7 +37,7 @@ docs/store-assets/
 │   ├── zh_CN-detail.txt        # ✅ ≤1000 字
 │   ├── en-short.txt            # ✅
 │   └── en-detail.txt           # ✅
-├── privacy-policy.md           # ✅ 隐私政策 markdown 源（已发布 HTML 见 web-watermark-prompt/）
+├── privacy-policy.md           # ✅ 隐私政策 markdown 源（已发布 HTML 见 watermask/privacy-policy.html）
 ├── sample-configs.json         # ✅ 截图用样例配置
 ├── demo-site.html              # ✅ 截图用 Demo 站点
 └── badge-showcase.html         # ✅ badge 合成 mockup
@@ -169,8 +169,8 @@ All configs stored in your own Chrome account (chrome.storage.sync). No third-pa
 **Chrome 强制要求**：即使不收集任何数据，也必须提供一个 HTTPS URL 指向隐私政策页。
 
 > **状态：已完成 ✅**
-> URL：<https://jinnersun.github.io/web-watermark-prompt/privacy-policy.html>
-> 源文件：`web-watermark-prompt/privacy-policy.html`（中英双语切换）
+> URL：<https://www.webwatermark.dpdns.org/privacy-policy>
+> 源文件：`watermask/privacy-policy.html`（中英双语切换）
 > 已实测 HTTP 200 可访问。
 >
 > ⏳ **遗留**：`docs/store-assets/privacy-policy.md` 尚未回填，仓库内缺 markdown 源。
@@ -206,7 +206,7 @@ None. This extension does not communicate with any external server.
 
 ## 5. Contact
 Report bugs or ask questions via GitHub Issues:
-https://github.com/jinnersun/web-watermark-prompt/issues
+https://github.com/jinnersun/watermask/issues
 
 ## 6. Changes
 This policy may be updated. Check this page for the latest version.
@@ -341,7 +341,7 @@ Chrome 现在对隐私要求非常严，这一栏答错就上不了：
   - 注意：**不申请 `activeTab` / `tabs`**（badge 由 content script 消息上报实现，见第七节 #1 方案 A）
 - **Are you handling user data**: **No**（因为你确实不收集）
 - **Data collection disclosure**: 全选 "not being collected"
-- **Privacy policy URL**: `https://jinnersun.github.io/web-watermark-prompt/privacy-policy.html`
+- **Privacy policy URL**: `https://www.webwatermark.dpdns.org/privacy-policy`
 
 
 ### 4.4 分发设置
@@ -457,13 +457,13 @@ Chrome 现在对隐私要求非常严，这一栏答错就上不了：
 ### 2. 隐私政策的 `activeTab` 段落 —— ✅ 已解决
 
 - **已按方案 A 处理（2026-08-10）**：manifest 只申请 `storage`，badge 由 content script 上报实现，不需要 `activeTab`
-- `web-watermark-prompt/privacy-policy.html`：已上线版本**不含 activeTab 段落**，权限说明仅列 `storage`
+- `watermask/privacy-policy.html`（独立站点仓库）：已上线版本**不含 activeTab 段落**，权限说明仅列 `storage`
 - `docs/store-assets/privacy-policy.md`：已同步（无 activeTab、无待决策警告、补反馈表单段）
 - 商店隐私问卷：权限 justification 只写 `storage` + `<all_urls>`，不填 activeTab
 
 ### 3. 反馈入口 —— ✅ 已决策
 
-- **保持使用 prompt 仓库的 GitHub Issues**：<https://github.com/jinnersun/web-watermark-prompt/issues>
+- **保持使用 prompt 仓库的 GitHub Issues**：<https://github.com/jinnersun/watermask/issues>
 - 备选/可叠加：接入自有表单服务 **EasyForm**（<https://www.easyform.dpdns.org/>，一行 script 嵌入，免费额度 100 次/月，含 AI 反垃圾）
   - 适用场景：面向不用 GitHub 的普通用户（GitHub Issues 需要账号，对非开发者是门槛）
   - 实现成本：扩展内不能直接嵌 script，需要单独做一个反馈页（GitHub Pages 上挂个 `feedback.html` + EasyForm script），扩展里链过去

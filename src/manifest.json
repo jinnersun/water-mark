@@ -3,6 +3,7 @@
   "name": "__MSG_extName__",
   "description": "__MSG_extDescription__",
   "version": "2.0.0",
+  "homepage_url": "https://www.webwatermark.dpdns.org/",
   "default_locale": "en",
   "action": {
     "default_icon": {

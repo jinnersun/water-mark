@@ -124,7 +124,7 @@ of one or more configs, ready to paste into the extension's Import dialog.
 
 ### ✅ 反馈入口 —— 已完成
 - 实现位置：帮助面板底部「反馈 / Bug 报告」卡片（`options.html:711-713`）
-- 指向 <https://github.com/jinnersun/web-watermark-prompt/issues>
+- 指向 <https://github.com/jinnersun/watermask/issues>
 - i18n key `helpFeedbackTitle / helpFeedbackDesc / helpFeedbackLink`，5 语言齐全
 - ✅ **已决策**：保持使用 prompt 仓库，不为扩展单开仓库
 - 🔶 **v2.1 增强候选**：接入自有 EasyForm（<https://www.easyform.dpdns.org/>）作为非 GitHub 用户的反馈通道

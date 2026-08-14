@@ -1,8 +1,8 @@
 # Privacy Policy for Web Watermark Tool
 
 > **本文件是隐私政策的 markdown 源**。已发布的 HTML 版本位于
-> `web-watermark-prompt/privacy-policy.html`，线上地址：
-> <https://jinnersun.github.io/web-watermark-prompt/privacy-policy.html>
+> `watermask/privacy-policy.html`（独立站点仓库 jinnersun/watermask），线上地址：
+> <https://www.webwatermark.dpdns.org/privacy-policy>
 >
 > 已与 `src/manifest.json` 核对一致：仅申请 `storage` 权限，无 `activeTab`。
 > 工具栏 badge 由 content script 上报命中结果实现，不需要额外权限。
@@ -62,4 +62,4 @@ This policy may be updated. Check the published page for the latest version.
 ## 8. Contact
 
 Report bugs or ask privacy-related questions via GitHub Issues:
-<https://github.com/jinnersun/web-watermark-prompt/issues>
+<https://github.com/jinnersun/watermask/issues>
