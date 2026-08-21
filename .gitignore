@@ -10,6 +10,9 @@ Thumbs.db
 *.zip
 src/_metadata/
 
+# Internal docs / store assets / publishing notes (kept local, not published in repo)
+docs/
+
 # Local example exports (not code) — may contain real internal hostnames
 json/
 watermark-configs-*.json

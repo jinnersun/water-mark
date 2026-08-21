@@ -1,1 +1,0 @@
-Distinguish prod/test/staging at a glance. Rule-based watermarks by host, URL, IP, or cookie. Prevent mis-operation.
