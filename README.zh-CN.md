@@ -20,7 +20,7 @@
 - **全局总开关**：右上角一键停用所有水印
 - **配置搜索**：侧栏搜索框，配置多时秒定位
 - **工具栏图标 badge**：命中的配置在插件图标右下角显示短标签（例 PROD）
-- **多语言支持**：中英字典已完整预留，测试稳定后一键开启（切换 src/features.js 里 multiLang 归属即可）
+- **多语言界面**：英文、简体中文、繁体中文、日本語、Español，可跟随浏览器语言。Manifest 字符串通过 `_locales/*` 原生提供
 
 ## 目录结构
 
@@ -43,14 +43,8 @@
 │   ├── gen-icons.mjs           # 由 src/icons/source/*.svg 光栅化出 PNG
 │   ├── gen-promo.mjs           # 生成 Chrome 商店宣传图
 │   ├── check-screenshots.mjs   # 校验商店截图尺寸
-│   └── fix-screenshots.mjs     # 裁切/补白到精确 1280x800
-├── docs/
-│   ├── paid-version.md         # 决策记录：付费已否决，全部免费
-│   ├── publish-guide.md        # Chrome 商店上架指南
-│   ├── v2-manifest.md          # v2.0 功能清单
-│   ├── v2-implementation-plan.md  # 分阶段实施计划
-│   ├── todo.md                 # 待办 & Roadmap
-│   └── store-assets/           # 图标、截图、宣传图、商店描述
+│   ├── fix-screenshots.mjs     # 裁切/补白到精确 1280x800
+│   └── icon-preview.html       # 预览生成的图标集
 ├── README.md
 ├── README.zh-CN.md
 └── .gitignore
@@ -70,7 +64,7 @@
 - 键：
   - `configs: Config[]` — 所有水印配置
   - `globalEnabled: boolean` — 全局总开关
-  - `lang: 'zh-CN' | 'en'` — 语言偏好
+  - `lang: 'zh-CN' | 'en' → lang: '' | 'en' | 'zh_CN' | 'zh_TW' | 'ja' | 'es'(空串=跟随浏览器)` — 语言偏好
 
 ## 匹配规则详解
 
@@ -85,9 +79,6 @@
 
 **冲突处理**：一条配置内多规则命中时，选 score 最高的一条；多条配置命中时也一样。score 大致规则：`host-exact` > `ip-exact` > `ip-cidr` > `url-regex` > `cookie` > `host-suffix`，同类型按 value 长度。
 
-## 定价
-
-**所有功能全部免费**，无付费档位、无试用、无功能限制。`src/features.js` 的 `Features.canUse(key)` 门控层仅作为未来可能的拆分桩位保留，当前不限制任何功能。决策记录见 `docs/paid-version.md`。
 
 ## 权限说明
 

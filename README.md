@@ -50,14 +50,8 @@ Chrome extension (Manifest V3) that stamps precise per-environment watermarks on
 │   ├── gen-icons.mjs           # Rasterize src/icons/source/*.svg to PNG
 │   ├── gen-promo.mjs           # Build Chrome Web Store promo tiles
 │   ├── check-screenshots.mjs   # Validate store screenshot dimensions
-│   └── fix-screenshots.mjs     # Crop/pad screenshots to exact 1280x800
-├── docs/
-│   ├── paid-version.md         # Decision record: paid features rejected, all free
-│   ├── publish-guide.md        # Chrome Web Store submission guide
-│   ├── v2-manifest.md          # v2.0 feature manifest
-│   ├── v2-implementation-plan.md  # Phased implementation plan
-│   ├── todo.md                 # Roadmap
-│   └── store-assets/           # Icons, screenshots, promo tiles, store descriptions
+│   ├── fix-screenshots.mjs     # Crop/pad screenshots to exact 1280x800
+│   └── icon-preview.html       # Preview the generated icon set
 ├── README.md                   # English (this file)
 ├── README.zh-CN.md             # Chinese
 └── .gitignore
@@ -98,10 +92,6 @@ Chrome extension (Manifest V3) that stamps precise per-environment watermarks on
 - Run `node scripts/gen-locales.mjs` to regenerate `_locales/*/messages.json` and `src/i18n-messages.js`.
 - Run `node scripts/check-i18n.mjs` to lint for drift between locales and unknown keys referenced from HTML/JS.
 - The runtime picker lives in `src/i18n.js` (`WatermarkI18n.switchLang(lang)`).
-
-## Pricing
-
-**All features are free.** There is no paid tier, trial, or feature limit. `src/features.js` keeps a gate layer (`Features.canUse`) purely as a stub for a possible future feature split — it never restricts anything today. See `docs/paid-version.md` for the decision record.
 
 ## Permissions
 
