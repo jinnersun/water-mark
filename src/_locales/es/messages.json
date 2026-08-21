@@ -4,7 +4,7 @@
     "description": "Extension name shown in Chrome Web Store and browser toolbar."
   },
   "extDescription": {
-    "message": "Marcas de agua precisas por dominio, URL, IP o cookie. Evita errores en producción. Incluye color de contraste inteligente, borde inmersivo y atenuación durante la interacción.",
+    "message": "Marcas de agua por dominio, URL, IP o cookie. Evita errores en producción. Incluye color de contraste, borde y atenuación.",
     "description": "Extension short description in the Chrome Web Store."
   },
   "extDefaultTitle": {

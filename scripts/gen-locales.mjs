@@ -93,7 +93,7 @@ const KEY_ORDER = [
 const TRANSLATIONS = {
   en: {
     extName: 'Web Watermark Tool',
-    extDescription: 'Precise watermarks by domain, URL, IP, or Cookie. Prevents mistakes on prod. Includes smart contrast color, immersive border, activity fade.',
+    extDescription: 'Precise watermarks by domain, URL, IP, or Cookie. Prevents mistakes on prod. Includes contrast color, border, activity fade.',
     extDefaultTitle: 'Click to configure watermark rules',
 
     title: 'Web Watermark - Settings',
@@ -821,7 +821,7 @@ const OVERRIDES = {
   },
   es: {
     extName: 'Herramienta de marca de agua web',
-    extDescription: 'Marcas de agua precisas por dominio, URL, IP o cookie. Evita errores en producción. Incluye color de contraste inteligente, borde inmersivo y atenuación durante la interacción.',
+    extDescription: 'Marcas de agua por dominio, URL, IP o cookie. Evita errores en producción. Incluye color de contraste, borde y atenuación.',
     extDefaultTitle: 'Haz clic para configurar reglas de marca de agua',
 
     title: 'Marca de agua web - Ajustes',
