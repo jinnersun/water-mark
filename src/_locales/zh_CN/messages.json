@@ -499,6 +499,9 @@
   "supportPR": {
     "message": "提 PR"
   },
+  "reviewPromptTitle": {
+    "message": "觉得网页水印工具好用吗？"
+  },
   "reviewPromptText": {
     "message": "如果它帮你少踩过一次坑，欢迎留个评价支持一下。"
   },

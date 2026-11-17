@@ -140,42 +140,54 @@
               </svg>
             </button>
           </div>
-          <ul id="config-list" class="config-list"></ul>
-          <div id="sidebar-empty" class="sidebar-empty" style="display: none">
-            <div class="sidebar-empty-icon">✨</div>
-            <p data-i18n="emptyList">暂无配置</p>
-            <p class="sidebar-empty-hint" data-i18n="emptyListHint">
-              点击右上角 + 号，创建你的第一条配置
-            </p>
-          </div>
-          <div
-            id="review-prompt"
-            class="review-prompt"
-            role="status"
-            hidden
-          >
-            <p class="review-prompt-text" data-i18n="reviewPromptText">
-              如果它帮你少踩过一次坑，欢迎留个评价支持一下。
-            </p>
-            <div class="review-prompt-actions">
-              <a
-                id="review-prompt-review"
-                class="review-prompt-review"
-                href="https://chromewebstore.google.com/detail/fgnehancpgnnbnbmpeimgjoaffjbapbi"
-                target="_blank"
-                rel="noopener"
-                data-i18n="reviewPromptReview"
-              >
-                去评价
-              </a>
-              <button
-                id="review-prompt-dismiss"
-                class="btn btn-ghost btn-sm review-prompt-dismiss"
-                type="button"
-                data-i18n="reviewPromptDismiss"
-              >
-                知道了
-              </button>
+          <div class="config-list-scroll">
+            <ul id="config-list" class="config-list"></ul>
+            <div id="sidebar-empty" class="sidebar-empty" style="display: none">
+              <div class="sidebar-empty-icon">✨</div>
+              <p data-i18n="emptyList">暂无配置</p>
+              <p class="sidebar-empty-hint" data-i18n="emptyListHint">
+                点击右上角 + 号，创建你的第一条配置
+              </p>
+            </div>
+            <div
+              id="review-prompt"
+              class="review-prompt"
+              role="status"
+              hidden
+            >
+              <div class="review-prompt-heading">
+                <span class="review-prompt-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 2.5l2.92 5.92 6.53.95-4.73 4.61 1.12 6.51L12 17.42l-5.84 3.07 1.12-6.51-4.73-4.61 6.53-.95L12 2.5z" />
+                  </svg>
+                </span>
+                <p class="review-prompt-title" data-i18n="reviewPromptTitle">
+                  觉得网页水印工具好用吗？
+                </p>
+              </div>
+              <p class="review-prompt-text" data-i18n="reviewPromptText">
+                如果它帮你少踩过一次坑，欢迎留个评价支持一下。
+              </p>
+              <div class="review-prompt-actions">
+                <a
+                  id="review-prompt-review"
+                  class="review-prompt-review"
+                  href="https://chromewebstore.google.com/detail/fgnehancpgnnbnbmpeimgjoaffjbapbi"
+                  target="_blank"
+                  rel="noopener"
+                  data-i18n="reviewPromptReview"
+                >
+                  去评价
+                </a>
+                <button
+                  id="review-prompt-dismiss"
+                  class="btn btn-ghost btn-sm review-prompt-dismiss"
+                  type="button"
+                  data-i18n="reviewPromptDismiss"
+                >
+                  知道了
+                </button>
+              </div>
             </div>
           </div>
           <footer class="sidebar-support">

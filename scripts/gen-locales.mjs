@@ -89,7 +89,7 @@ const KEY_ORDER = [
   'helpAiPromptTitle', 'helpAiPromptDesc',
   'helpFeedbackTitle', 'helpFeedbackDesc', 'helpFeedbackLink',
   'supportPrompt', 'supportReviewLink', 'supportContribute', 'supportIssue', 'supportPR',
-  'reviewPromptText', 'reviewPromptReview', 'reviewPromptDismiss',
+  'reviewPromptTitle', 'reviewPromptText', 'reviewPromptReview', 'reviewPromptDismiss',
 ]
 
 const TRANSLATIONS = {
@@ -278,6 +278,7 @@ const TRANSLATIONS = {
     supportContribute: 'Help improve it',
     supportIssue: 'Open an Issue',
     supportPR: 'Submit a PR',
+    reviewPromptTitle: 'Find Web Watermark helpful?',
     reviewPromptText: 'If it has helped you avoid a production mistake, a quick review would mean a lot.',
     reviewPromptReview: 'Rate now',
     reviewPromptDismiss: 'Got it',
@@ -471,6 +472,7 @@ const OVERRIDES = {
     supportContribute: '欢迎参与改进',
     supportIssue: '提 Issue',
     supportPR: '提 PR',
+    reviewPromptTitle: '觉得网页水印工具好用吗？',
     reviewPromptText: '如果它帮你少踩过一次坑，欢迎留个评价支持一下。',
     reviewPromptReview: '去评价',
     reviewPromptDismiss: '知道了',
@@ -660,6 +662,7 @@ const OVERRIDES = {
     supportContribute: '歡迎一起改進',
     supportIssue: '提出 Issue',
     supportPR: '提交 PR',
+    reviewPromptTitle: '覺得網頁浮水印工具好用嗎？',
     reviewPromptText: '如果它曾幫你避免踩坑，歡迎留下評價支持一下。',
     reviewPromptReview: '去評價',
     reviewPromptDismiss: '知道了',
@@ -849,6 +852,7 @@ const OVERRIDES = {
     supportContribute: '改善に参加',
     supportIssue: 'Issue を作成',
     supportPR: 'PR を作成',
+    reviewPromptTitle: 'ウェブウォーターマーク ツールは便利ですか？',
     reviewPromptText: 'ミスの防止に役立ったら、レビューで応援してください。',
     reviewPromptReview: '評価する',
     reviewPromptDismiss: '了解',
@@ -1038,6 +1042,7 @@ const OVERRIDES = {
     supportContribute: 'Ayúdanos a mejorar',
     supportIssue: 'Abrir un Issue',
     supportPR: 'Enviar un PR',
+    reviewPromptTitle: '¿Te resulta útil la herramienta de marca de agua web?',
     reviewPromptText: 'Si te ha ayudado a evitar un error, una valoración nos ayudaría mucho.',
     reviewPromptReview: 'Valorar',
     reviewPromptDismiss: 'Entendido',

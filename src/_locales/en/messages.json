@@ -499,6 +499,9 @@
   "supportPR": {
     "message": "Submit a PR"
   },
+  "reviewPromptTitle": {
+    "message": "Find Web Watermark helpful?"
+  },
   "reviewPromptText": {
     "message": "If it has helped you avoid a production mistake, a quick review would mean a lot."
   },

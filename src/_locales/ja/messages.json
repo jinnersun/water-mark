@@ -499,6 +499,9 @@
   "supportPR": {
     "message": "PR を作成"
   },
+  "reviewPromptTitle": {
+    "message": "ウェブウォーターマーク ツールは便利ですか？"
+  },
   "reviewPromptText": {
     "message": "ミスの防止に役立ったら、レビューで応援してください。"
   },

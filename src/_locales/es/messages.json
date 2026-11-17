@@ -499,6 +499,9 @@
   "supportPR": {
     "message": "Enviar un PR"
   },
+  "reviewPromptTitle": {
+    "message": "¿Te resulta útil la herramienta de marca de agua web?"
+  },
   "reviewPromptText": {
     "message": "Si te ha ayudado a evitar un error, una valoración nos ayudaría mucho."
   },

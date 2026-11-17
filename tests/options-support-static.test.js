@@ -7,6 +7,10 @@ const OPTIONS_HTML = readFileSync(
   new URL('../src/options.html', import.meta.url),
   'utf8',
 )
+const OPTIONS_CSS = readFileSync(
+  new URL('../src/options.css', import.meta.url),
+  'utf8',
+)
 const context = { self: {} }
 vm.runInNewContext(
   readFileSync(new URL('../src/i18n-messages.js', import.meta.url), 'utf8'),
@@ -17,6 +21,15 @@ const messages = context.self.WatermarkMessages
 const getAttribute = (tag, name) => {
   const match = tag.match(new RegExp(`\\b${name}="([^"]*)"`))
   return match?.[1]
+}
+
+const getCssRule = (selector) => {
+  const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const match = OPTIONS_CSS.match(
+    new RegExp(`${escaped}\\s*\\{([^}]*)\\}`),
+  )
+  assert.ok(match, `${selector} rule must exist`)
+  return match[1]
 }
 
 test('support footer links use the published destinations and locale keys', () => {
@@ -95,6 +108,36 @@ test('review prompt is hidden, non-blocking, and loaded before options.js', () =
   assert.ok(optionsScript > promptScript, 'options-support.js must precede options.js')
 })
 
+test('review prompt follows the config list inside the shared scroll area', () => {
+  const scrollArea = OPTIONS_HTML.match(
+    /<div class="config-list-scroll">([\s\S]*?)<\/div>\s*<footer class="sidebar-support">/,
+  )
+  assert.ok(scrollArea, 'config list and review prompt must share a scroll area')
+  const listIndex = scrollArea[1].indexOf('<ul id="config-list"')
+  const promptIndex = scrollArea[1].indexOf('id="review-prompt"')
+  assert.ok(listIndex >= 0, 'config list must be inside the scroll area')
+  assert.ok(promptIndex > listIndex, 'review prompt must follow the config list')
+
+  const scrollStyle = getCssRule('.config-list-scroll')
+  assert.match(scrollStyle, /flex:\s*1/)
+  assert.match(scrollStyle, /overflow-y:\s*auto/)
+  assert.doesNotMatch(getCssRule('.config-list'), /overflow-y:\s*auto/)
+  assert.doesNotMatch(getCssRule('.review-prompt'), /position:\s*(?:absolute|fixed)/)
+})
+
+test('review prompt uses the approved compact purple gradient treatment', () => {
+  const promptStyle = getCssRule('.review-prompt')
+  assert.match(promptStyle, /margin:\s*17px 8px 6px/)
+  assert.match(promptStyle, /padding:\s*12px 13px/)
+  assert.match(
+    promptStyle,
+    /background:\s*linear-gradient\(135deg,\s*var\(--primary\),\s*#6d28d9\)/,
+  )
+  assert.match(getCssRule('.review-prompt-title'), /font-size:\s*12px/)
+  assert.match(getCssRule('.review-prompt-text'), /font-size:\s*10px/)
+  assert.match(OPTIONS_HTML, /data-i18n="reviewPromptTitle"/)
+})
+
 test('help feedback link uses the current repository issues page', () => {
   const tag = OPTIONS_HTML.match(
     /<a\b[^>]*\bclass="help-feedback-link"[^>]*>/,
@@ -114,6 +157,7 @@ test('support and review prompt messages are nonempty in every locale', () => {
     'supportContribute',
     'supportIssue',
     'supportPR',
+    'reviewPromptTitle',
     'reviewPromptText',
     'reviewPromptReview',
     'reviewPromptDismiss',
