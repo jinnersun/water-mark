@@ -483,5 +483,29 @@
   },
   "helpFeedbackLink": {
     "message": "GitHub Issues を開く"
+  },
+  "supportPrompt": {
+    "message": "この拡張機能は役に立ちましたか？"
+  },
+  "supportReviewLink": {
+    "message": "Chrome ウェブストアで評価"
+  },
+  "supportContribute": {
+    "message": "改善に参加"
+  },
+  "supportIssue": {
+    "message": "Issue を作成"
+  },
+  "supportPR": {
+    "message": "PR を作成"
+  },
+  "reviewPromptText": {
+    "message": "ミスの防止に役立ったら、レビューで応援してください。"
+  },
+  "reviewPromptReview": {
+    "message": "評価する"
+  },
+  "reviewPromptDismiss": {
+    "message": "了解"
   }
 }

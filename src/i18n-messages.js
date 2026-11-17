@@ -160,7 +160,15 @@ self.WatermarkMessages = {
     "helpAiPromptDesc": "Click \"Let AI write rules\" to copy a prompt to clipboard, paste into ChatGPT / Claude / Codex, describe your scenario, and paste the JSON reply back via \"Paste from clipboard\".",
     "helpFeedbackTitle": "Feedback / Bug report",
     "helpFeedbackDesc": "Found a bug or have suggestions? Open an issue on GitHub.",
-    "helpFeedbackLink": "Open GitHub Issues"
+    "helpFeedbackLink": "Open GitHub Issues",
+    "supportPrompt": "Find this extension helpful?",
+    "supportReviewLink": "Rate on Chrome Web Store",
+    "supportContribute": "Help improve it",
+    "supportIssue": "Open an Issue",
+    "supportPR": "Submit a PR",
+    "reviewPromptText": "If it has helped you avoid a production mistake, a quick review would mean a lot.",
+    "reviewPromptReview": "Rate now",
+    "reviewPromptDismiss": "Got it"
   },
   "zh_CN": {
     "extName": "网页水印工具",
@@ -321,7 +329,15 @@ self.WatermarkMessages = {
     "helpAiPromptDesc": "点「让 AI 帮我写规则」复制提示词到剪贴板，粘到 ChatGPT / Claude / Codex 描述场景后，用「从剪贴板导入」把 JSON 结果导回。",
     "helpFeedbackTitle": "反馈 / Bug 报告",
     "helpFeedbackDesc": "发现 Bug 或有建议？欢迎到 GitHub 提交 issue。",
-    "helpFeedbackLink": "打开 GitHub Issues"
+    "helpFeedbackLink": "打开 GitHub Issues",
+    "supportPrompt": "觉得这个扩展有帮助？",
+    "supportReviewLink": "去 Chrome 商店评价",
+    "supportContribute": "欢迎参与改进",
+    "supportIssue": "提 Issue",
+    "supportPR": "提 PR",
+    "reviewPromptText": "如果它帮你少踩过一次坑，欢迎留个评价支持一下。",
+    "reviewPromptReview": "去评价",
+    "reviewPromptDismiss": "知道了"
   },
   "zh_TW": {
     "extName": "網頁浮水印工具",
@@ -482,7 +498,15 @@ self.WatermarkMessages = {
     "helpAiPromptDesc": "點「讓 AI 幫我寫規則」複製提示詞到剪貼簿，貼上到 ChatGPT / Claude / Codex 描述情境後，用「從剪貼簿匯入」把 JSON 匯回。",
     "helpFeedbackTitle": "意見回饋 / Bug 回報",
     "helpFeedbackDesc": "發現 Bug 或有建議？歡迎到 GitHub 提交 issue。",
-    "helpFeedbackLink": "開啟 GitHub Issues"
+    "helpFeedbackLink": "開啟 GitHub Issues",
+    "supportPrompt": "覺得這個擴充功能有幫助？",
+    "supportReviewLink": "到 Chrome 商店評價",
+    "supportContribute": "歡迎一起改進",
+    "supportIssue": "提出 Issue",
+    "supportPR": "提交 PR",
+    "reviewPromptText": "如果它曾幫你避免踩坑，歡迎留下評價支持一下。",
+    "reviewPromptReview": "去評價",
+    "reviewPromptDismiss": "知道了"
   },
   "ja": {
     "extName": "ウェブウォーターマーク ツール",
@@ -643,7 +667,15 @@ self.WatermarkMessages = {
     "helpAiPromptDesc": "「AI にルール生成を依頼」でプロンプトをコピーし、ChatGPT / Claude / Codex に貼り付けてシナリオを説明後、「クリップボードから読込」で JSON を戻します。",
     "helpFeedbackTitle": "フィードバック / Bug 報告",
     "helpFeedbackDesc": "Bug や提案があれば、GitHub の issue にご報告ください。",
-    "helpFeedbackLink": "GitHub Issues を開く"
+    "helpFeedbackLink": "GitHub Issues を開く",
+    "supportPrompt": "この拡張機能は役に立ちましたか？",
+    "supportReviewLink": "Chrome ウェブストアで評価",
+    "supportContribute": "改善に参加",
+    "supportIssue": "Issue を作成",
+    "supportPR": "PR を作成",
+    "reviewPromptText": "ミスの防止に役立ったら、レビューで応援してください。",
+    "reviewPromptReview": "評価する",
+    "reviewPromptDismiss": "了解"
   },
   "es": {
     "extName": "Herramienta de marca de agua web",
@@ -804,6 +836,14 @@ self.WatermarkMessages = {
     "helpAiPromptDesc": "Pulsa \"Generar reglas con IA\" para copiar el prompt, pégalo en ChatGPT / Claude / Codex, describe tu escenario, y usa \"Pegar del portapapeles\" para importar el JSON.",
     "helpFeedbackTitle": "Comentarios / Reportar bug",
     "helpFeedbackDesc": "¿Bug o sugerencia? Abre un issue en GitHub.",
-    "helpFeedbackLink": "Abrir GitHub Issues"
+    "helpFeedbackLink": "Abrir GitHub Issues",
+    "supportPrompt": "¿Te resulta útil esta extensión?",
+    "supportReviewLink": "Valorar en Chrome Web Store",
+    "supportContribute": "Ayúdanos a mejorar",
+    "supportIssue": "Abrir un Issue",
+    "supportPR": "Enviar un PR",
+    "reviewPromptText": "Si te ha ayudado a evitar un error, una valoración nos ayudaría mucho.",
+    "reviewPromptReview": "Valorar",
+    "reviewPromptDismiss": "Entendido"
   }
 }

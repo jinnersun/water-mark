@@ -483,5 +483,29 @@
   },
   "helpFeedbackLink": {
     "message": "Abrir GitHub Issues"
+  },
+  "supportPrompt": {
+    "message": "¿Te resulta útil esta extensión?"
+  },
+  "supportReviewLink": {
+    "message": "Valorar en Chrome Web Store"
+  },
+  "supportContribute": {
+    "message": "Ayúdanos a mejorar"
+  },
+  "supportIssue": {
+    "message": "Abrir un Issue"
+  },
+  "supportPR": {
+    "message": "Enviar un PR"
+  },
+  "reviewPromptText": {
+    "message": "Si te ha ayudado a evitar un error, una valoración nos ayudaría mucho."
+  },
+  "reviewPromptReview": {
+    "message": "Valorar"
+  },
+  "reviewPromptDismiss": {
+    "message": "Entendido"
   }
 }

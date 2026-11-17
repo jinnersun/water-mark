@@ -389,6 +389,90 @@ body {
   margin-top: 6px;
   color: var(--text-muted);
 }
+.review-prompt {
+  flex-shrink: 0;
+  margin: 0 12px 12px;
+  padding: 12px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  background: var(--bg-soft);
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.review-prompt[hidden] {
+  display: none;
+}
+.review-prompt-text {
+  margin-bottom: 8px;
+}
+.review-prompt-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+}
+.review-prompt-review {
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+.review-prompt-review:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+.review-prompt-review:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.review-prompt-dismiss {
+  margin-left: auto;
+}
+.sidebar-support {
+  flex-shrink: 0;
+  padding: 12px 14px 14px;
+  border-top: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.sidebar-support-prompt {
+  margin-bottom: 4px;
+  color: var(--text-muted);
+}
+.sidebar-support a {
+  color: var(--primary);
+  text-decoration: none;
+}
+.sidebar-support a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+.sidebar-support a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.sidebar-support-review {
+  display: inline-block;
+  font-weight: 500;
+}
+.sidebar-support-contribute {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-top: 6px;
+}
+.sidebar-support-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+}
 
 /* ============ 主区 ============ */
 .main {
