@@ -1,7 +1,7 @@
 {
   "name": "env-watermark",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.0.1",
   "type": "module",
   "description": "Env Watermark — Chrome extension. Build scripts and tooling only; the extension itself has no runtime deps.",
   "scripts": {
