@@ -22,6 +22,14 @@ const canUse = (key) =>
     ? window.Features.canUse(key)
     : true
 
+const isTopFrame = () => {
+  try {
+    return window.top === window
+  } catch (_) {
+    return true
+  }
+}
+
 // ============ 主流程 ============
 
 // 本页最近一次上报的 badge 状态，供 background 在 top-level 加载完成时
@@ -88,7 +96,7 @@ const renderConfig = (config) => {
   // z-index 说明：
   //   BORDER 必须在 OVERLAY 之上，否则智能变色（mix-blend-mode: difference）会把边框像素也参与差值，
   //   血红色被算歪甚至看不见。
-  const overlay = buildOverlay(config)
+  const overlay = isTopFrame() ? buildOverlay(config) : null
   if (overlay) attach(overlay)
 
   if (
@@ -297,9 +305,11 @@ const setupObserver = () => {
       const needBorder =
         __wmCurrentConfig.border && __wmCurrentConfig.border.enabled
       const border = document.getElementById(BORDER_ID)
-      if (!overlay || (needBorder && !border)) {
+      if ((isTopFrame() && !overlay) || (needBorder && !border)) {
+        const config = __wmCurrentConfig
         cleanup()
-        renderConfig(__wmCurrentConfig)
+        __wmCurrentConfig = config
+        renderConfig(config)
       }
     })
   })
