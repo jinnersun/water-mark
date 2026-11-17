@@ -195,3 +195,21 @@ test('iframe observer restores a removed border', () => {
   assert.ok(env.document.getElementById('__wm_border__'))
   assert.notStrictEqual(env.document.getElementById('__wm_border__'), border)
 })
+
+test('iframe observer ignores non-own attribute mutations without re-render', () => {
+  const env = loadContent({ topFrame: false })
+  const border = env.document.getElementById('__wm_border__')
+  const createdBeforeMutation = env.createdElementCount()
+
+  // A page node's class/style change takes the observer's attributes branch
+  // (the more common empty-spin driver than a synthetic overlay removal).
+  assert.doesNotThrow(() => {
+    env.mutate([
+      { type: 'attributes', target: { id: 'some-page-node' } },
+    ])
+  })
+
+  assert.equal(env.createdElementCount(), createdBeforeMutation)
+  assert.strictEqual(env.document.getElementById('__wm_border__'), border)
+  assert.equal(env.document.getElementById('__wm_overlay__'), null)
+})
