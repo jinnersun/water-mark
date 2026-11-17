@@ -483,5 +483,29 @@
   },
   "helpFeedbackLink": {
     "message": "Open GitHub Issues"
+  },
+  "supportPrompt": {
+    "message": "Find this extension helpful?"
+  },
+  "supportReviewLink": {
+    "message": "Rate on Chrome Web Store"
+  },
+  "supportContribute": {
+    "message": "Help improve it"
+  },
+  "supportIssue": {
+    "message": "Open an Issue"
+  },
+  "supportPR": {
+    "message": "Submit a PR"
+  },
+  "reviewPromptText": {
+    "message": "If it has helped you avoid a production mistake, a quick review would mean a lot."
+  },
+  "reviewPromptReview": {
+    "message": "Rate now"
+  },
+  "reviewPromptDismiss": {
+    "message": "Got it"
   }
 }

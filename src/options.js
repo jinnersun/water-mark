@@ -369,6 +369,9 @@ const clamp = (name, v) =>
 document.addEventListener('DOMContentLoaded', () => {
   getStoredLang((lang) => {
     applyLang(lang).then(() => {
+      if (window.WatermarkSupportPrompt) {
+        window.WatermarkSupportPrompt.init()
+      }
       bindStaticEvents()
       loadAll()
     })

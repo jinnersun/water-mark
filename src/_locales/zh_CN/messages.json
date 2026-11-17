@@ -483,5 +483,29 @@
   },
   "helpFeedbackLink": {
     "message": "打开 GitHub Issues"
+  },
+  "supportPrompt": {
+    "message": "觉得这个扩展有帮助？"
+  },
+  "supportReviewLink": {
+    "message": "去 Chrome 商店评价"
+  },
+  "supportContribute": {
+    "message": "欢迎参与改进"
+  },
+  "supportIssue": {
+    "message": "提 Issue"
+  },
+  "supportPR": {
+    "message": "提 PR"
+  },
+  "reviewPromptText": {
+    "message": "如果它帮你少踩过一次坑，欢迎留个评价支持一下。"
+  },
+  "reviewPromptReview": {
+    "message": "去评价"
+  },
+  "reviewPromptDismiss": {
+    "message": "知道了"
   }
 }

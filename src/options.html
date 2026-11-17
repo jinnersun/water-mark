@@ -148,6 +148,73 @@
               点击右上角 + 号，创建你的第一条配置
             </p>
           </div>
+          <div
+            id="review-prompt"
+            class="review-prompt"
+            role="status"
+            hidden
+          >
+            <p class="review-prompt-text" data-i18n="reviewPromptText">
+              如果它帮你少踩过一次坑，欢迎留个评价支持一下。
+            </p>
+            <div class="review-prompt-actions">
+              <a
+                id="review-prompt-review"
+                class="review-prompt-review"
+                href="https://chromewebstore.google.com/detail/fgnehancpgnnbnbmpeimgjoaffjbapbi"
+                target="_blank"
+                rel="noopener"
+                data-i18n="reviewPromptReview"
+              >
+                去评价
+              </a>
+              <button
+                id="review-prompt-dismiss"
+                class="btn btn-ghost btn-sm review-prompt-dismiss"
+                type="button"
+                data-i18n="reviewPromptDismiss"
+              >
+                知道了
+              </button>
+            </div>
+          </div>
+          <footer class="sidebar-support">
+            <p class="sidebar-support-prompt" data-i18n="supportPrompt">
+              觉得这个扩展有帮助？
+            </p>
+            <a
+              id="support-review"
+              class="sidebar-support-review"
+              href="https://chromewebstore.google.com/detail/fgnehancpgnnbnbmpeimgjoaffjbapbi"
+              target="_blank"
+              rel="noopener"
+              data-i18n="supportReviewLink"
+            >
+              去 Chrome 商店评价
+            </a>
+            <div class="sidebar-support-contribute">
+              <span data-i18n="supportContribute">欢迎参与改进</span>
+              <span class="sidebar-support-links">
+                <a
+                  id="support-issue"
+                  href="https://github.com/jinnersun/water-mark/issues/new"
+                  target="_blank"
+                  rel="noopener"
+                  data-i18n="supportIssue"
+                  >提 Issue</a
+                >
+                <span aria-hidden="true">·</span>
+                <a
+                  id="support-pr"
+                  href="https://github.com/jinnersun/water-mark/pulls"
+                  target="_blank"
+                  rel="noopener"
+                  data-i18n="supportPR"
+                  >提 PR</a
+                >
+              </span>
+            </div>
+          </footer>
         </aside>
         <!-- ============ 主区 ============ -->
         <main class="main">
@@ -741,7 +808,7 @@
           <section class="help-section">
             <h4 data-i18n="helpFeedbackTitle">反馈 / Bug 报告</h4>
             <p class="help-feedback-desc" data-i18n="helpFeedbackDesc">发现 Bug 或有建议？欢迎到 GitHub 提交 issue。</p>
-            <a class="help-feedback-link" href="https://github.com/jinnersun/watermask/issues" target="_blank" rel="noopener" data-i18n="helpFeedbackLink">打开 GitHub Issues</a>
+            <a class="help-feedback-link" href="https://github.com/jinnersun/water-mark/issues" target="_blank" rel="noopener" data-i18n="helpFeedbackLink">打开 GitHub Issues</a>
           </section>
         </div>
       </div>
@@ -790,6 +857,7 @@
     <script src="watermark-core.js"></script>
     <script src="i18n-messages.js"></script>
     <script src="i18n.js"></script>
+    <script src="options-support.js"></script>
     <script src="color-picker.js"></script>
     <script src="options.js"></script>
   </body>
