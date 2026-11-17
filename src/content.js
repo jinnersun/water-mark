@@ -53,11 +53,7 @@ const sendBadge = (label, color) => {
 // 因此由算好结果的 content script 主动上报，零新增权限。
 // 只有顶层 frame 上报：badge 反映主页面，iframe（all_frames: true 也会注入）不覆盖。
 const reportBadge = (config) => {
-  try {
-    if (window.top !== window) return
-  } catch (_) {
-    // 极端沙箱场景下 window.top 不可读，按顶层处理
-  }
+  if (!isTopFrame()) return
   const label = config ? window.WatermarkCore.shortLabelOf(config) : ''
   const color = config ? window.WatermarkCore.resolveBadgeColor(config) : ''
   sendBadge(label, color)
@@ -333,11 +329,7 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 // 兜住"上报之后又被延迟事件清掉"的一切时序问题。
 chrome.runtime.onMessage.addListener((msg) => {
   if (!msg || msg.type !== 'wm:request-badge') return
-  try {
-    if (window.top !== window) return
-  } catch (_) {
-    // 同 reportBadge：极端沙箱场景按顶层处理
-  }
+  if (!isTopFrame()) return
   sendBadge(
     __wmLastBadge ? __wmLastBadge.label : '',
     __wmLastBadge ? __wmLastBadge.color : '',
