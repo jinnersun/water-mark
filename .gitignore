@@ -11,7 +11,9 @@ Thumbs.db
 src/_metadata/
 
 # Internal docs / store assets / publishing notes (kept local, not published in repo)
-docs/
+# 例外：docs/milestones/ 承载随仓库提交的里程碑文档
+docs/*
+!docs/milestones/
 
 # Local example exports (not code) — may contain real internal hostnames
 json/
@@ -28,3 +30,7 @@ tmp/
 # IDE
 .vscode/
 .idea/
+
+# Agent 任务工作区（2026-11-12 起：任务包/过程产物本地留存，不进业务提交）
+# 长期里程碑文档走 docs/milestones/；.agent/ 仅本地状态
+.agent/
